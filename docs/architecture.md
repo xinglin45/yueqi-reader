@@ -2,6 +2,8 @@
 
 状态：目标架构，尚无实现。外部源/第三方项目都是候选，不代表已接入。
 
+当前交付顺序为 macOS 小说先行；[四端技术边界](novel-cross-platform.md)细化了平台端口、feature目录、稳定锚点和本地存储。本批不要求先部署共享后端或实现漫画；全局架构保持两 App、四端、Local-first 与可选模块化单体。
+
 ## 总体结构
 
 ```mermaid
@@ -32,6 +34,7 @@ flowchart TB
 | packages/reader_storage | 数据库接口、迁移基础、文件/缓存索引；两 App 分别创建库 |
 | packages/reader_sync | 协议、待同步队列、重试、冲突处理，不包含来源凭据 |
 | packages/reader_ui | 主题、基础交互与可访问性组件，不包含完整阅读引擎 |
+| packages/platform_services | 文件权限/安全存储/语音/窗口/生命周期等端口与平台适配，首批验证macOS；不把平台插件泄露到领域层 |
 | packages/novel_sources | BookSource、REST/OPDS/本地及规则适配器；独立于漫画适配器 |
 | packages/comic_sources | ComicSource、REST/本地/规则与扩展边界；独立于小说适配器 |
 

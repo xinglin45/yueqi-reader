@@ -45,6 +45,8 @@
 
 client/ 与 server/ 当前只有 README，没有业务源码或构建文件。平台目录、lib/ 与 Java src/ 应在 FND-01 初始化真实工程时生成，不创建看似可编译的空工程。
 
+2026-10-15 当前执行顺序：由 FND-01 的 macOS 先行子任务 MAC-01/02 开始，先初始化 小说/client 和所需共享包，保留四端宿主/平台接口；漫画与 Java 实现延后。本批目录细化见 [novel-cross-platform.md](novel-cross-platform.md)，系统能力预留位于 packages/platform_services。所有平台当前仍未实现/验证。
+
 ## 客户端源码规则
 
 每个 client/ 内将包含：

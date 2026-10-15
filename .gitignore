@@ -34,3 +34,9 @@ coverage/
 .swiftpm/
 Pods/
 DerivedData/
+xcuserdata/
+**/Flutter/ephemeral/
+artifacts/
+*.app/
+*.dSYM/
+*.dmg

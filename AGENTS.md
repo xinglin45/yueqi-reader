@@ -14,6 +14,8 @@
 - 代码按产品放在 小说/client、小说/server、漫画/client、漫画/server；推荐在本根目录使用一个 Git 仓库，不在产品或平台目录内嵌套仓库。
 - 每款 client 是一套 Flutter 工程，四端只分别构建/适配；两款 server 是共享单体的业务模块，唯一启动入口在 services/reader_platform/app。
 - 开发/测试/生产共享源码，通过 infra/environments 的配置和运行时环境区分；不得复制业务代码维护环境分支。
+- 当前优先任务是 macOS 小说 App（先自用，通过安装包运行）；完整范围见 docs/novel-macos-plan.md，下一实现任务为 docs/novel-macos-backlog.md 的 MAC-01。
+- macOS 专有能力通过 packages/platform_services 或相应平台适配隔离，公共领域/用例不得直接依赖系统路径或原生实现。其他三端与漫画不能因本批延后而被移除。
 
 ## 开发边界
 
