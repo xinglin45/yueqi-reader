@@ -1,0 +1,49 @@
+# 开发环境与依赖核验
+
+核验日期：2026-10-15，Asia/Singapore。仅执行只读检查，没有安装 SDK、接受许可、初始化工程或运行 App。本文件区分本机观测与未来版本决策，不作为四端兼容证明。
+
+## 本机观测
+
+| 项目 | 实际结果 | 对开发的影响 |
+|---|---|---|
+| 系统 | macOS 27.0.1，build 26A434，arm64 | 首批先在当前 Apple Silicon 机器验证；最低系统与 Intel 支持未决定 |
+| Xcode | 27.0，build 27A266a | 工具可查询，不等于 Flutter/插件已通过此版本构建 |
+| Command Line Tools | xcode-select 指向 /Applications/Xcode.app/Contents/Developer；xcrun 72 | 初始化时继续检查 SDK、构建、许可和首次运行组件状态 |
+| Flutter / Dart | 当前 PATH 中未找到 | MAC-01 需配置 SDK；不能声称已有可运行工程 |
+| 常见 Flutter 路径 | /opt/homebrew/share/flutter、~/development/flutter、~/flutter、~/.fvm/default 下未找到 bin/flutter | 仅代表本次检查位置，没有证明整机未安装 |
+| CocoaPods | 当前 PATH 中未找到 pod | 根据选定 Flutter 与原生插件的依赖方式决定是否安装；不能据此断言所有工程无法构建 |
+| Java | OpenJDK 26.0.2.1 | 后端尚未初始化，不据此锁定 Spring Boot/Java 组合 |
+| Maven | 3.9.16，所用 Homebrew Java 为 26.0.1 | 与系统 Java 不同；服务端任务需明确 JAVA_HOME 与兼容矩阵 |
+| 仓库 | main；小说/client 和漫画/client 仍只有说明 | 本轮无 Flutter 宿主、依赖锁文件或运行服务 |
+
+## MAC-01 的执行顺序
+
+1. 先定位已有 SDK；需要安装时选择官方 stable SDK，记录来源、版本、Dart 版本和完整性，使用项目专用版本约定。
+2. 查所选 SDK 对当前 Xcode/macOS 的要求，运行 flutter doctor -v、flutter devices。当前 macOS 构建所需项必须解决；Windows 构建不能在本机假定通过。
+3. 检查 Xcode 许可和组件状态。需要接受法律条款时由账户所有者处理，不把 sudo xcodebuild -license accept 放进无人值守脚本。
+4. 依据插件清单核验 CocoaPods/Swift Package Manager，记录实际采用方式。原生工具存在与依赖可解析分别验证。
+5. 在临时目录生成 novel_app 四端模板，检查 diff 后合入小说/client，保留已有 README；不要覆盖根目录或漫画目录。
+6. 选定应用标识、显示名“阅栖”、最低部署系统和构建架构。占位标识需注明，正式签名前冻结；不冒用未持有的域名。
+7. 在中文仓库路径完成依赖解析、静态检查、基础测试、macOS Debug 运行与 Release 构建，记录结果。其他宿主生成不等于其他三端已验证。
+8. 提交 SDK 版本约定、应用锁文件、依赖许可清单与复现命令；机器路径、证书、Token 和个人 Team ID 不提交。
+
+以上命令均为未来任务，本轮没有运行 flutter doctor、flutter create 或 flutter build。
+
+## 建议基线与试验
+
+以下尚未安装、联合解析或锁定版本。2026-10-15 阅读了维护者文档；上游平台支持不是本项目实测结果。
+
+| 领域 | 建议 | 锁定条件 |
+|---|---|---|
+| 状态与装配 | Riverpod；异步状态、生命周期与取消令牌分离 | 所选 Flutter/Dart 联合解析、任务取消小样通过 |
+| 路由 | go_router；路由只传稳定 ID | 桌面返回、无效路由、隐私锁重定向通过 |
+| SQLite | Drift；封装表/迁移、事务和数据访问 | SQLite 运行方式、后台工作与中文索引试验通过 |
+| 文件/安全存储/窗口 | platform_services 端口，按需插件或原生实现 | 四端能力矩阵、macOS 权限重启恢复和 Release 验证 |
+| EPUB | 比较受控 WebView 与 Flutter 排版路线 | MAC-06 位置/选字/搜索/TTS/资源隔离及许可通过 |
+| TTS | SpeechService，系统语音优先，必要时原生桥接 | MAC-12 中文回调、暂停恢复、离线和长时播放通过 |
+
+选型发现：flutter_tts 的平台功能表未把 macOS 列入 pause 和 speech marks 支持项，不能因为包声明支持 macOS 就承诺完整听书体验。需要验证所选版本，必要时用 Apple 原生语音接口补足；不静默删掉暂停/恢复。句级回调不可用时可显示已提交朗读段落，必须说明粒度，不能伪造逐字同步。
+
+依据：[Flutter macOS 环境](https://docs.flutter.dev/platform-integration/macos/setup)、[构建分发](https://docs.flutter.dev/platform-integration/macos/building)、[Riverpod](https://pub.dev/packages/flutter_riverpod)、[go_router](https://pub.dev/packages/go_router)、[Drift](https://pub.dev/packages/drift)、[flutter_tts 功能表](https://pub.dev/packages/flutter_tts)、[Apple AVSpeechSynthesizer](https://developer.apple.com/documentation/avfaudio/avspeechsynthesizer)。精确版本待联合核验。
+
+下一步见 [macOS 详细开发步骤](novel-macos-implementation-steps.md)。本机环境事实不替代实现任务验收。

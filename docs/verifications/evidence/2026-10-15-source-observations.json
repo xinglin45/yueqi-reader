@@ -1,0 +1,164 @@
+{
+  "audit_date": "2026-10-15",
+  "timezone": "Asia/Singapore",
+  "recorded_by": "Codex",
+  "overall_status": "pending",
+  "app_integration_tested": false,
+  "approved_builtin_sources": {
+    "normal": 0,
+    "adult": 0
+  },
+  "scope": "Limited sequential public HTTP observations and inert rule JSON inspection. No login, script execution, full-work archival or adult text retrieval.",
+  "caveat": "Technical responses do not establish content rights, commercial permissions, cost guarantees, jurisdictional clearance, reliable rating filters or application compatibility.",
+  "observations": [
+    {
+      "id": "N-01-list",
+      "url": "https://gutendex.com/books/?languages=zh&copyright=false",
+      "checked_at_utc": "2026-10-15T07:14:09.581181+00:00",
+      "error": "TimeoutError: The read operation timed out"
+    },
+    {
+      "id": "N-02-search",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&format=json&list=search&srsearch=%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&srnamespace=0&srlimit=3&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T07:14:24.114612+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&format=json&list=search&srsearch=%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&srnamespace=0&srlimit=3&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 1592,
+      "sha256": "3aa5f2386a25787ce7ea40af612bb59d9accc927ab8957111e890e4f07f6b601",
+      "error": null,
+      "sample": [
+        {
+          "title": "三國演義",
+          "pageid": 7223
+        },
+        {
+          "title": "三國演義/附錄4",
+          "pageid": 148471
+        },
+        {
+          "title": "三國演義 (消歧義)",
+          "pageid": 1093044
+        }
+      ]
+    },
+    {
+      "id": "N-02-structure",
+      "url": "https://zh.wikisource.org/w/api.php?action=parse&format=json&page=%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&prop=sections%7Clinks&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T07:14:26.412655+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=parse&format=json&page=%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&prop=sections%7Clinks&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 5487,
+      "sha256": "18b8f8682bb1dea90cc40ef2db33489794f9a53c5967701bbe85679fc69fb07d",
+      "error": null,
+      "page_title": "三國演義",
+      "section_count": 1,
+      "chapter_links": [
+        "嘉靖本三國志通俗演義",
+        "三國演義/序",
+        "三國演義/讀《三國志》法",
+        "三國演義/凡例",
+        "三國演義/第001回",
+        "三國演義/第002回",
+        "三國演義/第003回",
+        "三國演義/第004回"
+      ]
+    },
+    {
+      "id": "N-12-terms",
+      "url": "https://archiveofourown.org/tos",
+      "checked_at_utc": "2026-10-15T07:14:28.531494+00:00",
+      "status": 525,
+      "error": "HTTP Error 525: <none>",
+      "retry_after": null
+    },
+    {
+      "id": "N-11-rule",
+      "url": "https://raw.githubusercontent.com/DowneyRem/PixivSource/main/pixiv.json",
+      "checked_at_utc": "2026-10-15T07:14:30.747587+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/DowneyRem/PixivSource/main/pixiv.json",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 421225,
+      "sha256": "cf47442a7a99f6a567c0f0c9f93c77dac376362883b682d316a315d631441b9c",
+      "json_root_type": "list",
+      "records": 3
+    },
+    {
+      "id": "N-02-chapter",
+      "url": "https://zh.wikisource.org/w/api.php?action=parse&format=json&page=%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9%2F%E7%AC%AC001%E5%9B%9E&prop=text%7Crevid&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T07:15:40.457751+00:00",
+      "status": 200,
+      "bytes": 21077,
+      "sha256": "0975877f8a6fb6ec6e34f243f43390110158b931aad9dba003e8b2db6b96ba84",
+      "title": "三國演義/第001回",
+      "revision": 2583915,
+      "has_nonempty_content": true,
+      "text_character_count": 5211,
+      "api_error": null
+    },
+    {
+      "id": "N-02-license-metadata",
+      "url": "https://zh.wikisource.org/w/api.php?action=parse&format=json&page=%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&prop=templates%7Crevid&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T07:15:42.343141+00:00",
+      "status": 200,
+      "bytes": 736,
+      "sha256": "7b161fd1d9ac83a20c4f4549177f44b430405f8caebc540ff217223ae74f8772",
+      "title": "三國演義",
+      "revision": 5401635,
+      "templates": [
+        "Template:Header",
+        "Template:Plain sister",
+        "Template:Main subject",
+        "Template:檢索",
+        "Template:竖中",
+        "Template:明朝作品",
+        "Template:PD-old",
+        "Template:License",
+        "Template:License/styles.css",
+        "Module:Header",
+        "Module:Plain sister",
+        "Module:Main subject",
+        "Module:License",
+        "Module:Arguments"
+      ],
+      "api_error": null
+    },
+    {
+      "id": "N-01-list-recheck",
+      "url": "https://gutendex.com/books?languages=zh&copyright=false",
+      "checked_at_utc": "2026-10-15T07:15:44.175787+00:00",
+      "error": "TimeoutError: The read operation timed out"
+    },
+    {
+      "id": "N-11-static-inspection",
+      "records": [
+        {
+          "name": "🅿️ Pixiv 小说",
+          "base_url": "https://www.pixiv.net/novel",
+          "has_login_configuration": true,
+          "contains_R18_marker": true,
+          "contains_js_rules": true,
+          "contains_chinese_language_hint": true
+        },
+        {
+          "name": "🅿️ Pixiv 小说备用",
+          "base_url": "https://www.pixiv.net",
+          "has_login_configuration": true,
+          "contains_R18_marker": true,
+          "contains_js_rules": true,
+          "contains_chinese_language_hint": true
+        },
+        {
+          "name": "🅿️ Pixiv 漫画",
+          "base_url": "https://www.pixiv.net/manga",
+          "has_login_configuration": true,
+          "contains_R18_marker": true,
+          "contains_js_rules": true,
+          "contains_chinese_language_hint": true
+        }
+      ]
+    }
+  ]
+}

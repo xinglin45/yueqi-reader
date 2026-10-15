@@ -1,6 +1,6 @@
 # 来源与同步接口草案
 
-本文件定义实现任务的输入边界，不是已运行的 API/OpenAPI，也不固定 Dart/Java 类签名。所有外部示例地址在 [data-sources.md](data-sources.md)中待核验。
+本文件定义实现任务的输入边界，不是已运行的API/OpenAPI，也不固定Dart/Java类签名。外部地址的整体状态见 [data-sources.md](data-sources.md)，2026-10-15部分技术观测不等于完整接入批准。
 
 ## 公共值对象
 
@@ -15,6 +15,17 @@
 小说当前资源仅中文（zh/zh-Hans/zh-Hant），ja/ko等共享标签继续服务漫画，不作为小说来源交付要求。来源另存 source_mode(normal/adult/mixed/unknown) 与 cost_status(free/limited_free/paid/unknown)，分级和费用不能混为同一字段。
 
 小说 SearchPreferences.includeAdultSources 默认false。搜索调度必须在网络请求前排除18+源；开启后才加入获准的成人请求，普通源继续参与。每个搜索带request_id与设置版本，关闭时取消成人请求/预取并丢弃迟到回调。此设置只影响在线发现，不撤销已有成人书架作品的阅读权限。详见 [novel-source-policy.md](novel-source-policy.md)。
+
+## macOS实现补充边界（待实现）
+
+- SearchSession：search_session_id、request_id、policy_revision、query、cursor、selected_source_ids与取消状态；网络调度、缓存合并、迟到回调都校验同一设置版本。新字段用于细化上述request_id，不是第二套独立搜索策略。
+- DocumentReader：打开文档/修订、目录、按需片段、resolveAnchor、从文本范围构造锚点、释放资源；TXT/EPUB实现独立，UI不依赖具体引擎。
+- DocumentAnchor：schema_version、document_kind、content_revision及格式特定payload；TXT声明段落与字符偏移单位/上下文指纹，EPUB采用MAC-06验证的spine/CFI或结构锚点。不存屏幕页码作为跨布局位置，原生/脚本偏移显式转换。
+- SpeechService：voices、capabilities、session_id、speak/pause/resume/stop与事件；进度含本次片段的偏移单位及原文映射，旧session事件不可覆盖新队列。不能因插件有macOS标记就假定暂停/逐字回调全部存在。
+- FileAccess：用户授权选择、托管副本/引用、持久授权恢复、授权失效与重新关联；SecureStore只返回本机受控凭据引用，导出不含密钥。
+- ReadingPosition与ListeningPosition分别持久化；用户明确切换后才用听书位置打开阅读，不能互相静默覆盖。
+
+代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为设计，尚无实现或冻结的Dart签名。
 
 ## 小说来源 BookSource
 
