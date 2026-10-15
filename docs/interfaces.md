@@ -12,6 +12,10 @@
 - SourceDescriptor：id、kind、adapter_version、rule_hash、domains、capabilities、permissions、languages、rating_scope、verification_record。
 - SourceError：unsupported_rule、auth_required、age_restricted、rate_limited、not_found、timeout、network、parse、rights_unverified；包含可重试属性与 retry_after，不泄露凭据。
 
+小说当前资源仅中文（zh/zh-Hans/zh-Hant），ja/ko等共享标签继续服务漫画，不作为小说来源交付要求。来源另存 source_mode(normal/adult/mixed/unknown) 与 cost_status(free/limited_free/paid/unknown)，分级和费用不能混为同一字段。
+
+小说 SearchPreferences.includeAdultSources 默认false。搜索调度必须在网络请求前排除18+源；开启后才加入获准的成人请求，普通源继续参与。每个搜索带request_id与设置版本，关闭时取消成人请求/预取并丢弃迟到回调。此设置只影响在线发现，不撤销已有成人书架作品的阅读权限。详见 [novel-source-policy.md](novel-source-policy.md)。
+
 ## 小说来源 BookSource
 
 | 方法 | 输入 | 输出 |

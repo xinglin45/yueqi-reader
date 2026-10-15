@@ -4,12 +4,25 @@
 
 当前没有来源获准内置或自动启用；所有候选 enabled=false。网站主页不是正式内容 API；规则仓库存在也不表示有抓取/下载/缓存/再分发授权。
 
+## 当前小说选源范围（2026-10-15 已确认）
+
+小说只选择中文（简繁）免费资源；内置核验通过的普通/18+免费源并允许自行导入。完整首版要求两类真实来源各至少一条贯通搜索/阅读，不能以本地阅读或mock替代；开关仅控制成人在线搜索，不删除/隐藏独立分组内已有收藏。详见 [novel-source-policy.md](novel-source-policy.md)。本轮未实测或新增已验证来源。
+
+| 候选类型 | 本轮处理 |
+|---|---|
+| 中文普通全文/目录 | 优先核验N-02、N-01中文子集及获准中文规则/OPDS；元数据API不能代替正文来源 |
+| 中文18+免费来源 | 单独筛选N-07～N-14中确实有中文内容、可免费访问且满足接入条件的条目；不因规则名/R18标签而判定可用或获准 |
+| N-03青空文库、N-04 Standard Ebooks等外文专门来源 | 保留历史研究记录，退出当前小说接入/测试计划 |
+| N-05/06元数据来源 | 中文元数据按需补充，不能计为普通/18+全文来源验收通过 |
+| 未核验/收费/未知收费来源 | 不自动启用或产生费用；缺所需来源时如实标记首版阻塞 |
+| 漫画候选 | 继续原中日韩计划，本次小说语言调整不影响漫画 |
+
 ## 小说：公开/免费候选
 
 | ID | 候选与入口（待核验） | 聊天中的能力/费用说法 | 核验重点 |
 |---|---|---|---|
-| N-01 | [Gutendex](https://gutendex.com/)；示例 https://gutendex.com/books?languages=zh | 聊天称免费 0 元、Gutenberg 元数据与格式下载链接；长期建议自建 | API 路径/分页、限流、实例服务保障、zh/ja/ko 实际覆盖、格式 MIME、公版的适用地区、每个译本权利 |
-| N-02 | [中文维基文库](https://zh.wikisource.org/)；候选 https://zh.wikisource.org/w/api.php；[版权入口](https://en.wikisource.org/wiki/Wikisource%3ACopyright_policy) | 聊天称 API 免费，可读取文本，中文/日文/韩文站点 | 官方 MediaWiki 获取方式、限流/署名、正文/译本/图片各自许可、清理导航文本；ja/ko 站点与路径仍待定位 |
+| N-01 | [Gutendex](https://gutendex.com/)；示例 https://gutendex.com/books?languages=zh | 聊天称免费 0 元、Gutenberg 元数据与格式下载链接；长期建议自建 | API路径/分页、限流、实例服务保障、中文实际覆盖、格式MIME、公版适用地区、每个译本权利 |
+| N-02 | [中文维基文库](https://zh.wikisource.org/)；候选 https://zh.wikisource.org/w/api.php；[版权入口](https://en.wikisource.org/wiki/Wikisource%3ACopyright_policy) | 聊天称API免费且有多语言站点；当前只选择中文 | 官方MediaWiki获取方式、中文正文覆盖、限流/署名、正文/译本/图片各自许可、清理导航文本；不再为小说定位ja/ko入口 |
 | N-03 | [青空文库](https://www.aozora.gr.jp/) | 聊天称免费日文目录和文本下载，并非统一商业 REST API | 目录/编码/ruby、作品和译本许可、下载/再分发/商用、地区版权；不承诺最新连载 |
 | N-04 | [Standard Ebooks](https://standardebooks.org/) | 聊天称精校 EPUB 免费，完整 OPDS 有访问条件，非主要中日韩来源 | 实际 OPDS 地址/版本、订阅权限及价格、作品/封面许可、匿名与会员范围 |
 | N-05 | [Google Books API 文档](https://developers.google.com/books/docs/v1/using)；示例 https://www.googleapis.com/books/v1/volumes?q=java | 聊天称免费配额内 0 元，Key/配额限制，无已确认的按次扩容价格 | API Key 要求/保护、项目配额、费用与超额行为；元数据/封面展示与全文/下载/再分发权限分别确认 |
@@ -17,7 +30,7 @@
 
 历史查询例子：Gutendex books?search=Alice / search=Frankenstein；Google Books filter=free-ebooks&key=YOUR_API_KEY。路径、参数和认证都待核验；free-ebooks 不是本项目已获得作品授权的证据。
 
-中文优先研究 N-02，日文 N-03，跨语言 N-01；韩文免费小说全文的数量和质量仍不明确，不能从 API 支持语言过滤推断内容充分。开发先用自产 TXT/EPUB，获得作品级证据后再使用公版/开放许可样本。
+当前小说仅研究中文：N-02、N-01中文子集及获准中文规则/OPDS等；不因接口有语言参数就推断中文内容充分。N-03日文与其他外文资源只保留历史记录。开发用自产中文TXT/EPUB，来源测试另需对应证据。
 
 ## 小说：规则与成人平台研究
 

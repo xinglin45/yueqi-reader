@@ -2,6 +2,8 @@
 
 日期：2026-10-15。状态：目录与技术方案；没有生成 Flutter/Java 构建文件，接口名称是设计草案。适用 [macOS 开发方案](novel-macos-plan.md)。
 
+小说资源仅中文简繁，漫画语言模型保持中日韩。完整小说首版包括内置核验过的免费普通/18+来源和导入、在线搜书/阅读；includeAdultSources默认false且在请求前控制来源集合。搜索开关不撤销已有成人收藏阅读，具体见 [来源规则](novel-source-policy.md)。
+
 ## 1. 仓库与交付边界
 
 根仓库 yueqi-reader，项目显示名“阅读软件”。小说与漫画是两个独立 App，不按操作系统或开发/生产环境复制仓库。macOS 是首个交付端；Windows、Android、iOS 保留相同领域模型与用例。
@@ -94,13 +96,13 @@ platform_services 当前只有说明文件。初始化后应区分纯接口与�
 | speech_session | 段/句位置、队列 generation、语音设置、听书单独进度、定时停止 |
 | search_state | 索引版本、分词策略、待建/完成/失败、源修订，支持取消与重建 |
 | collection / membership | 合集、标签、排序与书籍关系 |
-| source_config / access_ref | 能力/域名/版本/许可状态；凭据只保存安全存储引用 |
+| source_config / access_ref | 能力/域名/版本/许可/中文范围、source_mode与cost_status；凭据只保存安全存储引用 |
 | download_job / cache_entry | 已校验分片、资源版本、quota、offline_pinned、临时与最终路径 |
 | backup_manifest | schema/app/内容版本、文件 hash、导出范围、恢复验证结果 |
 | reading_session / preferences | 本地统计、空闲边界、全局/单书偏好 |
 | change_log / sync_metadata | 稳定操作 ID、实体修订、墓碑；R1 只设计持久变更边界，联网 outbox R2 完成 |
 
-TXT：统一文本规范化版本与偏移单位（如 Unicode code point/UTF-16 必须选择并记录），遇 emoji、组合字符、中日韩标点需验证跨端一致。显示层简繁/替换不能改变原始锚点。
+TXT：统一文本规范化版本与偏移单位（如 Unicode code point/UTF-16 必须选择并记录），遇 emoji、组合字符、中文标点需验证跨端一致。显示层简繁/替换不能改变原始锚点。
 
 EPUB：CFI 或引擎稳定锚点；选引擎时必须验证文本选择、搜索、朗读回调与锚点互通。原书变更使用 content_revision 区分，恢复失败保留上下文与用户选择，不让错误锚点覆盖已知位置。
 
@@ -122,7 +124,7 @@ EPUB：CFI 或引擎稳定锚点；选引擎时必须验证文本选择、搜索
 1. Flutter/Dart 与当前 Xcode/macOS/CPU 架构；Windows、Android、iOS 工程入口能生成但尚未验证须标记。
 2. 状态管理/路由/SQLite 方案的真实四端支持与许可证；不把插件仅支持 Android 的能力暴露为全端通用。
 3. EPUB 引擎小样：目录、图片、样式、分页/滚动、选字/笔记、CFI/位置、全文搜索、TTS取文、恶意资源限制、大书内存。
-4. 中日韩搜索：分词/子串策略、索引大小/建索引时间/命中精度；仅 FTS 表存在不算通过。
+4. 中文简繁搜索：分词/子串策略、索引大小/建索引时间/命中精度；仅 FTS 表存在不算通过。
 5. TTS：实际安装语音、是否离线、长时播放、句段回调、暂停/切书/休眠、耳机断开。
 6. 文件引用：权限/书签重启恢复、移动/删除后重新关联、不同架构打包的权限差异。
 7. 选定 SDK 后确认最低系统和 CPU 发行范围；当前不承诺 Intel 支持或 universal 包。
@@ -141,7 +143,7 @@ EPUB：CFI 或引擎稳定锚点；选引擎时必须验证文本选择、搜索
 
 ## 9. 后续四端与后端迁移路径
 
-1. macOS R1-A 稳定本地使用，R1-B 在许可通过后接入联网增强。
+1. macOS先完成R1-A内部本地检查，再合入R1-B普通/18+免费来源、导入、在线阅读和搜索开关；两部分通过后才计完整首版。来源核验MAC-18在A0前置，缺来源则报告交付阻塞。
 2. 将小说领域/存储/来源/锚点的无平台测试用于 Windows/Android/iOS。
 3. 各端实现/验证平台端口和布局，不复制小说业务规则；逐端形成构建、安装、文件、TTS、生命周期证据。
 4. 用户需要多端同步时再实现 Spring Boot 共享身份/设备/同步，MySQL持久化，Redis按需。
