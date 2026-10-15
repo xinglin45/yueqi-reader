@@ -1,0 +1,814 @@
+{
+  "audit_date": "2026-10-15",
+  "timezone": "Asia/Singapore",
+  "recorded_by": "Codex",
+  "task": "MAC-18 / SRC-02 / step 00",
+  "baseline_commit": "aecc0778b2bfc14b3be0e8b41efd6bf11109d1f6",
+  "overall_status": "pending",
+  "approved_builtin_sources": {
+    "normal": 0,
+    "adult": 0
+  },
+  "app_integration_tested": false,
+  "user_confirmed_self_use_country": "China",
+  "jurisdiction_review_scope": "Mainland China self-use; not Hong Kong/Macao/Taiwan or public distribution",
+  "developer_egress_location_verified": false,
+  "scope": "Manual bounded public policy/API/OPDS observations, no unknown rule execution, account, credentials, payment, image download or adult body retrieval. Raw responses stay outside repository; only summaries and hashes committed.",
+  "observation_count": 38,
+  "observations": [
+    {
+      "id": "wm-terms",
+      "url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use",
+      "checked_at_utc": "2026-10-15T08:12:19.631784+00:00",
+      "status": 200,
+      "final_url": "https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 152857,
+      "sha256": "8c5a9b4cdbcabb64c3b516497ffa9db26ce5ec91424fe179462c2650129c3013",
+      "summary": {
+        "sections_reviewed": [
+          "7: content licensing/reuse/attribution/modifications",
+          "12: API terms"
+        ],
+        "permission_scope": "Underlying content licenses control; public-domain markings and text reuse conditions are separate from media rights."
+      }
+    },
+    {
+      "id": "wm-api-policy",
+      "url": "https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_API_Usage_Guidelines",
+      "checked_at_utc": "2026-10-15T08:12:22.204406+00:00",
+      "status": 200,
+      "final_url": "https://foundation.wikimedia.org/wiki/Policy:Wikimedia_Foundation_API_Usage_Guidelines",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 85588,
+      "sha256": "675d5d8b4fe7a51d104a32a6f4611298e06020c4278c7a37178d24940faa3f6d",
+      "summary": {
+        "policy_version": "1.0",
+        "policy_date": "2024-08-26",
+        "page_oldid": 556362,
+        "scope": "Small compliant API use does not require prior foundation permission; identify UA, respect rate notifications and licenses; no numerical unlimited quota or SLA."
+      }
+    },
+    {
+      "id": "pixiv-policies",
+      "url": "https://policies.pixiv.net/",
+      "checked_at_utc": "2026-10-15T08:12:25.683218+00:00",
+      "status": 200,
+      "final_url": "https://policies.pixiv.net/",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 585949,
+      "sha256": "86f5e19e9e54081aa3dbec87d0411956aafe0167182bf551d993884ba554b98a",
+      "summary": {
+        "language": "ja (authoritative per article 31)",
+        "master_terms_latest_revision_displayed": "2026-06-22",
+        "sections_reviewed": [
+          "Master terms 14: unauthorized republication/external commercial use/excessive load",
+          "brand: applications/services use section, item 4: crawler collection restriction"
+        ],
+        "decision": "reject current unapproved crawler/rule collection route; platform remains pending for separately authorized integration",
+        "not_inferred": "No assertion that all third-party applications are forbidden or that no official API can exist."
+      }
+    },
+    {
+      "id": "ao3-terms",
+      "url": "https://archiveofourown.org/tos",
+      "checked_at_utc": "2026-10-15T08:12:30.682935+00:00",
+      "error": "The read operation timed out"
+    },
+    {
+      "id": "ws-work",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions%7Cinfo&titles=%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&inprop=url&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:12:49.624302+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions%7Cinfo&titles=%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&inprop=url&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 13231,
+      "sha256": "e4dbb75c2c512da5e6ce029609deda50a2cabb4b2f8787c8f22900565009353c",
+      "summary": {
+        "title": "三國演義",
+        "pageid": 7223,
+        "revid": 5401635,
+        "revision_timestamp": "2026-05-20T11:48:30Z",
+        "edition": "Page describes Mao Lun/Mao Zonggang edited/commented version."
+      }
+    },
+    {
+      "id": "ws-talk",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Talk%3A%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:12:51.475901+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Talk%3A%E4%B8%89%E5%9C%8B%E6%BC%94%E7%BE%A9&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 4293,
+      "sha256": "dbb4e344f4fc49cc5609b9f05a184f3c2d05a8eb8a82f1558e776b30b848a6f4",
+      "summary": {
+        "title": "Talk:三國演義",
+        "pageid": 7676,
+        "revid": 2112847,
+        "revision_timestamp": "2022-03-11T17:07:34Z",
+        "provenance_issue": "Talk records use of Youlian/Zhao Cong collated edition; date/rights and relation to tested text not settled; not proof of infringement."
+      }
+    },
+    {
+      "id": "ws-pd-template",
+      "url": "https://zh.wikisource.org/w/api.php?action=parse&page=Template%3APD-old&prop=text%7Crevid&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:12:52.722561+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=parse&page=Template%3APD-old&prop=text%7Crevid&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 16499,
+      "sha256": "6007233c66229bd93a9fe4c2623497dcf91f1cc1b7888f10c742d46cfd32af74",
+      "summary": {
+        "revid": 2636674,
+        "title": "Template:PD-old",
+        "caveat": "Site template is a claim to verify against the specific edition/jurisdiction; not an independent legal clearance."
+      }
+    },
+    {
+      "id": "ws-siteinfo",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&meta=siteinfo&siprop=general%7Crightsinfo&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:12:54.536594+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&meta=siteinfo&siprop=general%7Crightsinfo&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 3398,
+      "sha256": "c5b5b86e834024643c90abd2ff210322fa7adb9a521cd63770ae9eb2594b2e3c",
+      "summary": {
+        "rightsinfo": {
+          "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.zh",
+          "text": "Creative Commons Attribution-Share Alike 4.0"
+        },
+        "generator": "MediaWiki 1.47.0-wmf.24"
+      }
+    },
+    {
+      "id": "ws-jiajing",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions%7Cinfo&titles=%E5%98%89%E9%9D%96%E6%9C%AC%E4%B8%89%E5%9C%8B%E5%BF%97%E9%80%9A%E4%BF%97%E6%BC%94%E7%BE%A9&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&inprop=url&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:13:35.507693+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions%7Cinfo&titles=%E5%98%89%E9%9D%96%E6%9C%AC%E4%B8%89%E5%9C%8B%E5%BF%97%E9%80%9A%E4%BF%97%E6%BC%94%E7%BE%A9&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&inprop=url&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 18020,
+      "sha256": "ca6f5d9070faa52cba86556049f87754a3b8caf7dc0a2501b2404349d81709a4",
+      "summary": {
+        "title": "嘉靖本三國志通俗演義",
+        "pageid": 1051388,
+        "revid": 2474782,
+        "revision_timestamp": "2024-10-20T11:35:27Z",
+        "edition": "Jiajing edition, linked scan index; not the Mao edition."
+      }
+    },
+    {
+      "id": "pixiv-language",
+      "url": "https://www.pixiv.help/hc/en-us/articles/900004333863-I-want-to-set-a-work-s-language-on-Novels",
+      "checked_at_utc": "2026-10-15T08:13:37.726473+00:00",
+      "status": 200,
+      "final_url": "https://www.pixiv.help/hc/en-us/articles/900004333863-I-want-to-set-a-work-s-language-on-Novels",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 26694,
+      "sha256": "d3c1829fcf7f71a92b32f06f65811156cd1ead9f001790ae3fc54258bd0ed941",
+      "summary": {
+        "documented": "Novel search language refinement and Simplified/Traditional Chinese language settings",
+        "not_proved": "Chinese free adult work availability, third-party API permissions, or actual search/body path."
+      }
+    },
+    {
+      "id": "pixiv-age",
+      "url": "https://www.pixiv.help/hc/en-us/articles/235646007-What-s-age-restriction",
+      "checked_at_utc": "2026-10-15T08:13:39.892021+00:00",
+      "status": 200,
+      "final_url": "https://www.pixiv.help/hc/en-us/articles/235646007-What-s-age-restriction",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 26725,
+      "sha256": "afbfc292344a68a93d56707302a318e37fd4a29f89af641e03e760cf43b6d992",
+      "summary": {
+        "documented": "R-18 vs R-18G and account viewing settings; tags alone do not enable restricted visibility",
+        "account_used": false
+      }
+    },
+    {
+      "id": "ao3-faq",
+      "url": "https://archiveofourown.org/tos_faq",
+      "checked_at_utc": "2026-10-15T08:13:42.140932+00:00",
+      "status": 525,
+      "error": "HTTP Error 525: <none>"
+    },
+    {
+      "id": "otw-faq",
+      "url": "https://www.transformativeworks.org/faq/",
+      "checked_at_utc": "2026-10-15T08:13:43.935249+00:00",
+      "status": 200,
+      "final_url": "https://www.transformativeworks.org/faq/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 157796,
+      "sha256": "7663f1df0e858bd26fb5191f67c14fa0d362da60dac6560047ffee66e7373a42",
+      "summary": {
+        "documented": "OTW services described as free and without ads; no work-specific redistribution or third-party API license inferred."
+      }
+    },
+    {
+      "id": "ws-scan-index",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Index%3A%E4%B8%89%E5%9C%8B%E5%BF%97%E9%80%9A%E4%BF%97%E6%BC%94%E7%BE%A9%28%E4%B8%80%29.djvu&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:14:18.912429+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Index%3A%E4%B8%89%E5%9C%8B%E5%BF%97%E9%80%9A%E4%BF%97%E6%BC%94%E7%BE%A9%28%E4%B8%80%29.djvu&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 1957,
+      "sha256": "b464f4eebc8a8290f8e88d325fec02602f26f975d475f8fb4d0de2d053074964",
+      "summary": {
+        "title": "Index:三國志通俗演義(一).djvu",
+        "pageid": 1172431,
+        "revid": 2527770,
+        "revision_timestamp": "2025-02-11T13:09:25Z",
+        "unresolved": "Year/publisher/editor blank; index marked unproofread."
+      }
+    },
+    {
+      "id": "ws-jiajing-ch1-metadata",
+      "url": "https://zh.wikisource.org/w/api.php?action=parse&page=%E5%98%89%E9%9D%96%E6%9C%AC%E4%B8%89%E5%9C%8B%E5%BF%97%E9%80%9A%E4%BF%97%E6%BC%94%E7%BE%A9%2F%E7%AC%AC001%E5%9B%9E&prop=templates%7Crevid%7Ccategories%7Clinks&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:14:21.291447+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=parse&page=%E5%98%89%E9%9D%96%E6%9C%AC%E4%B8%89%E5%9C%8B%E5%BF%97%E9%80%9A%E4%BF%97%E6%BC%94%E7%BE%A9%2F%E7%AC%AC001%E5%9B%9E&prop=templates%7Crevid%7Ccategories%7Clinks&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 1388,
+      "sha256": "954b92d8b1a1911f9f5b1e1c4deb0a1b0d70d59ba73ba35e7878e18eaab14284",
+      "summary": {
+        "pageid": 1051391,
+        "revid": 3207988,
+        "body_requested": false
+      }
+    },
+    {
+      "id": "ws-jiajing-talk",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Talk%3A%E5%98%89%E9%9D%96%E6%9C%AC%E4%B8%89%E5%9C%8B%E5%BF%97%E9%80%9A%E4%BF%97%E6%BC%94%E7%BE%A9&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:14:22.831805+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Talk%3A%E5%98%89%E9%9D%96%E6%9C%AC%E4%B8%89%E5%9C%8B%E5%BF%97%E9%80%9A%E4%BF%97%E6%BC%94%E7%BE%A9&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 1287,
+      "sha256": "d92538b12e66d3a82a40913cbfa182f60a4bffdfe1d99173d5c9329f7d242dc8",
+      "summary": {
+        "title": "Talk:嘉靖本三國志通俗演義",
+        "pageid": 1051446,
+        "revid": 2112865,
+        "revision_timestamp": "2022-03-11T17:41:51Z",
+        "provenance_issue": "Talk describes a web-text import and script conversion; linked scan alone does not prove a scan-backed transcription."
+      }
+    },
+    {
+      "id": "gutendex-zh-retry",
+      "url": "https://gutendex.com/books/?languages=zh&copyright=false",
+      "checked_at_utc": "2026-10-15T08:14:24.267963+00:00",
+      "status": 200,
+      "final_url": "https://gutendex.com/books/?languages=zh&copyright=false",
+      "content_type": "application/json",
+      "bytes": 59837,
+      "sha256": "52f612a401a5027c6413329ab1efa25d199b4a225933ff1ea210936797d08da6",
+      "summary": {
+        "count_reported": 441,
+        "results_received": 32,
+        "next": "https://gutendex.com/books/?copyright=false&languages=zh&page=2",
+        "all_pages_tested": false,
+        "sample": [
+          {
+            "id": 23962,
+            "title": "西遊記",
+            "languages": [
+              "zh"
+            ],
+            "copyright_us": false
+          },
+          {
+            "id": 23950,
+            "title": "三國志演義",
+            "languages": [
+              "zh"
+            ],
+            "copyright_us": false
+          },
+          {
+            "id": 52200,
+            "title": "金瓶梅",
+            "languages": [
+              "zh"
+            ],
+            "copyright_us": false
+          }
+        ],
+        "rating": "mixed/unknown; language/copyright query is not adult exclusion"
+      }
+    },
+    {
+      "id": "ws-kong-metadata",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions%7Cinfo&titles=%E5%AD%94%E4%B9%99%E5%B7%B1%7CTalk%3A%E5%AD%94%E4%B9%99%E5%B7%B1&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&inprop=url&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:14:47.452246+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions%7Cinfo&titles=%E5%AD%94%E4%B9%99%E5%B7%B1%7CTalk%3A%E5%AD%94%E4%B9%99%E5%B7%B1&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&inprop=url&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 3522,
+      "sha256": "af346a1695233801a596994e312056f30d239405c27ec5037ab13cf34f10ac8c",
+      "summary": {
+        "work": {
+          "pageid": 7607,
+          "revid": 2605389
+        },
+        "talk_revid": 5179449,
+        "edition": "Chinese transcription of 1948 volume 1 reprint; header refers to 1938 collection; six Page transclusions, not former 1948 Japanese parallel edition",
+        "translation_reused": false
+      }
+    },
+    {
+      "id": "ws-kong-structure",
+      "url": "https://zh.wikisource.org/w/api.php?action=parse&page=%E5%AD%94%E4%B9%99%E5%B7%B1&prop=templates%7Crevid%7Ccategories%7Clinks&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:14:48.830399+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=parse&page=%E5%AD%94%E4%B9%99%E5%B7%B1&prop=templates%7Crevid%7Ccategories%7Clinks&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 2382,
+      "sha256": "987a47b76cbf502a623ce1406524cffcdd3aa9ad19afb62065e65308fcef4be3",
+      "summary": {
+        "pageid": 7607,
+        "revid": 2605389,
+        "transcluded_page_range": [
+          313,
+          318
+        ],
+        "toc_mapping": "Single complete short story -> synthetic single document entry; next/previous works excluded."
+      }
+    },
+    {
+      "id": "pg-terms",
+      "url": "https://www.gutenberg.org/policy/terms_of_use.html",
+      "checked_at_utc": "2026-10-15T08:15:18.606617+00:00",
+      "status": 200,
+      "final_url": "https://www.gutenberg.org/policy/terms_of_use.html",
+      "content_type": "text/html",
+      "bytes": 12086,
+      "sha256": "38e45e0cbc6a3f903ef019b3bcbcbce9c3190f9f68f73bf31d2ef58a8ceb679b",
+      "summary": {
+        "reviewed": [
+          "Audience: US over-13 target, minors accompanied; non-US local law check",
+          "OPDS: descriptive UA/contact; user-scale requests and on-demand pagination",
+          "No bulk main-site downloads or IP-limit circumvention"
+        ],
+        "no_adult_eligibility_inferred": true
+      }
+    },
+    {
+      "id": "pg-license",
+      "url": "https://www.gutenberg.org/policy/license.html",
+      "checked_at_utc": "2026-10-15T08:15:21.553217+00:00",
+      "status": 200,
+      "final_url": "https://www.gutenberg.org/policy/license.html",
+      "content_type": "text/html",
+      "bytes": 32478,
+      "sha256": "8a5137aecb0911dc0700e4ff636834326f6eade4beb997229269658a5ccd82f7",
+      "summary": {
+        "reviewed": [
+          "1.D: local law",
+          "1.E: license/notice/trademark/redistribution conditions"
+        ],
+        "not_proved": "Per-work internal license or edition checked; no global commercial redistribution approval."
+      }
+    },
+    {
+      "id": "wm-api-etiquette",
+      "url": "https://www.mediawiki.org/wiki/API:Etiquette",
+      "checked_at_utc": "2026-10-15T08:15:23.446090+00:00",
+      "status": 200,
+      "final_url": "https://www.mediawiki.org/wiki/API:Etiquette",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 95333,
+      "sha256": "cd433113656c5e91d205d16013dc578cf3bc1e61dbb7346a42defd71d41a2a4c",
+      "summary": {
+        "reviewed": "Serial/batched queries, descriptive User-Agent, maxlag/backoff and caching; no fixed rate guarantee."
+      }
+    },
+    {
+      "id": "ws-kong-index",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Index%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601_%281948%29.pdf&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:15:26.598498+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Index%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601_%281948%29.pdf&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 2800,
+      "sha256": "a78a9b7d221d42b46a359b10afe750c19cf2d9add74cb0307aaff05f96c10a99",
+      "summary": {
+        "title": "Index:魯迅全集01 (1948).pdf",
+        "pageid": 953251,
+        "revid": 7912162,
+        "revision_timestamp": "2026-08-04T17:00:23Z",
+        "year": 1948,
+        "publisher": "魯迅全集出版社",
+        "editor": "魯迅先生紀念委員會",
+        "included_images": false
+      }
+    },
+    {
+      "id": "pg-opds-search",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=23962",
+      "checked_at_utc": "2026-10-15T08:16:19.147296+00:00",
+      "status": 200,
+      "final_url": "https://www.gutenberg.org/ebooks/search.opds/?query=23962",
+      "content_type": "application/atom+xml; charset=UTF-8",
+      "bytes": 3455,
+      "sha256": "f0a4a8e66748ffd958a7811295601a6e99970074291431984f40a8d09d1e7180",
+      "summary": {
+        "format": "Atom XML OPDS feed; exact OPDS version not declared/confirmed",
+        "entries": [
+          {
+            "title": "西遊記 (Chinese)",
+            "id": "https://www.gutenberg.org/ebooks/23962.opds",
+            "updated": "2026-10-15T08:16:20Z",
+            "links": [
+              {
+                "type": "application/atom+xml;profile=opds-catalog",
+                "rel": "subsection",
+                "href": "/ebooks/23962.opds"
+              }
+            ]
+          }
+        ],
+        "body_or_epub_fetched": false,
+        "updated_caveat": "Feed updated timestamp observed near request time; not treated as content revision."
+      }
+    },
+    {
+      "id": "gutendex-normal-detail",
+      "url": "https://gutendex.com/books/23962",
+      "checked_at_utc": "2026-10-15T08:16:20.481468+00:00",
+      "error": "The read operation timed out"
+    },
+    {
+      "id": "ws-kong-search",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&list=search&srsearch=intitle%3A%E5%AD%94%E4%B9%99%E5%B7%B1&srnamespace=0&srlimit=3&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:16:52.195877+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&list=search&srsearch=intitle%3A%E5%AD%94%E4%B9%99%E5%B7%B1&srnamespace=0&srlimit=3&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 2026,
+      "sha256": "4ee6429824ea7ad62ac05893e38e97a2b9252343c69a0d42fe88267c5de16e06",
+      "summary": {
+        "hits": [
+          {
+            "pageid": 7607,
+            "title": "孔乙己"
+          },
+          {
+            "pageid": 7019661,
+            "title": "孔乙己尚宴餐饮管理（北京）有限公司与王某劳动争议二审民事判决书"
+          }
+        ],
+        "finding": "Title search also matches a court case; cannot treat all hits as novels or normal-rated works."
+      }
+    },
+    {
+      "id": "ws-kong-document",
+      "url": "https://zh.wikisource.org/w/api.php?action=parse&oldid=2605389&prop=text%7Crevid%7Csections&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:16:53.615097+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=parse&oldid=2605389&prop=text%7Crevid%7Csections&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 39923,
+      "sha256": "d59439b1d711e9484bf54678e7e1f3ec8af4e61615dca7075a4ae3d6d165baf1",
+      "summary": {
+        "method": "Temporary HTMLParser tree; paragraph narrative boundaries manually reviewed; scripts/styles/sup excluded. Not application sanitizer.",
+        "narrative_paragraphs": 14,
+        "narrative_characters": 2637,
+        "narrative_sha256": "3aced1d387b1b1d18d3ab81d59f77b48d09ec5abfbd5f8d59e160b51ac4c0954",
+        "contains_start_and_end": true,
+        "sections": [],
+        "rating_assessment": "proposed_normal_after_manual_review; alcohol, humiliation, assault and implied death advisory; no official age rating; no site-wide inference",
+        "app_compatibility_tested": false,
+        "pageid": 7607,
+        "revid": 2605389,
+        "body_retained_in_repository": false,
+        "permission_basis_for_limited_probe": "Wikimedia small API/reuse policy and source public-domain markings; not a distribution clearance."
+      }
+    },
+    {
+      "id": "ws-kong-page-revisions",
+      "url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Page%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F313%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F314%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F315%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F316%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F317%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F318&rvprop=ids%7Ctimestamp&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:16:55.390217+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=query&prop=revisions&titles=Page%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F313%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F314%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F315%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F316%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F317%7CPage%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf%2F318&rvprop=ids%7Ctimestamp&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 1054,
+      "sha256": "093d119441cf9a68e8b11796f22f5c844e4c9896a6b0db43cd54c2a21be1e169",
+      "summary": {
+        "dependencies": [
+          {
+            "title": "Page:魯迅全集01 (1948).pdf/313",
+            "pageid": 1183947,
+            "revid": 2570484,
+            "timestamp": "2025-06-17T09:18:13Z"
+          },
+          {
+            "title": "Page:魯迅全集01 (1948).pdf/314",
+            "pageid": 1183948,
+            "revid": 2570494,
+            "timestamp": "2025-06-17T09:43:14Z"
+          },
+          {
+            "title": "Page:魯迅全集01 (1948).pdf/315",
+            "pageid": 1183982,
+            "revid": 2570496,
+            "timestamp": "2025-06-17T09:44:01Z"
+          },
+          {
+            "title": "Page:魯迅全集01 (1948).pdf/316",
+            "pageid": 1184006,
+            "revid": 2570497,
+            "timestamp": "2025-06-17T09:44:18Z"
+          },
+          {
+            "title": "Page:魯迅全集01 (1948).pdf/317",
+            "pageid": 1184007,
+            "revid": 2570498,
+            "timestamp": "2025-06-17T09:44:34Z"
+          },
+          {
+            "title": "Page:魯迅全集01 (1948).pdf/318",
+            "pageid": 1184008,
+            "revid": 2571619,
+            "timestamp": "2025-06-20T09:29:03Z"
+          }
+        ],
+        "caveat": "oldid of parent does not freeze transcluded page/template contents; these are observed current dependencies, not an atomic snapshot."
+      }
+    },
+    {
+      "id": "commons-kong-scan",
+      "url": "https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo%7Crevisions&titles=File%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf&iiprop=extmetadata%7Ctimestamp%7Csha1&rvprop=ids%7Ctimestamp&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:16:56.628162+00:00",
+      "status": 200,
+      "final_url": "https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo%7Crevisions&titles=File%3A%E9%AD%AF%E8%BF%85%E5%85%A8%E9%9B%8601+%281948%29.pdf&iiprop=extmetadata%7Ctimestamp%7Csha1&rvprop=ids%7Ctimestamp&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 1676,
+      "sha256": "f2b3f71c1ea3831232442ee56d9834c6a3d99c43e267ec9260ab2ad14e20a4de",
+      "summary": {
+        "file_description_revid": 1119875422,
+        "file_sha1": "e7e33c4f3ebb4cd1563b938abc027ae615d5b68d",
+        "upload_timestamp": "2019-08-04T02:55:56Z",
+        "metadata": {
+          "License": "pd",
+          "LicenseShortName": "Public domain",
+          "AttributionRequired": "false",
+          "Copyrighted": "False",
+          "Credit": "online drive",
+          "DateTimeOriginal": "1938"
+        },
+        "binary_downloaded": false,
+        "unresolved": "File name/index year 1948 vs extmetadata DateTimeOriginal 1938; weak Credit=online drive; independent edition/territory clearance outstanding."
+      }
+    },
+    {
+      "id": "gutendex-adult-candidate-detail",
+      "url": "https://gutendex.com/books/52200",
+      "checked_at_utc": "2026-10-15T08:16:39.348774+00:00",
+      "error": "The read operation timed out"
+    },
+    {
+      "id": "ws-kong-pd",
+      "url": "https://zh.wikisource.org/w/api.php?action=parse&page=Template%3APd%2F1996&prop=text%7Crevid&format=json&utf8=1&maxlag=5",
+      "checked_at_utc": "2026-10-15T08:16:59.158990+00:00",
+      "status": 200,
+      "final_url": "https://zh.wikisource.org/w/api.php?action=parse&page=Template%3APd%2F1996&prop=text%7Crevid&format=json&utf8=1&maxlag=5",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 33455,
+      "sha256": "3c81de044dff5e23e91c9d813bae6c7e8bb71f533c91c495b1eb4fffff332327",
+      "summary": {
+        "revid": 2601716,
+        "title": "Template:Pd/1996",
+        "caveat": "Site template is a claim to verify against the specific edition/jurisdiction; not an independent legal clearance."
+      }
+    },
+    {
+      "id": "pg-normal-opds-detail",
+      "url": "https://www.gutenberg.org/ebooks/23962.opds",
+      "checked_at_utc": "2026-10-15T08:17:31.593985+00:00",
+      "status": 200,
+      "final_url": "https://www.gutenberg.org/ebooks/23962.opds",
+      "content_type": "application/atom+xml; charset=UTF-8",
+      "bytes": 10128,
+      "sha256": "859e177356ca73a5797838cf269ab9fa391cdb7fb372647d5a96e197be34d135",
+      "summary": {
+        "format": "Atom XML OPDS feed; exact OPDS version not declared/confirmed",
+        "entries": [
+          {
+            "title": "西遊記",
+            "id": "urn:gutenberg:23962:2",
+            "updated": "2026-10-15T08:17:32Z",
+            "links": [
+              {
+                "type": "application/epub+zip",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "EPUB (older e-readers, no images)",
+                "length": "1147756",
+                "href": "https://www.gutenberg.org/ebooks/23962.epub.noimages"
+              },
+              {
+                "type": "application/x-mobipocket-ebook",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "Kindle (no images)",
+                "length": "2092782",
+                "href": "https://www.gutenberg.org/ebooks/23962.kindle.noimages"
+              }
+            ]
+          },
+          {
+            "title": "西遊記",
+            "id": "urn:gutenberg:23962:3",
+            "updated": "2026-10-15T08:17:32Z",
+            "links": [
+              {
+                "type": "application/epub+zip",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "EPUB3 (E-readers incl. Send-to-Kindle)",
+                "length": "1098522",
+                "href": "https://www.gutenberg.org/ebooks/23962.epub3.images"
+              },
+              {
+                "type": "application/epub+zip",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "EPUB (older e-readers)",
+                "length": "1147756",
+                "href": "https://www.gutenberg.org/ebooks/23962.epub.images"
+              },
+              {
+                "type": "application/x-mobipocket-ebook",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "Kindles (kf8)",
+                "length": "2158058",
+                "href": "https://www.gutenberg.org/ebooks/23962.kf8.images"
+              },
+              {
+                "type": "application/x-mobipocket-ebook",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "Older Kindles",
+                "length": "2118486",
+                "href": "https://www.gutenberg.org/ebooks/23962.kindle.images"
+              }
+            ]
+          }
+        ],
+        "body_or_epub_fetched": false,
+        "updated_caveat": "Feed updated timestamp observed near request time; not treated as content revision."
+      }
+    },
+    {
+      "id": "pg-adult-opds-detail",
+      "url": "https://www.gutenberg.org/ebooks/52200.opds",
+      "checked_at_utc": "2026-10-15T08:17:33.118317+00:00",
+      "status": 200,
+      "final_url": "https://www.gutenberg.org/ebooks/52200.opds",
+      "content_type": "application/atom+xml; charset=UTF-8",
+      "bytes": 8980,
+      "sha256": "ec745736191ae5f4411d8ba2bb3f3cd42c0ae1294e569527cca73773668eb581",
+      "summary": {
+        "format": "Atom XML OPDS feed; exact OPDS version not declared/confirmed",
+        "entries": [
+          {
+            "title": "金瓶梅",
+            "id": "urn:gutenberg:52200:2",
+            "updated": "2026-10-15T08:17:34Z",
+            "links": [
+              {
+                "type": "application/epub+zip",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "EPUB (older e-readers, no images)",
+                "length": "1136757",
+                "href": "https://www.gutenberg.org/ebooks/52200.epub.noimages"
+              },
+              {
+                "type": "application/x-mobipocket-ebook",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "Kindle (no images)",
+                "length": "2106819",
+                "href": "https://www.gutenberg.org/ebooks/52200.kindle.noimages"
+              }
+            ]
+          },
+          {
+            "title": "金瓶梅",
+            "id": "urn:gutenberg:52200:3",
+            "updated": "2026-10-15T08:17:34Z",
+            "links": [
+              {
+                "type": "application/epub+zip",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "EPUB3 (E-readers incl. Send-to-Kindle)",
+                "length": "1087037",
+                "href": "https://www.gutenberg.org/ebooks/52200.epub3.images"
+              },
+              {
+                "type": "application/epub+zip",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "EPUB (older e-readers)",
+                "length": "1136756",
+                "href": "https://www.gutenberg.org/ebooks/52200.epub.images"
+              },
+              {
+                "type": "application/x-mobipocket-ebook",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "Kindles (kf8)",
+                "length": "2155381",
+                "href": "https://www.gutenberg.org/ebooks/52200.kf8.images"
+              },
+              {
+                "type": "application/x-mobipocket-ebook",
+                "rel": "http://opds-spec.org/acquisition",
+                "title": "Older Kindles",
+                "length": "2127521",
+                "href": "https://www.gutenberg.org/ebooks/52200.kindle.images"
+              }
+            ]
+          }
+        ],
+        "body_or_epub_fetched": false,
+        "updated_caveat": "Feed updated timestamp observed near request time; not treated as content revision."
+      }
+    },
+    {
+      "id": "pg-catalog-policy",
+      "url": "https://www.gutenberg.org/ebooks/offline_catalogs.html",
+      "checked_at_utc": "2026-10-15T08:17:34.896578+00:00",
+      "status": 200,
+      "final_url": "https://www.gutenberg.org/ebooks/offline_catalogs.html",
+      "content_type": "text/html",
+      "bytes": 17895,
+      "sha256": "15bed33b010ce97eada323c1c84c88e2fe34faf2fbe69ce82e23ae795a92944e",
+      "summary": {
+        "official_opds_entry": "https://www.gutenberg.org/ebooks/search.opds/",
+        "deprecation_notice": "Existing XML feeds expected to sunset in 2027; OPDS2 JSON is testing/contact access, not verified public replacement.",
+        "print_source_caveat": "Metadata excludes original print publication data; some ebooks combine editions."
+      }
+    },
+    {
+      "id": "cn-copyright-law",
+      "url": "https://www.ncac.gov.cn/xxfb/flfg/flfg_532/202103/t20210309_50530.html",
+      "checked_at_utc": "2026-10-15T08:22:12.448263+00:00",
+      "status": 200,
+      "final_url": "https://www.ncac.gov.cn/xxfb/flfg/flfg_532/202103/t20210309_50530.html",
+      "content_type": "text/html",
+      "bytes": 122716,
+      "sha256": "e27fccf5c3a0f29439d7e165f09e4e3d148ac301c16f71d0210339c175cca4f3",
+      "summary": {
+        "version": "2020 third amendment, effective 2021-06-01",
+        "sections_reviewed": [
+          22,
+          23,
+          37
+        ],
+        "scope": "Mainland China original Chinese prose only; expiry inference does not extend to modern annotations, translations, images or different editions."
+      }
+    },
+    {
+      "id": "cn-online-content-rules",
+      "url": "https://www.cac.gov.cn/2019-12/20/c_1578375159509309.htm",
+      "checked_at_utc": "2026-10-15T08:22:12.689520+00:00",
+      "status": 200,
+      "final_url": "https://www.cac.gov.cn/2019-12/20/c_1578375159509309.htm",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 31496,
+      "sha256": "e1d88863cb29c960b777f8a4441e99423113701e0da5dab65509a77592180fd0",
+      "summary": {
+        "effective": "2020-03-01",
+        "sections_reviewed": [
+          6,
+          7
+        ],
+        "scope": "Online illegal and harmful content distinctions; adult switch alone is not regional permission; applicability to any future service assessed separately."
+      }
+    },
+    {
+      "id": "cn-criminal-law-excerpt",
+      "url": "https://gdca.miit.gov.cn/zwgk/zcwj/flfg/art/2020/art_febc844315734997bd2369be3c057001.html",
+      "checked_at_utc": "2026-10-15T08:22:12.821856+00:00",
+      "status": 200,
+      "final_url": "https://gdca.miit.gov.cn/zwgk/zcwj/flfg/art/2020/art_febc844315734997bd2369be3c057001.html",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 18866,
+      "sha256": "8f4436c0a194585a4bfa1b90bfc4328c50905de62ac230ac209a178e95189d01",
+      "summary": {
+        "section_reviewed": 367,
+        "scope": "Obscene-material definition distinguishes literary/artistic works of artistic value; no blanket classification of all editions or all mature content."
+      }
+    },
+    {
+      "id": "cn-luxun-biography",
+      "url": "https://www.shanghai.gov.cn/nw4411/20240925/4d47a4ab740042d4935bebbbed45b3d7.html",
+      "checked_at_utc": "2026-10-15T08:26:28.120042+00:00",
+      "status": 200,
+      "final_url": "https://www.shanghai.gov.cn/nw4411/20240925/4d47a4ab740042d4935bebbbed45b3d7.html",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 17520,
+      "sha256": "95dfce9bf036dd68579b0382b6899b8407707bbae4ccf1ed7e0d9626ed1bb17c",
+      "summary": {
+        "source": "Shanghai Municipal Government",
+        "fact_used": "Lu Xun died 1936-10-19",
+        "not_used": "No text from this news article copied as fixture."
+      }
+    }
+  ]
+}

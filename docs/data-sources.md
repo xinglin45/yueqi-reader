@@ -2,7 +2,7 @@
 
 初次整理：2026-10-14；有限实测更新：2026-10-15。下表保留历史候选信息；没有独立证据的地址、格式、价格、额度、语言、授权和维护说法继续待核验。“聊天称”不能用于生产配置、预算或商用承诺。
 
-本次已核验N-01、N-02、N-11/N-14、N-12的部分资料/响应，见 [首轮结论](source-audit-2026-10-15.md)和[明细索引](verifications/README.md)。只有N-02单作品搜索/目录/章节技术链路通过；其他维度分别标记，所有候选整体仍pending，无完整获准内置来源。
+本次已核验N-01、N-02、N-11/N-14、N-12的部分资料/响应，见 [首轮结论](source-audit-2026-10-15.md)、[第00步单源续验](source-step00-2026-10-15.md)和[明细索引](verifications/README.md)。新增N-02-K完整短篇技术样本、Gutendex中文列表与官方OPDS元数据；当前未获许可的Pixiv规则采集路径已拒绝，平台候选整体仍pending，无完整获准内置来源。
 
 同日按用户截图继续核验N-07～N-10五个合集，包文件/数量/静态依赖/维护与许可调查已记录，另做有限首页/搜索路径探测，见 [五合集逐项报告](source-collections-audit-2026-10-15.md)。没有逐条测通全部数千规则，没有完整Legado或阅栖兼容验收，不计算全包有效率。
 
@@ -14,8 +14,8 @@
 
 | 候选类型 | 本轮处理 |
 |---|---|
-| 中文普通全文/目录 | 优先核验N-02、N-01中文子集及获准中文规则/OPDS；元数据API不能代替正文来源 |
-| 中文18+免费来源 | 单独筛选N-07～N-14中确实有中文内容、可免费访问且满足接入条件的条目；不因规则名/R18标签而判定可用或获准 |
+| 中文普通全文/目录 | 优先N-02-K《孔乙己》有限原文范围与N-01 #23962官方OPDS；前者完整短篇样本通过，后者仅目录/获取链接通过；元数据不能代替正文 |
+| 中文18+免费来源 | 新增N-01 #52200受限未知的成人文学候选，只取元数据；N-11现行未获许可规则采集路径rejected，N-12条款仍未读全；不因作品名/R18/免费标签而批准 |
 | N-03青空文库、N-04 Standard Ebooks等外文专门来源 | 保留历史研究记录，退出当前小说接入/测试计划 |
 | N-05/06元数据来源 | 中文元数据按需补充，不能计为普通/18+全文来源验收通过 |
 | 未核验/收费/未知收费来源 | 不自动启用或产生费用；缺所需来源时如实标记首版阻塞 |
@@ -44,8 +44,8 @@
 | N-08 | [XIU2/Yuedu](https://github.com/XIU2/Yuedu)；https://raw.githubusercontent.com/XIU2/Yuedu/master/shuyuan | 22条现已确认，星级无核验方法 | 作者与镜像解析一致，12启用/10禁用，存在GPL-3.0文件；启用不是有效性结论，作品权利/兼容未通过；见[N-08](verifications/N-08.md) |
 | N-09 | [Tickmao Novel](https://github.com/tickmao/Novel)；https://cdn.jsdelivr.net/gh/tickmao/Novel@master/sources/legado/full.json | README仍写1000；公开链接实测194，内部main/full.json为1000 | 文件路径不能混用；MIT/勿商用/GPL材料范围需澄清，实际阅读/作品权利未通过；见[N-09](verifications/N-09.md) |
 | N-10 | [破冰作者仓库](https://github.com/PB-pobing/pobing)；[关耳分发页](https://yuedu.miaogongzi.net/gx.html) | 历史128/86；入口现已定位 | 破冰作者/AOA128、另一分发文件91；关耳公开分发/AOA86且hash相同。见[破冰记录](verifications/N-10-pobing.md)、[关耳记录](verifications/N-10-guaner.md)，逐站阅读/免费/许可未通过 |
-| N-11 | [PixivSource](https://github.com/DowneyRem/PixivSource)；https://raw.githubusercontent.com/DowneyRem/PixivSource/main/pixiv.json | 聊天称含普通/R18 小说分类及登录规则 | 只作规则候选；R18/登录/平台条款/商业接入核验，规则不能授予作品权利 |
-| N-12 | [AO3](https://archiveofourown.org/) | 聊天称有 Mature/Explicit、多语言，未确认通用商业 API，并有抓取/收费限制 | 官方 API 是否存在、条款和作品作者权利待核验；默认仅候选入口 |
+| N-11 | [PixivSource](https://github.com/DowneyRem/PixivSource)；https://raw.githubusercontent.com/DowneyRem/PixivSource/main/pixiv.json | 聊天称含普通/R18 小说分类及登录规则 | 本轮官方政策取得，当前未获许可规则采集路径rejected；平台另行获准接入仍pending，见[记录](verifications/N-11.md) |
+| N-12 | [AO3](https://archiveofourown.org/) | 聊天称有 Mature/Explicit、多语言，未确认通用商业 API，并有抓取/收费限制 | 本轮OTW免费服务说明取得，完整条款及中文作品路径仍未通过；[记录](verifications/N-12.md) |
 | N-13 | [ESJ Zone 规则](https://github.com/jiwangyihao/source-j-legado/blob/main/esjzone.json) | 聊天称普通/R18 轻小说分类 | 规则、译本权利、目标站可用性均待核验 |
 | N-14 | [Pixiv](https://www.pixiv.net/) | 聊天称需要出生日期/年龄选项，R18 分级 | 不假定拥有公开第三方全文 API；正式合作/年龄要求待核验 |
 | N-15 | 番茄、起点、七猫等正版平台 | 聊天未提供可核验的通用正文 API 与统一报价 | 商务合作候选；免费读者访问/购买不是第三方分发许可 |

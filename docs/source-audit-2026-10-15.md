@@ -30,3 +30,5 @@
 明细：[N-01](verifications/N-01.md)、[N-02](verifications/N-02.md)、[N-11/N-14](verifications/N-11.md)、[N-12](verifications/N-12.md)。其他历史候选继续见 [数据源清单](data-sources.md)。
 
 同日续验：按用户截图对AOAOSTAR、XIU2、Tickmao、破冰、关耳作了[五合集包级核验和有限网络探测](source-collections-audit-2026-10-15.md)。本页保留首轮四候选范围；新增证据不改变“尚无完整获准来源”的结论。
+
+同日第00步又完成[单源/有限作品续验](source-step00-2026-10-15.md)：用户确认中国自用，按中国大陆核验；N-02-K《孔乙己》完整短篇技术样本通过，具体转录依赖/权利与未决项已列明；Gutendex中文列表取得（报告441、本页32），官方Gutenberg两书OPDS详情有获取链接，但未取EPUB；Pixiv官方条款取得，当前未获许可规则采集路径rejected；AO3条款仍访问失败，仅OTW免费服务说明取得。本页上表是首轮历史结果，不应用其“列表仅超时/条款未取得”覆盖新结论。获准内置普通/成人仍均为0，MAC-18/SRC-02保持进行中。
