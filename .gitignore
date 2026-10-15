@@ -1,0 +1,36 @@
+# Local-only data and credentials
+.DS_Store
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p8
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.mobileprovision
+*.provisionprofile
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+credentials/
+local-data/
+downloads/
+cache/
+# Future Flutter/Java build outputs
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+target/
+.gradle/
+.idea/
+*.iml
+coverage/
+.swiftpm/
+Pods/
+DerivedData/

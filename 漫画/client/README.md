@@ -1,0 +1,9 @@
+# comic_app
+
+源码位置：漫画/client。一套 Flutter 工程覆盖手机与 PC，共用 lib/；android/、ios/、windows/、macos/ 平台目录将在 FND-01 实际初始化时生成。
+
+见[漫画目录说明](../README.md)与[仓库布局](../../docs/repository-layout.md)。
+
+漫画阅读 App 的独立 Flutter 工程预留；负责 CBZ/ZIP、图片流、长条/单页/双页、方向、缩放与漫画用例。四端目标：Android、iOS、Windows、macOS。初始化任务 FND-01，核心实现 COMIC-01/02。
+
+此处仅为职责和目录预留，不是已实现的可运行模块。总体架构、验收与依赖见项目根目录 docs/architecture.md 和 docs/roadmap.md。
