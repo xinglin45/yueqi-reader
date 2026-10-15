@@ -13,6 +13,7 @@
 - 用户进一步要求继续并设计macOS详细开发步骤。已形成23步执行顺序，见 [详细步骤](novel-macos-implementation-steps.md)；本轮未安装依赖、生成工程或实现应用。
 - 只读环境检查：当前arm64 Mac有Xcode，PATH未找到Flutter/Dart/pod；见 [环境记录](development-environment.md)。提出状态/路由/SQLite候选，精确版本未锁定；EPUB/TTS继续小样选型。
 - MAC-18/SRC-02已开始：维基文库单作品搜索/目录/章节技术通过；Gutendex中文列表超时；Pixiv规则静态/部分分级资料可读但中文成人链路与许可未确认；AO3条款失败。见 [核验记录](source-audit-2026-10-15.md)，尚无获准内置来源。
+- 用户要求验证截图全部五个合集，已完成包级/版本/计数/静态与有限网络样本调查，见 [五合集报告](source-collections-audit-2026-10-15.md)。AOA3907、XIU2 22、关耳86有文件证据；Tickmao公开194/内部1000、破冰作者128/另一分发91需区分。星级与全包可用率无核验依据，没有执行第三方规则或完整App验证。
 
 - 用户明确要求将目录推送到 git@github.com:xinglin45/yueqi-reader.git，再设计 macOS 小说 App 完整开发方案，本轮不直接实现应用。
 - 首批使用方式已确认：先自用，通过安装包运行。四端目标与两个独立产品保留，先验收 macOS 小说；Windows/Android/iOS、漫画和可选云同步后续推进。

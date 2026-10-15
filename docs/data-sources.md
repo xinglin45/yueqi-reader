@@ -4,6 +4,8 @@
 
 本次已核验N-01、N-02、N-11/N-14、N-12的部分资料/响应，见 [首轮结论](source-audit-2026-10-15.md)和[明细索引](verifications/README.md)。只有N-02单作品搜索/目录/章节技术链路通过；其他维度分别标记，所有候选整体仍pending，无完整获准内置来源。
 
+同日按用户截图继续核验N-07～N-10五个合集，包文件/数量/静态依赖/维护与许可调查已记录，另做有限首页/搜索路径探测，见 [五合集逐项报告](source-collections-audit-2026-10-15.md)。没有逐条测通全部数千规则，没有完整Legado或阅栖兼容验收，不计算全包有效率。
+
 当前没有来源获准内置或自动启用；所有候选 enabled=false。网站主页不是正式内容 API；规则仓库存在也不表示有抓取/下载/缓存/再分发授权。
 
 ## 当前小说选源范围（2026-10-15 已确认）
@@ -36,12 +38,12 @@
 
 ## 小说：规则与成人平台研究
 
-| ID | 候选入口（全部待核验） | 原讨论信息 | 当前限制/研究任务 |
+| ID | 候选入口（整体待核验） | 原讨论信息 | 当前限制/研究任务 |
 |---|---|---|---|
-| N-07 | [AOAOSTAR](https://github.com/aoaostar/legado)；https://legado.aoaostar.com/sources/b778fe6b.json | 聊天称全量 3907 条 | 数量/有效性未实测；规则许可证和每个目标站授权；不内置聚合规则 |
-| N-08 | [XIU2/Yuedu](https://github.com/XIU2/Yuedu)；https://raw.githubusercontent.com/XIU2/Yuedu/master/shuyuan | 聊天称精品 22 条 | Legado 子集样本候选；当前分支/格式/域名/许可待核验 |
-| N-09 | [Tickmao Novel](https://github.com/tickmao/Novel)；https://cdn.jsdelivr.net/gh/tickmao/Novel@master/sources/legado/full.json | 聊天称 1000 条与多种阅读器配置 | CDN 与源仓库版本/完整性/许可、支持矩阵待核验 |
-| N-10 | 破冰书源、关耳女频 | 聊天称分别 128/86 条；未给独立确定入口 | 待定位原项目与许可；不能据名称伪造下载地址 |
+| N-07 | [AOAOSTAR](https://github.com/aoaostar/legado)；https://legado.aoaostar.com/sources/b778fe6b.json | 3907为历史说法，现已实测确认文件记录数 | 3907条、2595种非空URL字符串；混合类型/重复/脚本，不代表3907个有效小说站；见[N-07记录](verifications/N-07.md)，权利/实际阅读仍待核验 |
+| N-08 | [XIU2/Yuedu](https://github.com/XIU2/Yuedu)；https://raw.githubusercontent.com/XIU2/Yuedu/master/shuyuan | 22条现已确认，星级无核验方法 | 作者与镜像解析一致，12启用/10禁用，存在GPL-3.0文件；启用不是有效性结论，作品权利/兼容未通过；见[N-08](verifications/N-08.md) |
+| N-09 | [Tickmao Novel](https://github.com/tickmao/Novel)；https://cdn.jsdelivr.net/gh/tickmao/Novel@master/sources/legado/full.json | README仍写1000；公开链接实测194，内部main/full.json为1000 | 文件路径不能混用；MIT/勿商用/GPL材料范围需澄清，实际阅读/作品权利未通过；见[N-09](verifications/N-09.md) |
+| N-10 | [破冰作者仓库](https://github.com/PB-pobing/pobing)；[关耳分发页](https://yuedu.miaogongzi.net/gx.html) | 历史128/86；入口现已定位 | 破冰作者/AOA128、另一分发文件91；关耳公开分发/AOA86且hash相同。见[破冰记录](verifications/N-10-pobing.md)、[关耳记录](verifications/N-10-guaner.md)，逐站阅读/免费/许可未通过 |
 | N-11 | [PixivSource](https://github.com/DowneyRem/PixivSource)；https://raw.githubusercontent.com/DowneyRem/PixivSource/main/pixiv.json | 聊天称含普通/R18 小说分类及登录规则 | 只作规则候选；R18/登录/平台条款/商业接入核验，规则不能授予作品权利 |
 | N-12 | [AO3](https://archiveofourown.org/) | 聊天称有 Mature/Explicit、多语言，未确认通用商业 API，并有抓取/收费限制 | 官方 API 是否存在、条款和作品作者权利待核验；默认仅候选入口 |
 | N-13 | [ESJ Zone 规则](https://github.com/jiwangyihao/source-j-legado/blob/main/esjzone.json) | 聊天称普通/R18 轻小说分类 | 规则、译本权利、目标站可用性均待核验 |
@@ -108,7 +110,7 @@ Pixiv 共用 N-14；未确认第三方公开漫画 API。免费且可商业分�
 
 ## 核验记录模板与启用门槛
 
-每个候选记录放 docs/verifications/<ID>.md，已有记录见索引；N-14与N-11合并记录。不能把空模板、HTTP200或局部技术通过当作整体批准。至少记录：
+每个候选记录放 docs/verifications/<ID>.md，已有记录见索引；N-14与N-11合并，N-10按pobing/guaner拆分。不能把空模板、HTTP200或局部技术通过当作整体批准。至少记录：
 
 - ID、结论 pending/verified/rejected、核验人、日期、官方证据链接、版本/提交 hash。
 - 有效域名/API 路径/schema、认证方式、实际语言/章节覆盖、错误与限流。

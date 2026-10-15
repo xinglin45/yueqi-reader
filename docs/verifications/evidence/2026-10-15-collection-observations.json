@@ -1,0 +1,1010 @@
+{
+  "audit_date": "2026-10-15",
+  "timezone": "Asia/Singapore",
+  "recorded_by": "Codex",
+  "overall_status": "pending",
+  "scope": "Five named collection packages: provenance, HTTP retrieval, inert JSON parsing, static markers, snapshot comparisons, four homepage probes and four manually transcribed literal search URL probes. Not every underlying site and not end-to-end Legado/App reading validation.",
+  "app_integration_tested": false,
+  "third_party_rules_executed": false,
+  "paid_actions_executed": false,
+  "adult_text_retrieved": false,
+  "approved_builtin_sources": {
+    "normal": 0,
+    "adult": 0
+  },
+  "method": {
+    "json_record_count": "Top-level list length; not a count of working or independent sites.",
+    "duplicate_identity": "Exact nonempty bookSourceUrl strings only; no claim to semantic provider deduplication.",
+    "js_marker_regex": "@js:|<js>|\\b(?:java|cookie|source|cache)\\.|javascript: (case-insensitive), excluding top-level comment/name/group/time/order fields. Heuristic only.",
+    "purchase_markers": "Nonempty ruleContent.payAction and static purchase/autosubscribe keywords; code presence is not evidence of execution.",
+    "body_policy": "Only metadata, hashes and structure counts retained. No raw rules, site bodies, credentials or chapters in this evidence."
+  },
+  "repository_snapshots": {
+    "aoaostar/legado": {
+      "url": "https://github.com/aoaostar/legado",
+      "default_branch": "release",
+      "commit": "1f10d490b46bf56180efb0c30a61d6e8a141a7e2",
+      "committed_at": "2026-10-15T02:30:10Z",
+      "pushed_at": "2026-10-15T02:30:12Z",
+      "archived": false,
+      "detected_license": null
+    },
+    "XIU2/Yuedu": {
+      "url": "https://github.com/XIU2/Yuedu",
+      "default_branch": "master",
+      "commit": "426b24f59aa763ee0f2d9cc094612d2ef42c8293",
+      "committed_at": "2026-08-14T11:45:59Z",
+      "pushed_at": "2026-08-14T11:46:04Z",
+      "archived": false,
+      "detected_license": "GPL-3.0"
+    },
+    "tickmao/Novel": {
+      "url": "https://github.com/tickmao/Novel",
+      "default_branch": "master",
+      "commit": "7e199f158effb9246491b43a9ea7bbf92284ac9b",
+      "committed_at": "2026-10-15T03:00:38Z",
+      "pushed_at": "2026-10-15T03:00:47Z",
+      "archived": false,
+      "detected_license": null
+    },
+    "PB-pobing/pobing": {
+      "url": "https://github.com/PB-pobing/pobing",
+      "default_branch": "pb",
+      "commit": "a0d7655b078dbc674bc3a775005ae8c8e15d72c7",
+      "committed_at": "2023-08-22T06:58:05Z",
+      "pushed_at": "2023-08-22T06:58:05Z",
+      "archived": false,
+      "detected_license": null
+    }
+  },
+  "pinned_aoa_blob_checks": [
+    {
+      "observation_id": "rules-aoa-full",
+      "repo_path": "sources/b778fe6b.json",
+      "github_blob_sha": "8b860910e78c7f73d6c506744a7194557bc40e2f",
+      "observed_git_blob_sha": "8b860910e78c7f73d6c506744a7194557bc40e2f",
+      "matches_pinned_commit_tree": true
+    },
+    {
+      "observation_id": "rules-aoa-xiu2",
+      "repo_path": "sources/71e56d4f.json",
+      "github_blob_sha": "948e3e1820af364822d89bd627a8685d39cbef72",
+      "observed_git_blob_sha": "948e3e1820af364822d89bd627a8685d39cbef72",
+      "matches_pinned_commit_tree": true
+    },
+    {
+      "observation_id": "rules-aoa-pobing",
+      "repo_path": "sources/4dc410d1.json",
+      "github_blob_sha": "c90af3eb1a62f5c627a878caef4b1d2caebf23a6",
+      "observed_git_blob_sha": "c90af3eb1a62f5c627a878caef4b1d2caebf23a6",
+      "matches_pinned_commit_tree": true
+    },
+    {
+      "observation_id": "rules-aoa-guaner",
+      "repo_path": "sources/e3e5d620.json",
+      "github_blob_sha": "80d6e6152e043f03928a1fd30f77a938377f9b00",
+      "observed_git_blob_sha": "80d6e6152e043f03928a1fd30f77a938377f9b00",
+      "matches_pinned_commit_tree": true
+    }
+  ],
+  "comparisons": {
+    "mirrors": {
+      "rules-aoa-xiu2__rules-xiu2": {
+        "left_records": 22,
+        "right_records": 22,
+        "common_source_urls": 22,
+        "left_only_source_urls": 0,
+        "right_only_source_urls": 0,
+        "changed_field_counts": {}
+      },
+      "rules-aoa-pobing__rules-pobing": {
+        "left_records": 128,
+        "right_records": 128,
+        "common_source_urls": 128,
+        "left_only_source_urls": 0,
+        "right_only_source_urls": 0,
+        "changed_field_counts": {}
+      },
+      "rules-aoa-guaner__rules-guaner-published": {
+        "left_records": 86,
+        "right_records": 86,
+        "common_source_urls": 86,
+        "left_only_source_urls": 0,
+        "right_only_source_urls": 0,
+        "changed_field_counts": {}
+      }
+    },
+    "overlap_with_aoa_full_by_exact_source_url": {
+      "rules-xiu2": 22,
+      "rules-tickmao": 59,
+      "rules-pobing": 128,
+      "rules-aoa-guaner": 86
+    },
+    "url_quality": {
+      "rules-aoa-full": {
+        "nonempty_source_url_records": 3906,
+        "unique_nonempty_source_url_strings": 2595,
+        "missing_or_empty_source_url_records": 1
+      },
+      "rules-xiu2": {
+        "nonempty_source_url_records": 22,
+        "unique_nonempty_source_url_strings": 22,
+        "missing_or_empty_source_url_records": 0
+      },
+      "rules-tickmao": {
+        "nonempty_source_url_records": 194,
+        "unique_nonempty_source_url_strings": 194,
+        "missing_or_empty_source_url_records": 0
+      },
+      "rules-pobing": {
+        "nonempty_source_url_records": 128,
+        "unique_nonempty_source_url_strings": 128,
+        "missing_or_empty_source_url_records": 0
+      },
+      "rules-aoa-guaner": {
+        "nonempty_source_url_records": 86,
+        "unique_nonempty_source_url_strings": 86,
+        "missing_or_empty_source_url_records": 0
+      }
+    }
+  },
+  "cost_marker_counts": {
+    "rules-aoa-full": {
+      "pay_action_field_nonempty_records": 3,
+      "purchase_or_autosubscribe_marker_records": 9
+    },
+    "rules-xiu2": {
+      "pay_action_field_nonempty_records": 0,
+      "purchase_or_autosubscribe_marker_records": 0
+    },
+    "rules-tickmao": {
+      "pay_action_field_nonempty_records": 0,
+      "purchase_or_autosubscribe_marker_records": 2
+    },
+    "rules-pobing": {
+      "pay_action_field_nonempty_records": 0,
+      "purchase_or_autosubscribe_marker_records": 1
+    },
+    "rules-aoa-guaner": {
+      "pay_action_field_nonempty_records": 1,
+      "purchase_or_autosubscribe_marker_records": 1
+    }
+  },
+  "observations": [
+    {
+      "id": "repo-aoaostar-legado",
+      "url": "https://api.github.com/repos/aoaostar/legado",
+      "checked_at_utc": "2026-10-15T07:38:46.206683+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/aoaostar/legado",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 4930,
+      "sha256": "70e64f0e7befb0a1a269aadc9caccc82475428c8df9c7a8e860843ec00815954",
+      "repo_metadata": {
+        "full_name": "aoaostar/legado",
+        "default_branch": "release",
+        "archived": false,
+        "disabled": false,
+        "pushed_at": "2026-10-15T02:30:12Z",
+        "updated_at": "2026-10-15T07:18:26Z",
+        "license": null,
+        "size": 31917
+      }
+    },
+    {
+      "id": "repo-XIU2-Yuedu",
+      "url": "https://api.github.com/repos/XIU2/Yuedu",
+      "checked_at_utc": "2026-10-15T07:38:46.206974+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/XIU2/Yuedu",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 4881,
+      "sha256": "fd339cd63f90b2701ad172914b9e24c2c0f837364b0fd056feb633ae4cfb944a",
+      "repo_metadata": {
+        "full_name": "XIU2/Yuedu",
+        "default_branch": "master",
+        "archived": false,
+        "disabled": false,
+        "pushed_at": "2026-08-14T11:46:04Z",
+        "updated_at": "2026-10-15T07:32:26Z",
+        "license": {
+          "key": "gpl-3.0",
+          "name": "GNU General Public License v3.0",
+          "spdx_id": "GPL-3.0",
+          "url": "https://api.github.com/licenses/gpl-3.0",
+          "node_id": "MDc6TGljZW5zZTk="
+        },
+        "size": 2029
+      }
+    },
+    {
+      "id": "repo-tickmao-Novel",
+      "url": "https://api.github.com/repos/tickmao/Novel",
+      "checked_at_utc": "2026-10-15T07:38:46.207058+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/tickmao/Novel",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 5098,
+      "sha256": "665f089f584e8eb792051f88364f134fef207cb73d4856fcd10f05a429798f6e",
+      "repo_metadata": {
+        "full_name": "tickmao/Novel",
+        "default_branch": "master",
+        "archived": false,
+        "disabled": false,
+        "pushed_at": "2026-10-15T03:00:47Z",
+        "updated_at": "2026-10-15T07:14:45Z",
+        "license": null,
+        "size": 364416
+      }
+    },
+    {
+      "id": "repo-PB-pobing-pobing",
+      "url": "https://api.github.com/repos/PB-pobing/pobing",
+      "checked_at_utc": "2026-10-15T07:38:47.817195+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/PB-pobing/pobing",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 5031,
+      "sha256": "705500377a23cf40732ed5f7d0adb76c79c79b4d1da153d903fadcd72c9c82dd",
+      "repo_metadata": {
+        "full_name": "PB-pobing/pobing",
+        "default_branch": "pb",
+        "archived": false,
+        "disabled": false,
+        "pushed_at": "2023-08-22T06:58:05Z",
+        "updated_at": "2026-10-12T06:12:15Z",
+        "license": null,
+        "size": 3671
+      }
+    },
+    {
+      "id": "readme-aoaostar-legado",
+      "url": "https://raw.githubusercontent.com/aoaostar/legado/release/README.md",
+      "checked_at_utc": "2026-10-15T07:38:51.174855+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/aoaostar/legado/release/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 10047,
+      "sha256": "0403e24ba47e7505a2f52b4abbc3508cc95696668e2416434e387b1a5224ad95"
+    },
+    {
+      "id": "head-aoaostar-legado",
+      "url": "https://api.github.com/repos/aoaostar/legado/commits/release",
+      "checked_at_utc": "2026-10-15T07:38:51.175096+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/aoaostar/legado/commits/release",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 132774,
+      "sha256": "d7bd17c3b9cd278f95a0455417817bfcd69340a7a949ff7f599ea5b9eb8a8bfe"
+    },
+    {
+      "id": "readme-XIU2-Yuedu",
+      "url": "https://raw.githubusercontent.com/XIU2/Yuedu/master/README.md",
+      "checked_at_utc": "2026-10-15T07:38:51.175232+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/XIU2/Yuedu/master/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 8357,
+      "sha256": "ed1fca4a7346d80ab091633d1a6559daac3b3f9c229e3bb5cdd426e600432323"
+    },
+    {
+      "id": "head-XIU2-Yuedu",
+      "url": "https://api.github.com/repos/XIU2/Yuedu/commits/master",
+      "checked_at_utc": "2026-10-15T07:38:52.453928+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/XIU2/Yuedu/commits/master",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 26096,
+      "sha256": "d05d741888219e51e5866eefdea0fc55c91841f191ff4aee4934eb4495f8a84a"
+    },
+    {
+      "id": "readme-tickmao-Novel",
+      "url": "https://raw.githubusercontent.com/tickmao/Novel/master/README.md",
+      "checked_at_utc": "2026-10-15T07:38:54.139340+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/tickmao/Novel/master/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 2743,
+      "sha256": "0a98b4fd3550ef0132a18c59b5eaa36e3559cba292c08b30d9e4a5c63d9f1acf"
+    },
+    {
+      "id": "head-tickmao-Novel",
+      "url": "https://api.github.com/repos/tickmao/Novel/commits/master",
+      "checked_at_utc": "2026-10-15T07:38:54.327666+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/tickmao/Novel/commits/master",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 306816,
+      "sha256": "aa82f6472ac5dc2768710315f6655fddc680d639160fea92fcb05a3834859c27"
+    },
+    {
+      "id": "readme-PB-pobing-pobing",
+      "url": "https://raw.githubusercontent.com/PB-pobing/pobing/pb/README.md",
+      "checked_at_utc": "2026-10-15T07:38:54.440653+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/PB-pobing/pobing/pb/README.md",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 233,
+      "sha256": "9e9b3e5a2ea5252d14d12ec156f840834fc24aa905f63ffbf8c6734a48413448"
+    },
+    {
+      "id": "head-PB-pobing-pobing",
+      "url": "https://api.github.com/repos/PB-pobing/pobing/commits/pb",
+      "checked_at_utc": "2026-10-15T07:38:56.231456+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/PB-pobing/pobing/commits/pb",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 4509,
+      "sha256": "abe03b5228bf628b496f7385f4b239d02e10f140f935dc7677082cbfc0d9e48e"
+    },
+    {
+      "id": "rules-aoa-full",
+      "url": "https://legado.aoaostar.com/sources/b778fe6b.json",
+      "checked_at_utc": "2026-10-15T07:40:00.459580+00:00",
+      "status": 200,
+      "final_url": "https://legado.aoaostar.com/sources/b778fe6b.json",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 20987130,
+      "sha256": "a50c80e81e45a6ad77f6cdb94ab420e74de29691f8924692415a3e9f0e022747",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 3907,
+        "object_records": 3907,
+        "unique_source_url_strings": 2596,
+        "unique_url_hostname_strings": 1709,
+        "duplicate_url_strings": 1311,
+        "bookSourceType_counts": {
+          "0": 3715,
+          "1": 65,
+          "2": 98,
+          "3": 29
+        },
+        "enabled_counts": {
+          "True": 3869,
+          "False": 38
+        },
+        "field_presence": {
+          "bookSourceName": 3906,
+          "bookSourceUrl": 3906,
+          "searchUrl": 3204,
+          "ruleSearch": 3235,
+          "ruleBookInfo": 3217,
+          "ruleToc": 3275,
+          "ruleContent": 3378
+        },
+        "js_syntax_marker_records": 1748,
+        "java_or_execution_helper_marker_records": 815,
+        "login_config_records": 375,
+        "adult_keyword_hint_records_not_classification": 4,
+        "has_http_base_records": 1483,
+        "has_explicit_rating_field_records": 0,
+        "all_five_search_to_content_fields_nonempty_records": 3134
+      }
+    },
+    {
+      "id": "rules-aoa-xiu2",
+      "url": "https://legado.aoaostar.com/sources/71e56d4f.json",
+      "checked_at_utc": "2026-10-15T07:40:00.459889+00:00",
+      "status": 200,
+      "final_url": "https://legado.aoaostar.com/sources/71e56d4f.json",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 173127,
+      "sha256": "24fe11c400ddc8754703ff0c4d8a249baf024da3a15563de805cc134140959a0",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 22,
+        "object_records": 22,
+        "unique_source_url_strings": 22,
+        "unique_url_hostname_strings": 22,
+        "duplicate_url_strings": 0,
+        "bookSourceType_counts": {
+          "0": 22
+        },
+        "enabled_counts": {
+          "True": 12,
+          "False": 10
+        },
+        "field_presence": {
+          "bookSourceName": 22,
+          "bookSourceUrl": 22,
+          "searchUrl": 22,
+          "ruleSearch": 22,
+          "ruleBookInfo": 22,
+          "ruleToc": 22,
+          "ruleContent": 22
+        },
+        "js_syntax_marker_records": 17,
+        "java_or_execution_helper_marker_records": 11,
+        "login_config_records": 4,
+        "adult_keyword_hint_records_not_classification": 0,
+        "has_http_base_records": 3,
+        "has_explicit_rating_field_records": 0,
+        "all_five_search_to_content_fields_nonempty_records": 22
+      }
+    },
+    {
+      "id": "rules-aoa-pobing",
+      "url": "https://legado.aoaostar.com/sources/4dc410d1.json",
+      "checked_at_utc": "2026-10-15T07:40:00.459970+00:00",
+      "status": 200,
+      "final_url": "https://legado.aoaostar.com/sources/4dc410d1.json",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 901291,
+      "sha256": "05da3da45910c8342d4935044c9af6298be0fbcee62af910b6aea2550fee44de",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 128,
+        "object_records": 128,
+        "unique_source_url_strings": 128,
+        "unique_url_hostname_strings": 128,
+        "duplicate_url_strings": 0,
+        "bookSourceType_counts": {
+          "0": 121,
+          "1": 5,
+          "2": 2
+        },
+        "enabled_counts": {
+          "True": 128
+        },
+        "field_presence": {
+          "bookSourceName": 128,
+          "bookSourceUrl": 128,
+          "searchUrl": 128,
+          "ruleSearch": 128,
+          "ruleBookInfo": 128,
+          "ruleToc": 128,
+          "ruleContent": 127
+        },
+        "js_syntax_marker_records": 71,
+        "java_or_execution_helper_marker_records": 26,
+        "login_config_records": 9,
+        "adult_keyword_hint_records_not_classification": 0,
+        "has_http_base_records": 34,
+        "has_explicit_rating_field_records": 0,
+        "all_five_search_to_content_fields_nonempty_records": 127
+      }
+    },
+    {
+      "id": "rules-aoa-guaner",
+      "url": "https://legado.aoaostar.com/sources/e3e5d620.json",
+      "checked_at_utc": "2026-10-15T07:40:03.131214+00:00",
+      "status": 200,
+      "final_url": "https://legado.aoaostar.com/sources/e3e5d620.json",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 729479,
+      "sha256": "10537479695e9168c63ad3225463124c47bb3730525f6142d9c1ff4ad0139627",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 86,
+        "object_records": 86,
+        "unique_source_url_strings": 86,
+        "unique_url_hostname_strings": 85,
+        "duplicate_url_strings": 0,
+        "bookSourceType_counts": {
+          "3": 4,
+          "0": 78,
+          "1": 3,
+          "2": 1
+        },
+        "enabled_counts": {
+          "True": 71,
+          "False": 15
+        },
+        "field_presence": {
+          "bookSourceName": 86,
+          "bookSourceUrl": 86,
+          "searchUrl": 85,
+          "ruleSearch": 86,
+          "ruleBookInfo": 86,
+          "ruleToc": 85,
+          "ruleContent": 85
+        },
+        "js_syntax_marker_records": 65,
+        "java_or_execution_helper_marker_records": 50,
+        "login_config_records": 30,
+        "adult_keyword_hint_records_not_classification": 0,
+        "has_http_base_records": 20,
+        "has_explicit_rating_field_records": 0,
+        "all_five_search_to_content_fields_nonempty_records": 84
+      }
+    },
+    {
+      "id": "rules-xiu2",
+      "url": "https://raw.githubusercontent.com/XIU2/Yuedu/426b24f59aa763ee0f2d9cc094612d2ef42c8293/shuyuan",
+      "checked_at_utc": "2026-10-15T07:40:03.636623+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/XIU2/Yuedu/426b24f59aa763ee0f2d9cc094612d2ef42c8293/shuyuan",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 163824,
+      "sha256": "00644eda44f0fcabcfc015a024480376638d5e7a381a2010aeedfca5aa797845",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 22,
+        "object_records": 22,
+        "unique_source_url_strings": 22,
+        "unique_url_hostname_strings": 22,
+        "duplicate_url_strings": 0,
+        "bookSourceType_counts": {
+          "0": 22
+        },
+        "enabled_counts": {
+          "True": 12,
+          "False": 10
+        },
+        "field_presence": {
+          "bookSourceName": 22,
+          "bookSourceUrl": 22,
+          "searchUrl": 22,
+          "ruleSearch": 22,
+          "ruleBookInfo": 22,
+          "ruleToc": 22,
+          "ruleContent": 22
+        },
+        "js_syntax_marker_records": 17,
+        "java_or_execution_helper_marker_records": 11,
+        "login_config_records": 4,
+        "adult_keyword_hint_records_not_classification": 0,
+        "has_http_base_records": 3,
+        "has_explicit_rating_field_records": 0,
+        "all_five_search_to_content_fields_nonempty_records": 22
+      }
+    },
+    {
+      "id": "rules-tickmao",
+      "url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/sources/legado/full.json",
+      "checked_at_utc": "2026-10-15T07:40:06.022188+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/sources/legado/full.json",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 2023425,
+      "sha256": "d1adad8807307029f5540699970a3cf754ff3a9174624df23379ba3cb1f12fa7",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 194,
+        "object_records": 194,
+        "unique_source_url_strings": 194,
+        "unique_url_hostname_strings": 184,
+        "duplicate_url_strings": 0,
+        "bookSourceType_counts": {
+          "0": 194
+        },
+        "enabled_counts": {
+          "True": 194
+        },
+        "field_presence": {
+          "bookSourceName": 194,
+          "bookSourceUrl": 194,
+          "searchUrl": 194,
+          "ruleSearch": 194,
+          "ruleBookInfo": 182,
+          "ruleToc": 194,
+          "ruleContent": 194
+        },
+        "js_syntax_marker_records": 125,
+        "java_or_execution_helper_marker_records": 83,
+        "login_config_records": 50,
+        "adult_keyword_hint_records_not_classification": 0,
+        "has_http_base_records": 60,
+        "has_explicit_rating_field_records": 0,
+        "all_five_search_to_content_fields_nonempty_records": 182
+      }
+    },
+    {
+      "id": "rules-tickmao-cdn",
+      "url": "https://cdn.jsdelivr.net/gh/tickmao/Novel@master/sources/legado/full.json",
+      "checked_at_utc": "2026-10-15T07:40:07.571337+00:00",
+      "status": 200,
+      "final_url": "https://cdn.jsdelivr.net/gh/tickmao/Novel@master/sources/legado/full.json",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 2023425,
+      "sha256": "d1adad8807307029f5540699970a3cf754ff3a9174624df23379ba3cb1f12fa7",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 194,
+        "object_records": 194,
+        "unique_source_url_strings": 194,
+        "unique_url_hostname_strings": 184,
+        "duplicate_url_strings": 0,
+        "bookSourceType_counts": {
+          "0": 194
+        },
+        "enabled_counts": {
+          "True": 194
+        },
+        "field_presence": {
+          "bookSourceName": 194,
+          "bookSourceUrl": 194,
+          "searchUrl": 194,
+          "ruleSearch": 194,
+          "ruleBookInfo": 182,
+          "ruleToc": 194,
+          "ruleContent": 194
+        },
+        "js_syntax_marker_records": 125,
+        "java_or_execution_helper_marker_records": 83,
+        "login_config_records": 50,
+        "adult_keyword_hint_records_not_classification": 0,
+        "has_http_base_records": 60,
+        "has_explicit_rating_field_records": 0,
+        "all_five_search_to_content_fields_nonempty_records": 182
+      }
+    },
+    {
+      "id": "rules-pobing",
+      "url": "https://raw.githubusercontent.com/PB-pobing/pobing/a0d7655b078dbc674bc3a775005ae8c8e15d72c7/sy.json",
+      "checked_at_utc": "2026-10-15T07:40:08.657247+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/PB-pobing/pobing/a0d7655b078dbc674bc3a775005ae8c8e15d72c7/sy.json",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 883518,
+      "sha256": "567cc1bc3e101d6b3b31816a7b380eb499ac911e52ac2401ffe95d8da755eeb0",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 128,
+        "object_records": 128,
+        "unique_source_url_strings": 128,
+        "unique_url_hostname_strings": 128,
+        "duplicate_url_strings": 0,
+        "bookSourceType_counts": {
+          "0": 121,
+          "1": 5,
+          "2": 2
+        },
+        "enabled_counts": {
+          "True": 128
+        },
+        "field_presence": {
+          "bookSourceName": 128,
+          "bookSourceUrl": 128,
+          "searchUrl": 128,
+          "ruleSearch": 128,
+          "ruleBookInfo": 128,
+          "ruleToc": 128,
+          "ruleContent": 127
+        },
+        "js_syntax_marker_records": 71,
+        "java_or_execution_helper_marker_records": 26,
+        "login_config_records": 9,
+        "adult_keyword_hint_records_not_classification": 0,
+        "has_http_base_records": 34,
+        "has_explicit_rating_field_records": 0,
+        "all_five_search_to_content_fields_nonempty_records": 127
+      }
+    },
+    {
+      "id": "page-guaner-index",
+      "url": "https://yuedu.miaogongzi.net/gx.html",
+      "checked_at_utc": "2026-10-15T07:40:13.800869+00:00",
+      "status": 200,
+      "final_url": "https://yuedu.miaogongzi.net/gx.html",
+      "content_type": "text/html",
+      "bytes": 11701,
+      "sha256": "84e45157155d7eb1033bdda7fa8b3cf0e1a2c53fc58f6f6da6d9ba5d89cdca9f",
+      "linked_candidates": [
+        "yuedu://booksource/importonline?src=https://shuyuan.nyasama.cc/cdn/5f626361539d546e6fa3a02b24598284.json",
+        "yuedu://booksource/importonline?src=https://cdn.mgz.la/shuyuan/250701%E6%9C%80%E5%90%8E%E4%B8%80%E7%89%88%E4%B8%80%E7%A8%8B.json",
+        "yuedu://booksource/importonline?src=https://shuyuan.nyasama.cc/shuyuan/c5dccfb4fea13577819b10e0a3a810ea.json",
+        "yuedu://booksource/importonline?src=https://sy.nyasama.cc/shuyuan/469b68b8c8e7344eb38664d2fb1bdd17.json",
+        "yuedu://booksource/importonline?src=https://shuyuan.nyasama.cc/shuyuan/f5b15e9641d164937061974cfefb675c.json",
+        "yuedu://booksource/importonline?src=https://cdn.mgz.la/shuyuan/guaner25.02.03.txt",
+        "yuedu://booksource/importonline?src=https://legado.miaogongzi.org/%E9%98%85%E8%AF%BB%E4%B9%A6%E6%BA%90/sy.json",
+        "yuedu://booksource/importonline?src=https://legado.miaogongzi.org/%E9%98%85%E8%AF%BB%E4%B9%A6%E6%BA%90/hff.json",
+        "yuedu://booksource/importonline?src=https://cdn.miaogongzi.cc/shuyuan/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E9%80%9A%E7%94%A8.json"
+      ]
+    },
+    {
+      "id": "license-xiu2",
+      "url": "https://raw.githubusercontent.com/XIU2/Yuedu/426b24f59aa763ee0f2d9cc094612d2ef42c8293/LICENSE",
+      "checked_at_utc": "2026-10-15T07:40:13.949794+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/XIU2/Yuedu/426b24f59aa763ee0f2d9cc094612d2ef42c8293/LICENSE",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 35149,
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+    },
+    {
+      "id": "tree-aoa",
+      "url": "https://api.github.com/repos/aoaostar/legado/git/trees/1f10d490b46bf56180efb0c30a61d6e8a141a7e2?recursive=1",
+      "checked_at_utc": "2026-10-15T07:40:14.740477+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/aoaostar/legado/git/trees/1f10d490b46bf56180efb0c30a61d6e8a141a7e2?recursive=1",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 6477,
+      "sha256": "02394b7c0a547f8807045a9c8a9e273e899660f2850f1cb6da521ab6306a0dd6",
+      "license_paths": [],
+      "relevant_paths": [
+        "sources/4dc410d1.json",
+        "sources/71e56d4f.json",
+        "sources/b778fe6b.json",
+        "sources/e3e5d620.json"
+      ],
+      "truncated": false
+    },
+    {
+      "id": "tree-tickmao",
+      "url": "https://api.github.com/repos/tickmao/Novel/git/trees/7e199f158effb9246491b43a9ea7bbf92284ac9b?recursive=1",
+      "checked_at_utc": "2026-10-15T07:40:16.052008+00:00",
+      "status": 200,
+      "final_url": "https://api.github.com/repos/tickmao/Novel/git/trees/7e199f158effb9246491b43a9ea7bbf92284ac9b?recursive=1",
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 101337,
+      "sha256": "3cec9ae0016c41a94123cdc4828cf8736b7d079376658cebadc6d73785e27dc9",
+      "license_paths": [
+        "CREDITS.md",
+        "runtime/LICENSE"
+      ],
+      "relevant_paths": [],
+      "truncated": false
+    },
+    {
+      "id": "tickmao-credits",
+      "url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/CREDITS.md",
+      "checked_at_utc": "2026-10-15T07:40:17.533941+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/CREDITS.md",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 1189,
+      "sha256": "98a5eea5f0c9990b643aebe3166cb45286f9fe810d3e731482f533f425766b03"
+    },
+    {
+      "id": "tickmao-validator",
+      "url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/scripts/validate.py",
+      "checked_at_utc": "2026-10-15T07:40:18.563915+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/scripts/validate.py",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 1673,
+      "sha256": "5ea87158370af368677be0e370269994dc448e989bbef8afe1eaea2eac14c151"
+    },
+    {
+      "id": "tickmao-report",
+      "url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/validation_report.json",
+      "checked_at_utc": "2026-10-15T07:40:18.956778+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/validation_report.json",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 246,
+      "sha256": "fab43cc2c840a53ccdf6fbde4e74fe712933def72d75866c7922d6672dce5b15",
+      "upstream_claim_not_our_test": {
+        "timestamp": "2026-10-04T07:44:29.470924",
+        "total": 196,
+        "valid": 194,
+        "invalid": 2,
+        "sample": null,
+        "timeout": 10,
+        "errors": {
+          "https://www.zhaogushi.cn": "Server disconnected",
+          "http://www.huarenv5.com##": "超时"
+        }
+      }
+    },
+    {
+      "id": "rules-guaner-published",
+      "url": "https://cdn.mgz.la/shuyuan/guaner25.02.03.txt",
+      "checked_at_utc": "2026-10-15T07:41:49.940073+00:00",
+      "status": 200,
+      "final_url": "https://cdn.mgz.la/shuyuan/guaner25.02.03.txt",
+      "content_type": "text/plain",
+      "bytes": 729479,
+      "sha256": "10537479695e9168c63ad3225463124c47bb3730525f6142d9c1ff4ad0139627",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 86
+      }
+    },
+    {
+      "id": "rules-pobing-published",
+      "url": "https://legado.miaogongzi.org/%E9%98%85%E8%AF%BB%E4%B9%A6%E6%BA%90/sy.json",
+      "checked_at_utc": "2026-10-15T07:41:49.940353+00:00",
+      "status": 200,
+      "final_url": "https://legado.miaogongzi.org/%E9%98%85%E8%AF%BB%E4%B9%A6%E6%BA%90/sy.json",
+      "content_type": "application/json",
+      "bytes": 508616,
+      "sha256": "5f4fa106158ba51c4a1817d53060fa094e9b1c978045bd8844ec50e49ada75ab",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 91
+      }
+    },
+    {
+      "id": "rules-tickmao-main",
+      "url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/sources/legado/main/full.json",
+      "checked_at_utc": "2026-10-15T07:43:00.406593+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/sources/legado/main/full.json",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 7436715,
+      "sha256": "f9c7b1093f308bffc36806e89cf25a9ed6fac859b96c88d44e1dfe0e454b9707",
+      "static_analysis": {
+        "root_type": "list",
+        "records": 1000
+      }
+    },
+    {
+      "id": "tickmao-batch-validator",
+      "url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/scripts/batch_validator.py",
+      "checked_at_utc": "2026-10-15T07:43:00.406875+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/scripts/batch_validator.py",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 5076,
+      "sha256": "a1c37ad51e895a71d70a6fb34beb566d2336d9f7861b67865abd274b25a365d4"
+    },
+    {
+      "id": "tickmao-runtime-license",
+      "url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/runtime/LICENSE",
+      "checked_at_utc": "2026-10-15T07:43:00.406983+00:00",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/tickmao/Novel/7e199f158effb9246491b43a9ea7bbf92284ac9b/runtime/LICENSE",
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 35139,
+      "sha256": "35d3f26265f7c262a524602f72efda71f69d390086d6d0b74c70c8b07251227c"
+    },
+    {
+      "id": "probe-qidian",
+      "url": "https://www.qidian.com/",
+      "checked_at_utc": "2026-10-15T07:43:02.095921+00:00",
+      "status": 202,
+      "final_url": "https://www.qidian.com/",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 209,
+      "sha256": "cb7851e716fe40aab682229a1b10530262264f2f958ef12d13a662ca2d198aa7",
+      "challenge_page_observation": {
+        "http_status": 202,
+        "bytes": 209,
+        "body_empty": true,
+        "external_probe_script": true,
+        "search_result_nodes": 0,
+        "not_followed_or_bypassed": true
+      }
+    },
+    {
+      "id": "probe-jjwxc",
+      "url": "https://m.jjwxc.net/",
+      "checked_at_utc": "2026-10-15T07:43:02.225232+00:00",
+      "status": 200,
+      "final_url": "https://m.jjwxc.net/",
+      "content_type": "text/html",
+      "bytes": 75073,
+      "sha256": "b794cab83e12471439f5d0ac7fd7b7fcacf53b544eb9fa21dd65732da70b5566",
+      "page_observation": {
+        "html_like": true,
+        "has_title": true,
+        "challenge_keyword_hint": false,
+        "not_a_search_or_reading_test": true
+      }
+    },
+    {
+      "id": "probe-gushiwen",
+      "url": "https://m.gushiwen.cn/",
+      "checked_at_utc": "2026-10-15T07:43:02.587893+00:00",
+      "status": 200,
+      "final_url": "https://m.gushiwen.cn/",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 40619,
+      "sha256": "94b9a92693a2d8dd47d8c3ab425c60e14d1cae99e1fbc13020ff5923b885c202",
+      "page_observation": {
+        "html_like": true,
+        "has_title": true,
+        "challenge_keyword_hint": false,
+        "not_a_search_or_reading_test": true
+      }
+    },
+    {
+      "id": "probe-zongheng",
+      "url": "https://www.zongheng.com/",
+      "checked_at_utc": "2026-10-15T07:43:02.614369+00:00",
+      "status": 200,
+      "final_url": "https://www.zongheng.com/",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 413964,
+      "sha256": "0e440152db18b21163993d589b3c5db39f7280e5f1a12e81612ed6966d25e9eb",
+      "page_observation": {
+        "html_like": true,
+        "has_title": true,
+        "challenge_keyword_hint": false,
+        "not_a_search_or_reading_test": true
+      }
+    },
+    {
+      "id": "search-qidian-xiu2",
+      "url": "https://www.qidian.com/so/%E4%B8%89%E5%9B%BD%E6%BC%94%E4%B9%89.html",
+      "checked_at_utc": "2026-10-15T07:44:39.660373+00:00",
+      "status": 202,
+      "final_url": "https://www.qidian.com/so/%E4%B8%89%E5%9B%BD%E6%BC%94%E4%B9%89.html",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 209,
+      "sha256": "cb7851e716fe40aab682229a1b10530262264f2f958ef12d13a662ca2d198aa7",
+      "manual_literal_url_probe": {
+        "keyword": "三国演义",
+        "not_rule_execution": true,
+        "not_end_to_end_reading_test": true,
+        "res_book_item_class_count": 0,
+        "cont_class_count": 0,
+        "cytable_class_count": 0,
+        "anchor_count": 0,
+        "challenge_keyword_hint": false
+      },
+      "challenge_page_observation": {
+        "http_status": 202,
+        "bytes": 209,
+        "body_empty": true,
+        "external_probe_script": true,
+        "search_result_nodes": 0,
+        "not_followed_or_bypassed": true
+      }
+    },
+    {
+      "id": "search-qidian-pobing",
+      "url": "https://www.qidian.com/soushu/%E4%B8%89%E5%9B%BD%E6%BC%94%E4%B9%89.html",
+      "checked_at_utc": "2026-10-15T07:44:39.660638+00:00",
+      "status": 202,
+      "final_url": "https://www.qidian.com/soushu/%E4%B8%89%E5%9B%BD%E6%BC%94%E4%B9%89.html",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 209,
+      "sha256": "cb7851e716fe40aab682229a1b10530262264f2f958ef12d13a662ca2d198aa7",
+      "manual_literal_url_probe": {
+        "keyword": "三国演义",
+        "not_rule_execution": true,
+        "not_end_to_end_reading_test": true,
+        "res_book_item_class_count": 0,
+        "cont_class_count": 0,
+        "cytable_class_count": 0,
+        "anchor_count": 0,
+        "challenge_keyword_hint": false
+      },
+      "challenge_page_observation": {
+        "http_status": 202,
+        "bytes": 209,
+        "body_empty": true,
+        "external_probe_script": true,
+        "search_result_nodes": 0,
+        "not_followed_or_bypassed": true
+      }
+    },
+    {
+      "id": "search-jjwxc-guaner",
+      "url": "http://www.jjwxc.net/bookbase.php?searchkeywords=%C8%FD%B9%FA%D1%DD%D2%E5&page=1",
+      "checked_at_utc": "2026-10-15T07:44:39.752272+00:00",
+      "status": 200,
+      "final_url": "https://www.jjwxc.net/bookbase.php?searchkeywords=%C8%FD%B9%FA%D1%DD%D2%E5&page=1",
+      "content_type": "text/html",
+      "bytes": 228507,
+      "sha256": "f889e36f58804a93d64669464b59be501c83164e3a9f59b4fa238368982367b8",
+      "manual_literal_url_probe": {
+        "keyword": "三国演义",
+        "not_rule_execution": true,
+        "not_end_to_end_reading_test": true,
+        "res_book_item_class_count": 0,
+        "cont_class_count": 0,
+        "cytable_class_count": 1,
+        "anchor_count": 310,
+        "challenge_keyword_hint": false,
+        "cytable_rows": 99,
+        "cytable_novel_links": 98,
+        "cytable_unique_novel_links": 98
+      }
+    },
+    {
+      "id": "search-gushiwen-tickmao",
+      "url": "https://m.gushiwen.cn/search.aspx?value=%E4%B8%89%E5%9B%BD%E6%BC%94%E4%B9%89&valuej=%E4%B8%89",
+      "checked_at_utc": "2026-10-15T07:44:39.765051+00:00",
+      "status": 200,
+      "final_url": "https://m.gushiwen.cn/search.aspx?value=%E4%B8%89%E5%9B%BD%E6%BC%94%E4%B9%89&valuej=%E4%B8%89",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 84,
+      "sha256": "23cb06a0a646c96f5a2a91e4572705a37b4212021a288eb1f1bde9a2e8bb9c86",
+      "manual_literal_url_probe": {
+        "keyword": "三国演义",
+        "not_rule_execution": true,
+        "not_end_to_end_reading_test": true,
+        "res_book_item_class_count": 0,
+        "cont_class_count": 0,
+        "cytable_class_count": 0,
+        "anchor_count": 0,
+        "challenge_keyword_hint": false,
+        "script_redirect_only": true
+      }
+    }
+  ]
+}

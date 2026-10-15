@@ -16,6 +16,7 @@
 - 开发/测试/生产共享源码，通过 infra/environments 的配置和运行时环境区分；不得复制业务代码维护环境分支。
 - 当前优先任务是 macOS 小说 App（先自用，通过安装包运行）；完整范围见 docs/novel-macos-plan.md，下一实现任务为 docs/novel-macos-backlog.md 的 MAC-01。
 - 逐步实施见 docs/novel-macos-implementation-steps.md；环境事实见 docs/development-environment.md。MAC-18来源核验已开始，证据见 docs/source-audit-2026-10-15.md，仍无获准内置来源，不能将技术样本通过写成完整接入。
+- 截图五个合集的包级核验见 docs/source-collections-audit-2026-10-15.md。数量/镜像/脚本/许可与有限搜索路径有证据，但没有逐条测通全包；Tickmao公开194与内部1000、破冰128与91不得混淆，所有来源仍未获准自动启用。
 - macOS 专有能力通过 packages/platform_services 或相应平台适配隔离，公共领域/用例不得直接依赖系统路径或原生实现。其他三端与漫画不能因本批延后而被移除。
 - 小说资源只面向中文（含简繁），中文免费普通与18+书源都纳入接入范围；漫画仍保留中日韩语言目标。优先免费来源，收费来源不自动启用或付费。
 - 小说“搜索18+书源”默认关闭，关闭时调度层不得请求18+源；用户开启后才将获准且已启用的18+源加入搜索。不得先请求后仅靠UI隐藏结果。

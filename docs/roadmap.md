@@ -8,6 +8,8 @@
 
 具体执行见 [macOS详细步骤](novel-macos-implementation-steps.md)，环境见 [本机核验](development-environment.md)，来源见 [首轮核验](source-audit-2026-10-15.md)。当前普通/18+整体获准内置均为0条，不等同来源平台没有内容，也不影响继续本地基础设计。
 
+截图五个合集已做[包级核验与有限网络探测](source-collections-audit-2026-10-15.md)，计数/版本/许可和脚本风险已记录；没有逐条测通所有站点，MAC-18/SRC-02仍为进行中，不标完成或整包可用。
+
 ## 里程碑
 
 | 阶段 | 结果 | 退出条件 |

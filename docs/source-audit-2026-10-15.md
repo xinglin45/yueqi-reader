@@ -28,3 +28,5 @@
 - 本次无付费或订阅；未付费不等于永久免费、无限额度或免费商用。
 
 明细：[N-01](verifications/N-01.md)、[N-02](verifications/N-02.md)、[N-11/N-14](verifications/N-11.md)、[N-12](verifications/N-12.md)。其他历史候选继续见 [数据源清单](data-sources.md)。
+
+同日续验：按用户截图对AOAOSTAR、XIU2、Tickmao、破冰、关耳作了[五合集包级核验和有限网络探测](source-collections-audit-2026-10-15.md)。本页保留首轮四候选范围；新增证据不改变“尚无完整获准来源”的结论。
