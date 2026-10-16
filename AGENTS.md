@@ -15,6 +15,7 @@
 - 每款 client 是一套 Flutter 工程，四端只分别构建/适配；两款 server 是共享单体的业务模块，唯一启动入口在 services/reader_platform/app。
 - 开发/测试/生产共享源码，通过 infra/environments 的配置和运行时环境区分；不得复制业务代码维护环境分支。
 - 当前优先任务是 macOS 小说 App（先自用，通过安装包运行）；完整范围见 docs/novel-macos-plan.md，下一实现任务为 docs/novel-macos-backlog.md 的 MAC-01。
+- 第02步编码前必须先完成独立视觉设计与原型确认环节01A（MAC-02-D），范围见 docs/novel-macos-ui-design.md。可提前做设计，不依赖SDK或真实来源；只有具体设计包/原型获用户明确确认并记录版本后才能开始MAC-02编码。当前仅添加任务，尚无设计稿或确认结果。
 - 逐步实施见 docs/novel-macos-implementation-steps.md；环境事实见 docs/development-environment.md。MAC-18来源核验已开始，证据见 docs/source-audit-2026-10-15.md，仍无获准内置来源，不能将技术样本通过写成完整接入。
 - 当前开发聊天本批仍限第00步MAC-18，未进入MAC-01；续验见 docs/source-step00-2026-10-15.md。2026-10-16用户改为特殊区域“地外文明”：不指定现实地区、不做地区专项核验，地区核验及某国境内可达性不阻塞继续开发，规则见 docs/development-region-policy.md。旧中国大陆记录保留为历史，不继续作为开发前置条件。已有普通/成人完整批准仍0/0，来源技术/许可/自身访问条件分别记录。
 - 截图五个合集的包级核验见 docs/source-collections-audit-2026-10-15.md。数量/镜像/脚本/许可与有限搜索路径有证据，但没有逐条测通全包；Tickmao公开194与内部1000、破冰128与91不得混淆，所有来源仍未获准自动启用。

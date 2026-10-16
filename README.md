@@ -14,7 +14,8 @@
 
 - [macOS 小说 App 完整功能方案](docs/novel-macos-plan.md)：日常阅读、听书、书源、下载、备份、隐私与版本范围。
 - [macOS 开发任务与验收](docs/novel-macos-backlog.md)：MAC-00～MAC-26、依赖、验收场景和性能预算。
-- [macOS 详细开发步骤](docs/novel-macos-implementation-steps.md)：23步执行顺序、代码落点、交付物和逐步验收。
+- [macOS 详细开发步骤](docs/novel-macos-implementation-steps.md)：00～22及新增01A设计环节，共24个执行环节、代码落点与逐步验收。
+- [独立视觉设计与原型确认](docs/novel-macos-ui-design.md)：MAC-02-D，先形成用户明确确认的设计版本，再开始第02步编码；设计尚未开始。
 - [开发环境核验](docs/development-environment.md)与[中文来源首轮核验](docs/source-audit-2026-10-15.md)：本机事实、技术选型前提与来源未决条件。
 - [第00步单源续验](docs/source-step00-2026-10-15.md)：中国大陆自用范围、有限普通/成人候选矩阵、38次观测和未解除条件；本开发聊天本批仅执行MAC-18，未进入第01步。
 - [截图五个书源合集逐项核验](docs/source-collections-audit-2026-10-15.md)：实际文件数量、版本差异、脚本/付费能力、有限网络样本和未通过项。
