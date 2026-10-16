@@ -1,0 +1,22 @@
+name: novel_app
+description: "阅读软件：阅栖小说客户端，MAC-01工程基础。"
+publish_to: 'none'
+version: 0.0.1+1
+
+environment:
+  sdk: ^3.13.5
+  flutter: ">=3.47.7"
+
+dependencies:
+  reader_core:
+    path: ../../packages/reader_core
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: 6.0.0
+
+flutter:
+  uses-material-design: true

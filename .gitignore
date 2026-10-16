@@ -40,3 +40,11 @@ artifacts/
 *.app/
 *.dSYM/
 *.dmg
+
+# Local Python verification caches
+__pycache__/
+*.pyc
+# SDKs are installed outside the repository by tool/sdk.py
+.flutter-sdk/
+# Library lockfile is resolved by the consuming application.
+/packages/reader_core/pubspec.lock

@@ -1,8 +1,33 @@
 # 开发环境与依赖核验
 
+最新核验：2026-10-16，MAC-01已完成。以下当前结果优先于文末2026-10-15只读历史；完整证据见[基础工程验收](verifications/mac-01-2026-10-16.md)。
+
+## 当前实际基线
+
+| 项目 | 已验证结果 |
+|---|---|
+| 系统/机器 | macOS27.0.1 build26A434、arm64、64GiB内存 |
+| Xcode/SDK | Xcode27.1 build27A9275、macOS SDK27.0、Swift6.4；首次运行组件检查退出0 |
+| Flutter/Dart | 官方Git稳定标签3.47.7、Dart3.13.5；提交/engine固定在[tool/flutter-sdk.json](../tool/flutter-sdk.json) |
+| 调用方式 | 项目tool/flutterw、tool/dartw；SDK位于用户工具目录，包装命令只为子进程补PATH，不改全局配置 |
+| 原生依赖 | 本批无第三方原生插件；默认SwiftPM路径。未装CocoaPods，实际Debug/Release构建通过；未来插件按需补充 |
+| doctor | Flutter、可用设备与网络检查通过；Android许可未接受完整、CocoaPods缺失两项警告，未把这些写成已解决 |
+| 工程 | 小说/client四端宿主已生成；macOS arm64 Debug/Release及独立窗口通过；其他三端未构建 |
+| 当前依赖 | 仅Flutter、实际装配的纯Dart reader_core、flutter_test/flutter_lints；完整应用锁文件与[许可清单](licenses/README.md)留存 |
+| 中文目录检查 | 格式、严格Dart分析及3项测试通过；Flutter CLI LSP入口有中文字节长度错误，采用同SDKDart分析，见[ADR-0001](decisions/0001-mac01-flutter-toolchain.md) |
+| 产物 | 本机Release基础壳0.0.1+1、20.6MB工具报告、最低目标12.0、arm64、ad-hoc校验通过；不含真实阅读/来源能力，未正式公证分发 |
+
+SDK归档端点本轮返回404，改从官方仓库固定标签，未修改SDK源码；不声称核验未获取归档的SHA-256。Riverpod/go_router/Drift、EPUB、TTS与后端版本仍在对应任务实际使用时核验锁定，不被本批SDK决定自动批准。
+
+新终端从仓库根运行 `python3 tool/sdk.py install`、`./tool/check.sh`；本机已有匹配SDK时安装命令只校验并显示版本。不要直接flutter upgrade。项目源代码许可证仍未选择，未接受Android许可、购买证书或接入付费服务。
+
+## 2026-10-15只读核验与候选方案（历史）
+
+以下保留原始观测与当时未来计划，未安装/未初始化等措辞仅指2026-10-15。
+
 核验日期：2026-10-15，Asia/Singapore。仅执行只读检查，没有安装 SDK、接受许可、初始化工程或运行 App。本文件区分本机观测与未来版本决策，不作为四端兼容证明。
 
-## 本机观测
+### 本机观测
 
 | 项目 | 实际结果 | 对开发的影响 |
 |---|---|---|
@@ -16,7 +41,7 @@
 | Maven | 3.9.16，所用 Homebrew Java 为 26.0.1 | 与系统 Java 不同；服务端任务需明确 JAVA_HOME 与兼容矩阵 |
 | 仓库 | main；小说/client 和漫画/client 仍只有说明 | 本轮无 Flutter 宿主、依赖锁文件或运行服务 |
 
-## MAC-01 的执行顺序
+### MAC-01 的执行顺序
 
 1. 先定位已有 SDK；需要安装时选择官方 stable SDK，记录来源、版本、Dart 版本和完整性，使用项目专用版本约定。
 2. 查所选 SDK 对当前 Xcode/macOS 的要求，运行 flutter doctor -v、flutter devices。当前 macOS 构建所需项必须解决；Windows 构建不能在本机假定通过。
@@ -29,7 +54,7 @@
 
 以上命令均为未来任务，本轮没有运行 flutter doctor、flutter create 或 flutter build。
 
-## 建议基线与试验
+### 建议基线与试验
 
 以下尚未安装、联合解析或锁定版本。2026-10-15 阅读了维护者文档；上游平台支持不是本项目实测结果。
 

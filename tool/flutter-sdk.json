@@ -1,0 +1,9 @@
+{
+  "version": "3.47.7",
+  "channel": "stable",
+  "framework_revision": "abaf9c523780a608bd46686fd5e53740a07077f8",
+  "engine_revision": "deb287481e3ce9468f3434937ced4240a70539ca",
+  "repository": "https://github.com/flutter/flutter.git",
+  "installation": "git-tag",
+  "dart_version": "3.13.5"
+}

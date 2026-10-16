@@ -1,0 +1,259 @@
+{
+  "verified_date": "2026-10-16",
+  "sdk_pin": "../../tool/flutter-sdk.json",
+  "application_lockfile": "../../小说/client/pubspec.lock",
+  "packages": [
+    {
+      "name": "async",
+      "version": "2.13.1",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "ff15faa32a2e638107b7789592b14426162a75ba620044ee2340a20ec6ce5e73",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/async/versions/2.13.1"
+    },
+    {
+      "name": "boolean_selector",
+      "version": "2.1.2",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "b71519245009a3b8f126196a5408ec031e216e8e0d985085958c6543f82a8a2a",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/boolean_selector/versions/2.1.2"
+    },
+    {
+      "name": "characters",
+      "version": "1.4.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "0371d1da6a57fb791db29d29b95333429205f51f3cb2eb3a0c12d91838a38744",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/characters-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/characters/versions/1.4.1"
+    },
+    {
+      "name": "clock",
+      "version": "1.1.3",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/clock/versions/1.1.3"
+    },
+    {
+      "name": "collection",
+      "version": "1.19.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "ff15faa32a2e638107b7789592b14426162a75ba620044ee2340a20ec6ce5e73",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/collection-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/collection/versions/1.19.1"
+    },
+    {
+      "name": "fake_async",
+      "version": "1.3.3",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/fake_async/versions/1.3.3"
+    },
+    {
+      "name": "flutter",
+      "version": "0.0.0",
+      "source": "sdk",
+      "scope": "runtime",
+      "license_sha256": "a598db94b6290ffbe10b5ecf911057b6a943351c727fdda9e5f2891d68700a20",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/flutter-LICENSE.txt"
+    },
+    {
+      "name": "flutter_lints",
+      "version": "6.0.0",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "89519eca6f7b9529b35bdddd623a58c3af06a88c458dbd6531ddb4675acf75a9",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/flutter_lints/versions/6.0.0"
+    },
+    {
+      "name": "flutter_test",
+      "version": "0.0.0",
+      "source": "sdk",
+      "scope": "development",
+      "license_sha256": "a598db94b6290ffbe10b5ecf911057b6a943351c727fdda9e5f2891d68700a20",
+      "license_status": "text_inspected"
+    },
+    {
+      "name": "leak_tracker",
+      "version": "11.0.2",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "08a004aa8956c3cf3b24f7f69c966247233953e18e6afaa61191ea47b7eb70f6",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/leak_tracker/versions/11.0.2"
+    },
+    {
+      "name": "leak_tracker_flutter_testing",
+      "version": "3.0.10",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "08a004aa8956c3cf3b24f7f69c966247233953e18e6afaa61191ea47b7eb70f6",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/leak_tracker_flutter_testing/versions/3.0.10"
+    },
+    {
+      "name": "leak_tracker_testing",
+      "version": "3.0.2",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "08a004aa8956c3cf3b24f7f69c966247233953e18e6afaa61191ea47b7eb70f6",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/leak_tracker_testing/versions/3.0.2"
+    },
+    {
+      "name": "lints",
+      "version": "6.1.0",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "421fe78c3b5df297f8b4ab2c74f2450a274ee6d245a113091f6b9f90570af193",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/lints/versions/6.1.0"
+    },
+    {
+      "name": "matcher",
+      "version": "0.12.20",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/matcher/versions/0.12.20"
+    },
+    {
+      "name": "material_color_utilities",
+      "version": "0.13.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "d103f246ef4c18dab8af0c1dcf6a8af884e5cff554da7261a48ac43c17d98f2e",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/material_color_utilities-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/material_color_utilities/versions/0.13.0"
+    },
+    {
+      "name": "meta",
+      "version": "1.18.3",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "b71519245009a3b8f126196a5408ec031e216e8e0d985085958c6543f82a8a2a",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/meta-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/meta/versions/1.18.3"
+    },
+    {
+      "name": "novel_app",
+      "version": "0.0.1+1",
+      "source": "root",
+      "scope": "runtime",
+      "license_status": "project_license_not_selected"
+    },
+    {
+      "name": "path",
+      "version": "1.9.1",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/path/versions/1.9.1"
+    },
+    {
+      "name": "reader_core",
+      "version": "0.0.1",
+      "source": "path",
+      "scope": "runtime",
+      "license_status": "project_license_not_selected"
+    },
+    {
+      "name": "sky_engine",
+      "version": "0.0.0",
+      "source": "sdk",
+      "scope": "runtime",
+      "license_sha256": "3c0040023a5789bf56d6bf41fd44f08b21758523d41f128fb7dd6beb398d1191",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/sky_engine-LICENSE.txt"
+    },
+    {
+      "name": "source_span",
+      "version": "1.10.2",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/source_span/versions/1.10.2"
+    },
+    {
+      "name": "stack_trace",
+      "version": "1.12.2",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "ff0b91d4f3c32b25cb6ec84985e8da89b0ba2a2b2f7eef353cda5e5423a20390",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/stack_trace/versions/1.12.2"
+    },
+    {
+      "name": "stream_channel",
+      "version": "2.1.4",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "ff15faa32a2e638107b7789592b14426162a75ba620044ee2340a20ec6ce5e73",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/stream_channel/versions/2.1.4"
+    },
+    {
+      "name": "string_scanner",
+      "version": "1.4.1",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/string_scanner/versions/1.4.1"
+    },
+    {
+      "name": "term_glyph",
+      "version": "1.2.2",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "ea97a7558a7bd7cee4e2355f7529e3cbebb0dcbb546ddb9a90f10c9eb6b08da5",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/term_glyph/versions/1.2.2"
+    },
+    {
+      "name": "test_api",
+      "version": "0.7.12",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "ff1b9f0df9036c04be424b1e3ce12789bea880ad5ffc3a48e069ae2d40a087a4",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/test_api/versions/0.7.12"
+    },
+    {
+      "name": "vector_math",
+      "version": "2.4.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/vector_math-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/vector_math/versions/2.4.0"
+    },
+    {
+      "name": "vm_service",
+      "version": "15.4.0",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "ad6a71997da90924b2cfb1fb47ec46537f70faf469efe016168794ae45ed6888",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/vm_service/versions/15.4.0"
+    }
+  ]
+}

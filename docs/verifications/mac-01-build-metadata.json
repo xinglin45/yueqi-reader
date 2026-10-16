@@ -1,0 +1,16 @@
+{
+  "verified_date": "2026-10-16",
+  "version": "0.0.1+1",
+  "app_name": "阅栖",
+  "bundle_id": "local.yueqi.novel",
+  "minimum_macos": "12.0",
+  "executable_architectures": "arm64",
+  "dart_aot_architectures": "arm64",
+  "signature": "ad-hoc; deep strict verification passed",
+  "developer_team_configured": false,
+  "notarized": false,
+  "notices_sha256": "e78c728498a5393760b7e81ef94a6afc2b7f314171a52cd67e7072f26a63854d",
+  "notices_uncompressed_bytes": 1301508,
+  "build_output": "小说/client/build/macos/Build/Products/Release/阅栖.app",
+  "artifact_committed": false
+}

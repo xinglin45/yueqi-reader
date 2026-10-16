@@ -1,0 +1,40 @@
+name: Novel macOS foundation
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - '小说/client/**'
+      - 'packages/reader_core/**'
+      - 'tool/**'
+      - '.github/workflows/novel-macos.yml'
+  push:
+    branches: [main]
+    paths:
+      - '小说/client/**'
+      - 'packages/reader_core/**'
+      - 'tool/**'
+      - '.github/workflows/novel-macos.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: novel-macos-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Install the pinned official SDK
+        run: python3 tool/sdk.py install
+      - name: Format, analyze and test
+        run: ./tool/check.sh
+      - name: Build macOS release
+        working-directory: 小说/client
+        run: ../../tool/flutterw build macos --release --no-pub

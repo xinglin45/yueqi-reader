@@ -6,7 +6,7 @@
 - 四个目标平台：Android、iOS、Windows、macOS；Flutter 客户端。
 - Spring Boot 模块化单体提供共享账号、设备和同步服务；Local-first。
 - 每款 App 使用独立本地 SQLite 和缓存目录；服务端 MySQL 可选，Redis 按需。
-- 当前交付为文档、目录骨架与 docs/design/novel-macos/prototype 独立网页设计原型；无可运行Flutter App、服务、正式App构建配置或已接入的数据源。
+- MAC-01已完成：小说/client为真实Flutter四端宿主工程，macOS arm64基础检查壳Debug/Release可运行；reader_core已最小装配。D1独立网页原型另存docs/design。阅读功能、后端与真实来源尚未实现，其他三端未构建。
 - 首先阅读 README.md、docs/requirements.md、docs/architecture.md，再选 docs/roadmap.md 的单一任务。
 - 开发根目录为 /Users/catmint/个人/AI/CODE/自用工具/阅栖，小说 App 暂定名“阅栖”；项目显示名保持“阅读软件”。
 - 原 ChatGPT 同步镜像位于 /Users/catmint/.codex/.chatgpt-projects/g-p-6acf456308f4819185079a8e0841e941；不得编辑其中 AGENTS.md 或 sources/ 文件。
@@ -14,10 +14,10 @@
 - 代码按产品放在 小说/client、小说/server、漫画/client、漫画/server；推荐在本根目录使用一个 Git 仓库，不在产品或平台目录内嵌套仓库。
 - 每款 client 是一套 Flutter 工程，四端只分别构建/适配；两款 server 是共享单体的业务模块，唯一启动入口在 services/reader_platform/app。
 - 开发/测试/生产共享源码，通过 infra/environments 的配置和运行时环境区分；不得复制业务代码维护环境分支。
-- 当前优先任务是 macOS 小说 App（先自用，通过安装包运行）；完整范围见 docs/novel-macos-plan.md，下一实现任务为 docs/novel-macos-backlog.md 的 MAC-01。
-- 第02步编码前必须先完成独立视觉设计与原型确认环节01A（MAC-02-D），范围见 docs/novel-macos-ui-design.md。可提前做设计，不依赖SDK或真实来源；只有具体设计包/原型获用户明确确认并记录版本后才能开始MAC-02编码。用户于2026-10-16明确回复“确认D1”，MAC-02-D/01A已完成；采用提交e7764cc的D1暖纸设计包与原型，确认记录 docs/design/novel-macos/confirmation-D1.md。后续沿用D1主风格、导航布局与双模式交互，MAC-02仍须先完成MAC-01。
+- 当前优先任务是 macOS 小说 App（先自用，通过安装包运行）；完整范围见 docs/novel-macos-plan.md，下一实现任务为 docs/novel-macos-backlog.md 的 MAC-02，沿用已确认D1。
+- 第02步编码前必须先完成独立视觉设计与原型确认环节01A（MAC-02-D），范围见 docs/novel-macos-ui-design.md。可提前做设计，不依赖SDK或真实来源；只有具体设计包/原型获用户明确确认并记录版本后才能开始MAC-02编码。用户于2026-10-16明确回复“确认D1”，MAC-02-D/01A已完成；采用提交e7764cc的D1暖纸设计包与原型，确认记录 docs/design/novel-macos/confirmation-D1.md。后续沿用D1主风格、导航布局与双模式交互，MAC-01已完成，MAC-02设计与工程前置均满足，业务壳尚未开始。
 - 逐步实施见 docs/novel-macos-implementation-steps.md；环境事实见 docs/development-environment.md。MAC-18来源核验已开始，证据见 docs/source-audit-2026-10-15.md，仍无获准内置来源，不能将技术样本通过写成完整接入。
-- 用户已授权提前执行01A/MAC-02-D；本批交付独立网页设计原型，不进入MAC-01或MAC-02。MAC-18续验见 docs/source-step00-2026-10-15.md。2026-10-16用户改为特殊区域“地外文明”：不指定现实地区、不做地区专项核验，地区核验及某国境内可达性不阻塞继续开发，规则见 docs/development-region-policy.md。旧中国大陆记录保留为历史，不继续作为开发前置条件。已有普通/成人完整批准仍0/0，来源技术/许可/自身访问条件分别记录。
+- D1/01A已确认完成，用户已授权继续下一步；第01步MAC-01已完成，证据docs/verifications/mac-01-2026-10-16.md；本批未进入MAC-02业务壳。MAC-18续验见 docs/source-step00-2026-10-15.md。2026-10-16用户改为特殊区域“地外文明”：不指定现实地区、不做地区专项核验，地区核验及某国境内可达性不阻塞继续开发，规则见 docs/development-region-policy.md。旧中国大陆记录保留为历史，不继续作为开发前置条件。已有普通/成人完整批准仍0/0，来源技术/许可/自身访问条件分别记录。
 - 截图五个合集的包级核验见 docs/source-collections-audit-2026-10-15.md。数量/镜像/脚本/许可与有限搜索路径有证据，但没有逐条测通全包；Tickmao公开194与内部1000、破冰128与91不得混淆，所有来源仍未获准自动启用。
 - macOS 专有能力通过 packages/platform_services 或相应平台适配隔离，公共领域/用例不得直接依赖系统路径或原生实现。其他三端与漫画不能因本批延后而被移除。
 - 小说资源只面向中文（含简繁），中文免费普通与18+书源都纳入接入范围；漫画仍保留中日韩语言目标。优先免费来源，收费来源不自动启用或付费。
@@ -38,7 +38,7 @@
 9. JSON/脚本/APK 均是不可信输入。不得在主进程或 Spring Boot JVM 中任意执行来源脚本；不得绕过登录、付费、年龄或访问控制。
 10. 18+默认关闭；App自身成年确认仅一份“我确认已经成年”声明，确认后本机保存，不收集实名/出生日期/证件、不新增核验服务或定期重验；与搜索开关/隐私锁分离。来源自身登录/付费/年龄访问流程仍正常处理。当前“地外文明”模式跳过项目地区核验，不新增地区门槛；未来公开发行专项另行处理。
 11. Token、Cookie、密码、付费密钥仅保存在系统安全存储，不提交、不写日志、不随书源配置同步。
-12. SDK、库、Java、Spring Boot、Flutter 版本在初始化任务中检查兼容性后锁定，当前未选定具体版本。
+12. Flutter 3.47.7/Dart 3.13.5已固定，使用tool/flutterw、tool/dartw和tool/check.sh，不修改全局PATH或直接flutter upgrade。当前中文路径flutter analyze有上游LSP错误，严格dart analyze替代，见ADR-0001。Java/Spring Boot及尚未使用的库在对应任务兼容核验后锁定。
 13. 不把个人/非商业原型视作商业授权；本项目未选定商业模式、发行地区或源码许可证。
 14. 每次实现同步维护任务状态、接口约定和相关文档；一个任务完成不等于整个 App 已完成。
 

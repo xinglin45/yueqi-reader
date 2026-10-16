@@ -1,6 +1,6 @@
 # 仓库、产品与部署环境
 
-更新日期：2026-10-15。状态：已调整本地目录骨架并初始化 Git、关联远程仓库；应用工程与部署配置尚未实现。
+更新日期：2026-10-15。状态：已调整本地目录骨架并初始化 Git、关联远程仓库；MAC-01已生成小说Flutter四端宿主并验证macOS基础壳；业务与后端部署尚未实现。
 
 ## 决策
 
@@ -45,7 +45,7 @@
 
 client/ 与 server/ 当前只有 README，没有业务源码或构建文件。平台目录、lib/ 与 Java src/ 应在 FND-01 初始化真实工程时生成，不创建看似可编译的空工程。
 
-2026-10-15 当前执行顺序：由 FND-01 的 macOS 先行子任务 MAC-01/02 开始，先初始化 小说/client 和所需共享包，保留四端宿主/平台接口；漫画与 Java 实现延后。本批目录细化见 [novel-cross-platform.md](novel-cross-platform.md)，系统能力预留位于 packages/platform_services。所有平台当前仍未实现/验证。
+2026-10-15 当前执行顺序：由 FND-01 的 macOS 先行子任务 MAC-01/02 开始，先初始化 小说/client 和所需共享包，保留四端宿主/平台接口；漫画与 Java 实现延后。本批目录细化见 [novel-cross-platform.md](novel-cross-platform.md)，系统能力预留位于 packages/platform_services。当前macOS基础构建已通过，Android/iOS/Windows仅宿主已生成，未构建/运行。
 
 ## 客户端源码规则
 

@@ -1,6 +1,6 @@
 # 01A / MAC-02-D · D1 设计验证
 
-日期：2026-10-16。
+日期：2026-10-16。本文保留D1网页原型阶段的QA范围；后续MAC-01已另行完成，见[Flutter基础工程验收](docs/verifications/mac-01-2026-10-16.md)，不以本QA代替原生验证。
 
 final result: passed
 

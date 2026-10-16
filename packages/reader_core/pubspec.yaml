@@ -1,0 +1,7 @@
+name: reader_core
+description: Platform-independent identities shared by the two reader products.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=3.11.0 <4.0.0'

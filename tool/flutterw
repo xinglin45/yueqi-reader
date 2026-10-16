@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+YUEQI_TOOL_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+exec python3 "$YUEQI_TOOL_DIR/sdk.py" flutter "$@"

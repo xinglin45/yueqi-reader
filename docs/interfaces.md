@@ -2,6 +2,8 @@
 
 本文件定义实现任务的输入边界，不是已运行的API/OpenAPI，也不固定Dart/Java类签名。外部地址的整体状态见 [data-sources.md](data-sources.md)，2026-10-15部分技术观测不等于完整接入批准。
 
+MAC-01已实现的最小共享标识为[ReaderProduct](../packages/reader_core/lib/reader_core.dart)，namespace固定novel/comic；不包含系统路径或App引用。下列来源、同步和平台端口仍为待实现接口。
+
 ## 公共值对象
 
 - PageRequest：cursor/limit；PageResult：items/next_cursor/has_more，拒绝无限返回。
