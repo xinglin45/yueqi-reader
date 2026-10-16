@@ -28,6 +28,7 @@ AdultAcknowledgement（待实现）：仅保存本机`age_acknowledged`及声明
 - SpeechService：voices、capabilities、session_id、speak/pause/resume/stop与事件；进度含本次片段的偏移单位及原文映射，旧session事件不可覆盖新队列。不能因插件有macOS标记就假定暂停/逐字回调全部存在。
 - FileAccess：用户授权选择、托管副本/引用、持久授权恢复、授权失效与重新关联；SecureStore只返回本机受控凭据引用，导出不含密钥。
 - ReadingPosition与ListeningPosition分别持久化；用户明确切换后才用听书位置打开阅读，不能互相静默覆盖。
+- ReadingSession（01A设计约定，待Flutter实现）：独立保存content_key、content_revision、DocumentAnchor、推进状态与session_id，四种显示表面订阅同一会话，不复制游标。ReaderWindowState另存surface(normal/menubar/strip/mini)、可见性、屏幕/归一化位置、尺寸、文字与背景透明度、置顶/穿透和焦点策略。hide暂停推进并隐藏所有内容表面；restore重用原锚点且保持暂停；presentation必须显式结束后再主动restore。原生菜单栏/窗口/快捷键通过platform_services端口，解析器不直接控制窗口。详见[D1设计规范](design/novel-macos/design-spec-D1.md)。
 
 代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为设计，尚无实现或冻结的Dart签名。
 
