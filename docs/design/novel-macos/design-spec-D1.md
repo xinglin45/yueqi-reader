@@ -1,6 +1,6 @@
 # 阅栖 macOS UI · D1 暖纸阅读
 
-日期：2026-10-16。任务：01A / MAC-02-D。状态：**待用户确认**。用户“第一个”确认的是三套草案中的第一套方向；本交付的全部页面与交互尚待审阅，不能据此开始MAC-02。
+日期：2026-10-16。任务：01A / MAC-02-D。状态：**已确认**。用户先以“第一个”选择暖纸方向，随后于2026-10-16明确回复“确认D1”，确认提交e7764cc的本设计包与原型，见[确认记录](confirmation-D1.md)。MAC-02-D/01A已完成；MAC-02还须先完成MAC-01。
 
 ## 依据与范围
 
@@ -109,4 +109,4 @@
 - 图标：[Phosphor官方React仓库](https://github.com/phosphor-icons/react)，安装版本2.1.10，MIT；锁文件保留确切依赖。其许可副本见[Phosphor MIT](licenses/phosphor-react-MIT.txt)。React/Vite等原型依赖由锁文件管理，未确定正式Flutter/Java版本。
 - 不加载外部图片/字体/CDN，不配置来源Token/Cookie，不上传或同步正文。仅开发服务器的本机资源与HMR连接。
 
-验证记录见项目根[design-qa.md](../../../design-qa.md)。当前待用户确认D1主风格、导航与两模式交互；确认后MAC-02-D才完成，MAC-02还须等待MAC-01工程初始化通过。
+验证记录见项目根[design-qa.md](../../../design-qa.md)。用户已明确确认D1主风格、导航与两模式交互，MAC-02-D已完成，确认范围与遗留项见[确认记录](confirmation-D1.md)。MAC-02还须等待MAC-01工程初始化通过。

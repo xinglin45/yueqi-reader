@@ -4,7 +4,7 @@
 
 final result: passed
 
-范围仅为**D1本机网页设计原型**的视觉与交互验证，不是用户设计确认、Flutter完成、真实书源通过或macOS系统能力验收。MAC-02-D状态仍为待用户确认。
+范围仅为**D1本机网页设计原型**的视觉与交互验证，不是用户设计确认、Flutter完成、真实书源通过或macOS系统能力验收。用户于2026-10-16另行明确回复“确认D1”，现MAC-02-D已完成（设计确认），见[确认记录](docs/design/novel-macos/confirmation-D1.md)。
 
 ## 参考与同画面对照
 
@@ -57,4 +57,4 @@ final result: passed
 
 ## 真机与正式功能未验
 
-全局快捷键注册/冲突与权限、NSStatusItem、独立窗口、真正置顶/穿透、Dock、工作应用焦点、外屏/Spaces/Stage Manager、启动/唤醒/关闭、SQLite落盘与重启恢复、真实TXT/EPUB解析、系统TTS、真实在线来源/下载/同步均未实现或未验证。原型通过不能代替MAC-01～26对应检查。用户尚未确认整个D1设计版本。
+全局快捷键注册/冲突与权限、NSStatusItem、独立窗口、真正置顶/穿透、Dock、工作应用焦点、外屏/Spaces/Stage Manager、启动/唤醒/关闭、SQLite落盘与重启恢复、真实TXT/EPUB解析、系统TTS、真实在线来源/下载/同步均未实现或未验证。原型通过不能代替MAC-01～26对应检查。用户已另行明确确认D1设计版本；该确认不改变上述未实现/未验证能力。

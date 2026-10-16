@@ -15,9 +15,9 @@
 - [macOS 小说 App 完整功能方案](docs/novel-macos-plan.md)：日常阅读、听书、书源、下载、备份、隐私与版本范围。
 - [macOS 开发任务与验收](docs/novel-macos-backlog.md)：MAC-00～MAC-26、依赖、验收场景和性能预算。
 - [macOS 详细开发步骤](docs/novel-macos-implementation-steps.md)：00～22及新增01A设计环节，共24个执行环节、代码落点与逐步验收。
-- [独立视觉设计与原型确认](docs/novel-macos-ui-design.md)：MAC-02-D，先形成用户明确确认的设计版本，再开始第02步编码；D1暖纸设计包与可点击原型已交付，待用户确认。
+- [独立视觉设计与原型确认](docs/novel-macos-ui-design.md)：MAC-02-D，先形成用户明确确认的设计版本，再开始第02步编码；D1暖纸设计包与原型已获用户明确确认，01A已完成。
 - [开发环境核验](docs/development-environment.md)与[中文来源首轮核验](docs/source-audit-2026-10-15.md)：本机事实、技术选型前提与来源未决条件。
-- [第00步单源续验](docs/source-step00-2026-10-15.md)：中国大陆自用范围、有限普通/成人候选矩阵、38次观测和未解除条件；本开发聊天本批仅执行MAC-18，未进入第01步。
+- [第00步单源续验](docs/source-step00-2026-10-15.md)：中国大陆自用范围、有限普通/成人候选矩阵、38次观测和未解除条件；该来源核验批次仅执行MAC-18，未进入第01步。
 - [截图五个书源合集逐项核验](docs/source-collections-audit-2026-10-15.md)：实际文件数量、版本差异、脚本/付费能力、有限网络样本和未通过项。
 - [小说四端目录与技术边界](docs/novel-cross-platform.md)：平台适配、稳定数据/锚点、可选服务端与发布规划。
 
@@ -86,7 +86,7 @@ Local-first：未登录、断网或共享服务停机时，已有本地书籍、
 
 ## 从 Codex 开始
 
-将此目录作为开发工作目录。按用户最新要求，当前提前执行 **01A / MAC-02-D**，已交付[D1暖纸设计与原型](docs/design/novel-macos/design-spec-D1.md)，待用户确认。此前第00步/MAC-18已交付[单源续验](docs/source-step00-2026-10-15.md)，来源任务仍进行中。**MAC-01 / 第01步**为后续工程初始化任务，本批未开始。macOS先验证本地内部检查点，再合入联网能力形成完整首版；漫画/云服务保持后续计划。
+将此目录作为开发工作目录。按用户最新要求，当前提前执行 **01A / MAC-02-D**，[D1暖纸设计与原型](docs/design/novel-macos/design-spec-D1.md)已获用户明确确认，01A已完成，见[确认记录](docs/design/novel-macos/confirmation-D1.md)。此前第00步/MAC-18已交付[单源续验](docs/source-step00-2026-10-15.md)，来源任务仍进行中。**MAC-01 / 第01步**为后续工程初始化任务，本批未开始。macOS先验证本地内部检查点，再合入联网能力形成完整首版；漫画/云服务保持后续计划。
 
 推荐任务提示：“在‘阅读软件’项目中执行 MAC-01，遵守 AGENTS.md 和 macOS 专题方案，先运行 macOS 小说客户端、保留四端边界；报告版本选择、验证结果、尚未验证的平台和下一任务。”
 
