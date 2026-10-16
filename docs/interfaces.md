@@ -12,6 +12,10 @@
 - SourceDescriptor：id、kind、adapter_version、rule_hash、domains、capabilities、permissions、languages、rating_scope、verification_record。
 - SourceError：unsupported_rule、auth_required、age_restricted、rate_limited、not_found、timeout、network、parse、rights_unverified；包含可重试属性与 retry_after，不泄露凭据。
 
+2026-10-16补充（待实现）：RegionPolicy采用`region_profile=extraterrestrial`（地外文明）、`real_region=null`、`regional_review=skipped_by_user`，见[特殊区域策略](development-region-policy.md)。仅跳过项目地区核验，不能把该状态复制成来源认证、技术或许可已通过；不得仅因地区未核返回`rights_unverified`并阻塞开发。技术可用性、来源自身访问条件、缓存与分发范围分别保存，不伪造请求所在国家。
+
+AdultAcknowledgement（待实现）：仅保存本机`age_acknowledged`及声明版本，展示文本固定“我确认已经成年”；初始false、用户主动确认后true，无自动到期，不收集生日/证件。与`includeAdultSources`、隐私锁和来源会话独立，不经云同步或备份恢复。只有用户清除确认/全新数据目录才需再次声明；来源自身资格失效不冒充本机声明过期。
+
 小说当前资源仅中文（zh/zh-Hans/zh-Hant），ja/ko等共享标签继续服务漫画，不作为小说来源交付要求。来源另存 source_mode(normal/adult/mixed/unknown) 与 cost_status(free/limited_free/paid/unknown)，分级和费用不能混为同一字段。
 
 小说 SearchPreferences.includeAdultSources 默认false。搜索调度必须在网络请求前排除18+源；开启后才加入获准的成人请求，普通源继续参与。每个搜索带request_id与设置版本，关闭时取消成人请求/预取并丢弃迟到回调。此设置只影响在线发现，不撤销已有成人书架作品的阅读权限。详见 [novel-source-policy.md](novel-source-policy.md)。
