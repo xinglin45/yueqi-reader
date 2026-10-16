@@ -1,12 +1,12 @@
 # novel_app · 阅栖
 
-源码位置：小说/client。一套Flutter工程保留Android、iOS、Windows、macOS四个宿主，共用lib；MAC-01已完成基础工程初始化，当前只验证macOS Apple Silicon基础壳。显示名阅栖，开发标识local.yueqi.novel，版本0.0.1+1。真实书架、TXT/EPUB和阅读功能尚未实现。
+小说/client是一套Flutter工程，保留Android、iOS、Windows、macOS四个宿主，共用lib。MAC-01工程与MAC-02应用壳已完成，仅验证macOS Apple Silicon。显示名阅栖，开发标识local.yueqi.novel，本批版本0.0.2+2。
 
-保留原产品职责与入口：[小说目录说明](../README.md)、[仓库布局](../../docs/repository-layout.md)、[四端边界](../../docs/novel-cross-platform.md)。核心业务仍按FND/NOV与macOS专题任务推进，不按平台或环境复制源码。
+已实现D1暖纸导航、桌面/窄窗布局、深浅色、明确空态、可取消任务与构造注入端口。首次为空库，可主动“体验演示样本”打开自产《山间来信》；仅内存预览，没有真实导入、解析、阅读进度、SQLite或在线书源。阶段说明内可检查任务加载/取消/部分完成/无结果/错误。
 
 ## 本机运行
 
-固定Flutter 3.47.7 / Dart 3.13.5，使用项目包装命令，不修改全局PATH。首次从仓库根安装：
+固定Flutter3.47.7 / Dart3.13.5，使用项目包装命令，不修改全局PATH。首次从仓库根安装：
 
 ```sh
 python3 tool/sdk.py install
@@ -15,12 +15,15 @@ cd 小说/client
 ../../tool/flutterw run -d macos --debug
 ```
 
-在本目录构建Release：`../../tool/flutterw build macos --release --no-pub`，产物`build/macos/Build/Products/Release/阅栖.app`。当前ad-hoc签名，只作工程检查；未公证/正式发布，不是完整自用阅读包。SDK/构建输出/机器配置不提交。
+在本目录构建Release：`../../tool/flutterw build macos --release --no-pub`，产物`build/macos/Build/Products/Release/阅栖.app`。当前ad-hoc签名，只作内部应用壳检查，未公证/正式分发；未制作DMG或完成完整安装/升级验收。SDK/构建输出/机器配置不提交。
 
-## 检查与边界
+## 代码与检查
 
-[MAC-01验收](../../docs/verifications/mac-01-2026-10-16.md) · [SDK/中文路径分析决策](../../docs/decisions/0001-mac01-flutter-toolchain.md) · [依赖许可](../../docs/licenses/README.md)
+- app：构造装配、SDK Router（路由只传bookId）、D1主题/响应壳；features：各页面入口与TaskView。
+- domain：Repository、预览模型与任务契约，application：代际任务控制、有限脱敏诊断；infrastructure：空库＋自产样本的会话内Repository。
+- reader_core保持产品命名空间；platform_services为纯Dart系统端口，当前生产系统动作全部unsupported。测试替身位于test/fakes.dart，不能当生产安全存储。
+- `tool/check.sh`检查格式、严格Dart静态分析、15项测试和两个共享包。当前中文路径Flutter CLI LSP问题仍用同SDK严格dart analyze替代，详见[ADR-0001](../../docs/decisions/0001-mac01-flutter-toolchain.md)。
 
-使用同一SDK的严格`dart analyze`替代当前中文路径下失败的Flutter CLI LSP入口。应用锁文件提交；reader_core只提供独立产品命名空间，其他共享包、漫画与server仍为后续。其余三端宿主已生成但未构建/运行；Android许可、CocoaPods警告和原生输入法验收边界见验收记录。
+[MAC-02验收](../../docs/verifications/mac-02-2026-10-16.md) · [壳/取消/图标决策](../../docs/decisions/0002-mac02-shell-and-jobs.md) · [依赖许可](../../docs/licenses/README.md) · [D1设计确认](../../docs/design/novel-macos/confirmation-D1.md)
 
-下一步MAC-02按已确认的[D1设计](../../docs/design/novel-macos/design-spec-D1.md)实现应用壳与路由；后续功能、安装包和首版来源条件见[macOS完整方案](../../docs/novel-macos-plan.md)。
+下一主任务第03步MAC-06：EPUB风险小样并做中文检索/TTS前置试验；第04步再做MAC-03数据。其他三端宿主未构建，真实文件授权、听书、低存在感系统表面、分级/隐私、下载/同步均在后续任务。普通/18+来源批准仍0/0，完整首版条件保持。

@@ -2,7 +2,24 @@
 
 本文件定义实现任务的输入边界，不是已运行的API/OpenAPI，也不固定Dart/Java类签名。外部地址的整体状态见 [data-sources.md](data-sources.md)，2026-10-15部分技术观测不等于完整接入批准。
 
-MAC-01已实现的最小共享标识为[ReaderProduct](../packages/reader_core/lib/reader_core.dart)，namespace固定novel/comic；不包含系统路径或App引用。下列来源、同步和平台端口仍为待实现接口。
+MAC-01已实现的最小共享标识为[ReaderProduct](../packages/reader_core/lib/reader_core.dart)，namespace固定novel/comic；不包含系统路径或App引用。来源/同步仍待实现；MAC-02已落地最小Repository、平台端口与任务草案，见下节，不能据此声明真实系统能力通过。
+
+## MAC-02已落地的最小契约（2026-10-16）
+
+| 契约 | 当前代码与实际行为 | 后续边界 |
+|---|---|---|
+| LibraryRepository | `小说/client/lib/domain/library.dart`：load/addDemonstration/preview，注入JobContext，返回JobResult；SessionLibrary为空库＋主动加入自产样本，仅内存 | 不含持久ID/修订/解析引擎；MAC-03/04/05/06扩展 |
+| JobContext/JobSnapshot | `domain/jobs.dart`：job_id、idle/running/ready/partial/empty/failed/cancelled、可空进度、枚举错误/问题；`application/jobs.dart`拥有运行/取消/代际校验 | ID只在本进程唯一，不是跨启动数据库任务ID；将来持久队列需另定 |
+| 任务所有权 | TaskView离开页面/切书/关闭对话框时dispose，立即失效；取消/替换/终态同样废弃旧事件，partial保留成功项 | 合作任务主动检查信号；无法中止的Future仍运行但不回写，不能把丢弃回调等同物理终止网络/系统工作 |
+| FileAccess | `packages/platform_services/lib/platform_services.dart`：chooseDocument/restoreGrant；FileGrant为本地不透明引用＋展示名 | 当前所有生产动作unsupported；没有文件选择或持久授权实现 |
+| SecureStore | lookup/remove受控CredentialRef；不把凭据字符串暴露到UI或导出 | 写入/认证消费在真正来源会话任务补充；当前没有Keychain或内存安全存储实现 |
+| SpeechService | 显式capabilities/voices；sessionId标记speak/pause/resume/stop与SpeechEvent，偏移单位显式声明 | 本批unsupported/空事件流；没有语音播放或回调能力实测 |
+| WindowIntegration | normal/menubar/strip/mini选择与hideReading契约 | 全部unsupported；D1同锚点与隐藏暂停约束不因草案端口已存在而完成 |
+| 装配与路由 | `lib/app`构造注入；SDK Router；只传编码后的稳定bookId，不传正文、文件路径、凭据；未知地址可返回 | 原生文件深链、隐私重定向在MAC-13/16；当前没有来源请求 |
+
+平台结果区分成功、unsupported/permissionDenied/unavailable/cancelled；选择取消按未选择恢复，不冒充文件丢失。UI统一恢复动作只针对当前任务。未分类异常映射unexpected，全局诊断仅留有限错误枚举，不记录原始异常/堆栈或上传。
+
+[ADR-0002](decisions/0002-mac02-shell-and-jobs.md)记录SDK装配/路由选择和Phosphor兼容版本；[验收](verifications/mac-02-2026-10-16.md)区分测试替身、原生窗口和后续能力。下文是完整目标设计，未列入本表的字段和方法仍未实现。
 
 ## 公共值对象
 
@@ -22,7 +39,7 @@ AdultAcknowledgement（待实现）：仅保存本机`age_acknowledged`及声明
 
 小说 SearchPreferences.includeAdultSources 默认false。搜索调度必须在网络请求前排除18+源；开启后才加入获准的成人请求，普通源继续参与。每个搜索带request_id与设置版本，关闭时取消成人请求/预取并丢弃迟到回调。此设置只影响在线发现，不撤销已有成人书架作品的阅读权限。详见 [novel-source-policy.md](novel-source-policy.md)。
 
-## macOS实现补充边界（待实现）
+## macOS完整目标与后续补充边界
 
 - SearchSession：search_session_id、request_id、policy_revision、query、cursor、selected_source_ids与取消状态；网络调度、缓存合并、迟到回调都校验同一设置版本。新字段用于细化上述request_id，不是第二套独立搜索策略。
 - DocumentReader：打开文档/修订、目录、按需片段、resolveAnchor、从文本范围构造锚点、释放资源；TXT/EPUB实现独立，UI不依赖具体引擎。
@@ -32,7 +49,7 @@ AdultAcknowledgement（待实现）：仅保存本机`age_acknowledged`及声明
 - ReadingPosition与ListeningPosition分别持久化；用户明确切换后才用听书位置打开阅读，不能互相静默覆盖。
 - ReadingSession（01A设计约定，待Flutter实现）：独立保存content_key、content_revision、DocumentAnchor、推进状态与session_id，四种显示表面订阅同一会话，不复制游标。ReaderWindowState另存surface(normal/menubar/strip/mini)、可见性、屏幕/归一化位置、尺寸、文字与背景透明度、置顶/穿透和焦点策略。hide暂停推进并隐藏所有内容表面；restore重用原锚点且保持暂停；presentation必须显式结束后再主动restore。原生菜单栏/窗口/快捷键通过platform_services端口，解析器不直接控制窗口。详见[D1设计规范](design/novel-macos/design-spec-D1.md)。
 
-代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为设计，尚无实现或冻结的Dart签名。
+代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为完整目标设计；本批实际签名仅限上方MAC-02最小契约表，后续任务可按验证结果扩展。
 
 ## 小说来源 BookSource
 

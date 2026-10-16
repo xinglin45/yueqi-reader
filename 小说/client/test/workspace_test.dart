@@ -38,4 +38,35 @@ void main() {
       );
     }
   });
+  test('domain, jobs and platform contracts have no native or application dependency', () {
+    for (final path in [
+      'lib/domain',
+      'lib/application',
+      '../../packages/platform_services/lib',
+    ]) {
+      for (final file
+          in Directory(path)
+              .listSync(recursive: true)
+              .whereType<File>()
+              .where((file) => file.path.endsWith('.dart'))) {
+        final imports = file.readAsLinesSync().where(
+          (line) => RegExp(r'^\s*(import|export)\s').hasMatch(line),
+        );
+        for (final line in imports) {
+          expect(
+            line,
+            isNot(
+              matches(
+                r'(package:(flutter|novel_app|comic_app|.*_macos|path_provider|flutter_tts)/|dart:(io|ui)|AppKit|/Users/)',
+              ),
+            ),
+            reason: file.path,
+          );
+          if (path == 'lib/domain') {
+            expect(line, isNot(contains('../application/')));
+          }
+        }
+      }
+    }
+  });
 }

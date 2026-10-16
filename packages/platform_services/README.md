@@ -1,7 +1,9 @@
 # platform_services
 
-跨平台系统能力的接口与适配目录预留：文件选择/权限、安全存储、系统语音、窗口/菜单、任务生命周期与通知。支持目标为 macOS、Windows、Android、iOS，首批先验证 macOS。
+MAC-02已建立实际纯Dart包，小说App通过构造装配依赖此包。只提供[文件、受控凭据引用、语音及阅读窗口端口](lib/platform_services.dart)与统一PlatformResult。没有Flutter、AppKit、系统绝对路径、原生插件或任一产品依赖。
 
-当前只有职责说明，没有已实现的 Dart 包或原生插件。公共业务代码依赖端口，不直接依赖 macOS 系统路径/原生实现；成熟插件也必须核验实际四端能力和许可证。
+UnavailablePlatform对所有动作返回unsupported，语音能力为无暂停/无偏移，不伪造成功或Keychain。FileGrant/CredentialRef只携带本机不透明引用，不能作为可同步凭据或文件路径；SpeechEvent按sessionId归属，偏移单位必须显式声明。SecureStore本批只定义查找/删除受控引用，写入/认证消费协议在实际来源会话接入时再补，不把字符串密钥返回UI。
 
-详细设计见 [四端技术边界](../../docs/novel-cross-platform.md)。初始化任务 MAC-01/02，TTS 任务 MAC-12，文件/桌面集成 MAC-13。能力未实现时明确返回 unsupported，不伪造成功。
+真实文件访问/授权恢复在MAC-04/13；系统TTS在MAC-12；菜单栏/悬浮窗口/生命周期在MAC-13；安全存储在实际凭据任务接入。四端目标全部保留，目前没有任何端的真实系统适配器。
+
+测试替身放在消费App的test/fakes.dart，禁止将其作为生产安全存储。签名与生命周期草案见[接口](../../docs/interfaces.md)，验收见[MAC-02](../../docs/verifications/mac-02-2026-10-16.md)。

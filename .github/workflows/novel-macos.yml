@@ -6,6 +6,7 @@ on:
     paths:
       - '小说/client/**'
       - 'packages/reader_core/**'
+      - 'packages/platform_services/**'
       - 'tool/**'
       - '.github/workflows/novel-macos.yml'
   push:
@@ -13,6 +14,7 @@ on:
     paths:
       - '小说/client/**'
       - 'packages/reader_core/**'
+      - 'packages/platform_services/**'
       - 'tool/**'
       - '.github/workflows/novel-macos.yml'
 

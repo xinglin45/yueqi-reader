@@ -1,13 +1,16 @@
 name: novel_app
-description: "阅读软件：阅栖小说客户端，MAC-01工程基础。"
+description: "阅读软件：阅栖小说客户端，MAC-02应用壳。"
 publish_to: 'none'
-version: 0.0.1+1
+version: 0.0.2+2
 
 environment:
   sdk: ^3.13.5
   flutter: ">=3.47.7"
 
 dependencies:
+  phosphor_icons: 3.0.1
+  platform_services:
+    path: ../../packages/platform_services
   reader_core:
     path: ../../packages/reader_core
   flutter:
@@ -20,3 +23,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/mountain-letter-cover.png

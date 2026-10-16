@@ -1,6 +1,6 @@
 # 小说 App：macOS 优先的四端代码布局
 
-日期：2026-10-15。状态：MAC-01已生成小说Flutter四端宿主，macOS基础壳通过；Java、业务功能与平台端口仍待实现，接口名称仍是设计草案。适用 [macOS 开发方案](novel-macos-plan.md)。
+日期：2026-10-15。状态：MAC-01已生成小说Flutter四端宿主，macOS基础壳通过；MAC-02已建立D1基础壳与纯Dart平台端口，Java、真实阅读业务和原生适配仍待实现；完整接口仍为目标草案。适用 [macOS 开发方案](novel-macos-plan.md)。
 
 小说资源仅中文简繁，漫画语言模型保持中日韩。完整小说首版包括内置核验过的免费普通/18+来源和导入、在线搜书/阅读；includeAdultSources默认false且在请求前控制来源集合。搜索开关不撤销已有成人收藏阅读，具体见 [来源规则](novel-source-policy.md)。
 
@@ -21,7 +21,7 @@
 
 ## 2. 初始化后的目标结构
 
-以下是MAC-01/02及后续功能目录目标：四端宿主、lib/main.dart和test已创建，app/features/infrastructure/集成测试等按后续任务实际使用时创建。
+以下是MAC-01/02及后续功能目录目标：四端宿主、lib/main.dart和test已创建，MAC-02已建立app/domain/application/features/infrastructure，集成测试等按后续任务实际使用时创建。
 
 ```text
 小说/client/

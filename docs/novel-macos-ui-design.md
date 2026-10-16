@@ -1,6 +1,6 @@
 # 阅栖 macOS：视觉设计与原型确认任务
 
-日期：2026-10-16。任务 **MAC-02-D**，实施顺序 **01A**。状态：**已完成（设计确认）**。已交付[D1设计包](design/novel-macos/design-spec-D1.md)、[独立网页原型](design/novel-macos/prototype/README.md)与[QA报告](../design-qa.md)。用户于2026-10-16明确回复“确认D1”，确认提交e7764cc的主风格、导航布局及关键交互，见[确认记录](design/novel-macos/confirmation-D1.md)。MAC-01随后已完成基础构建，MAC-02仍未开始。
+日期：2026-10-16。任务 **MAC-02-D**，实施顺序 **01A**。状态：**已完成（设计确认）**。已交付[D1设计包](design/novel-macos/design-spec-D1.md)、[独立网页原型](design/novel-macos/prototype/README.md)与[QA报告](../design-qa.md)。用户于2026-10-16明确回复“确认D1”，确认提交e7764cc的主风格、导航布局及关键交互，见[确认记录](design/novel-macos/confirmation-D1.md)。MAC-01随后已完成基础构建，MAC-02现已完成基础应用壳，见[原生验收](verifications/mac-02-2026-10-16.md)；完整阅读/系统表面仍分任务接入。
 
 用户要求在第02步编码前增加独立环节。MAC-02-D依赖已完成的MAC-00规划；MAC-02编码必须等待MAC-01工程初始化与本任务确认都完成。设计可提前开展，不依赖Flutter安装、后端、真实书源或第00步全部通过。此任务是MAC-02的设计前置子任务，原MAC-00～26及第00～22步编号不重排。
 

@@ -48,3 +48,5 @@ __pycache__/
 .flutter-sdk/
 # Library lockfile is resolved by the consuming application.
 /packages/reader_core/pubspec.lock
+
+/packages/platform_services/pubspec.lock

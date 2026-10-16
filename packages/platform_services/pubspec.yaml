@@ -1,0 +1,6 @@
+name: platform_services
+description: Platform capability contracts for the two independent reader apps.
+version: 0.0.1
+publish_to: none
+environment:
+  sdk: '>=3.13.5 <4.0.0'

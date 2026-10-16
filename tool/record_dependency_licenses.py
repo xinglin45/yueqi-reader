@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Record resolved dependency license hashes without retaining machine paths."""
+import argparse
 from datetime import date
 import hashlib
 import json
@@ -10,6 +11,9 @@ from urllib.parse import unquote, urljoin, urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
 CLIENT = ROOT / '小说/client'
+parser = argparse.ArgumentParser()
+parser.add_argument('--checkpoint', required=True, choices=['mac-01', 'mac-02'])
+checkpoint = parser.parse_args().checkpoint
 OUT = ROOT / 'docs/licenses'
 config_path = CLIENT / '.dart_tool/package_config.json'
 config = json.loads(config_path.read_text())
@@ -41,7 +45,7 @@ for name, package in sorted(packages.items()):
         'name': name, 'version': package['version'], 'source': source,
         'scope': 'runtime' if name in runtime else 'development',
     }
-    if name in ('novel_app', 'reader_core'):
+    if name in ('novel_app', 'reader_core', 'platform_services'):
         record['license_status'] = 'project_license_not_selected'
     else:
         folder = roots[name]
@@ -53,14 +57,18 @@ for name, package in sorted(packages.items()):
         record['license_sha256'] = hashlib.sha256(license_file.read_bytes()).hexdigest()
         record['license_status'] = 'text_inspected'
         if name in runtime:
-            target = OUT / 'mac-01' / (name + '-LICENSE.txt')
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(license_file, target)
+            prior = OUT / 'mac-01' / (name + '-LICENSE.txt')
+            if checkpoint != 'mac-01' and prior.exists() and hashlib.sha256(prior.read_bytes()).hexdigest() == record['license_sha256']:
+                target = prior
+            else:
+                target = OUT / checkpoint / (name + '-LICENSE.txt')
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(license_file, target)
             record['retained_license'] = target.relative_to(OUT).as_posix()
         if source == 'hosted':
             record['upstream'] = 'https://pub.dev/packages/' + name + '/versions/' + package['version']
     records.append(record)
-(OUT / 'mac-01-dependencies.json').write_text(json.dumps({
+(OUT / (checkpoint + '-dependencies.json')).write_text(json.dumps({
     'verified_date': date.today().isoformat(),
     'sdk_pin': '../../tool/flutter-sdk.json',
     'application_lockfile': '../../小说/client/pubspec.lock',
