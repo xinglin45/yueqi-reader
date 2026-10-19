@@ -1,0 +1,25 @@
+Resolving dependencies...
+Downloading packages...
+  archive 3.6.1 (4.5.2 available)
+  equatable 2.1.0 (3.0.0 available)
+  image 3.3.0 (4.12.0 available)
+  material_color_utilities 0.13.0 (0.13.1 available)
+  meta 1.18.3 (1.19.0 available)
+  petitparser 7.0.2 (7.1.0 available)
+  test_api 0.7.12 (0.7.15 available)
+  vector_math 2.4.0 (2.4.3 available)
+  xml 6.6.1 (7.1.0 available)
+Got dependencies!
+9 packages have newer versions incompatible with dependency constraints.
+Try `flutter pub outdated` for more information.
+Launching tool/mac06/probe.dart on macOS in debug mode...
+Building macOS application...
+../../../../../../../.pub-cache/hosted/pub.dev/flutter_html-3.0.0/lib/src/tree/styled_element.dart:31:17: Error: Method not found: 'matches'.
+      return qs.matches(element, selector);
+                ^^^^^^^
+Target kernel_snapshot_program failed: Exception
+Failed to package ${REPO}/小说/client.
+Command PhaseScriptExecution failed with a nonzero exit code
+** BUILD FAILED **
+
+Error: Build process failed

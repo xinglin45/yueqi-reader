@@ -4,6 +4,17 @@
 
 MAC-01已实现的最小共享标识为[ReaderProduct](../packages/reader_core/lib/reader_core.dart)，namespace固定novel/comic；不包含系统路径或App引用。来源/同步仍待实现；MAC-02已落地最小Repository、平台端口与任务草案，见下节，不能据此声明真实系统能力通过。
 
+## MAC-06研究结论对后续契约的约束（2026-10-19）
+
+本节是MAC-03/07/10/12的实施输入；不将独立探针当生产接口。已有MAC-02签名仍以后一节为准，研究验收见[MAC-06](verifications/mac-06-2026-10-19.md)。
+
+| 边界 | 研究已验证的约定 | 正式实现待补 |
+|---|---|---|
+| DocumentAnchor | 结构锚点绑定schema版本、document_revision、spine_href、block_id、UTF-16 start/end及exact；修订/块/摘录不符时失败，禁止半代理对；见[ADR-0003](decisions/0003-mac06-epub-rendering.md) | MAC-03统一TXT/EPUB外层与上下文指纹，MAC-07/09处理跨块/ruby、重启恢复、可解释回退；不把研究CFI当完整实现 |
+| EPUB资源端口 | 当前书籍manifest白名单与有界内存资源，不向页面传系统路径；隔离world固定桥接，书籍脚本移除、网络/跨书/未知资源拒绝 | 正式Dart导入、分段大书、Release权限/沙盒、超时/重入/Web进程恢复及其他平台绑定 |
+| 搜索 | 原文精确子串语义；少于3 Unicode标量扫描，长查询可用trigram候选＋原文核对；SQL值参数化 | MAC-03复验实际SQLite绑定，MAC-10增量/取消/分页/索引修订；SQL标量位置先转UTF-16再形成锚点；见[ADR-0004](decisions/0004-mac06-chinese-search.md) |
+| SpeechService | 每个utterance绑定session_id、修订及原文范围；NSRange使用UTF-16，先作废旧会话再停止底层工作 | 现有契约需扩展paused/resumed/cancelled/error、range length和离线unknown，不能将枚举语音写offline=true；MainActor、整机断网/休眠等在MAC-12完成；见[ADR-0005](decisions/0005-mac06-system-tts.md) |
+
 ## MAC-02已落地的最小契约（2026-10-16）
 
 | 契约 | 当前代码与实际行为 | 后续边界 |

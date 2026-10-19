@@ -1,0 +1,154 @@
+{
+  "engine": "macOS system libsqlite3 via C API",
+  "sqlite_version": "3.54.0",
+  "fts_compile_options": [
+    "ENABLE_FTS3",
+    "ENABLE_FTS3_PARENTHESIS",
+    "ENABLE_FTS3_TOKENIZER",
+    "ENABLE_FTS4",
+    "ENABLE_FTS5"
+  ],
+  "tokenizers": {
+    "unicode61": true,
+    "trigram": true
+  },
+  "checks": [
+    {
+      "query": "山",
+      "instr": [
+        "ch1/title1",
+        "ch1/p1",
+        "ch1/p2",
+        "ch1/ruby",
+        "ch2/title2",
+        "ch2/long0",
+        "ch2/long1",
+        "ch2/long2",
+        "ch2/long3",
+        "ch2/long4",
+        "ch2/long5",
+        "ch2/long6",
+        "ch2/long7",
+        "ch2/long8",
+        "ch2/long9",
+        "ch2/long10",
+        "ch2/long11",
+        "ch2/long12",
+        "ch2/long13",
+        "ch2/long14",
+        "ch2/long15"
+      ],
+      "literal_exact": true,
+      "unicode61": [],
+      "trigram": []
+    },
+    {
+      "query": "山间",
+      "instr": [
+        "ch1/p1"
+      ],
+      "literal_exact": true,
+      "unicode61": [],
+      "trigram": []
+    },
+    {
+      "query": "山间来信",
+      "instr": [
+        "ch1/p1"
+      ],
+      "literal_exact": true,
+      "unicode61": [],
+      "trigram": [
+        "ch1/p1"
+      ]
+    },
+    {
+      "query": "山間來信",
+      "instr": [
+        "ch1/p1",
+        "ch2/title2"
+      ],
+      "literal_exact": true,
+      "unicode61": [
+        "ch2/title2"
+      ],
+      "trigram": [
+        "ch1/p1",
+        "ch2/title2"
+      ]
+    },
+    {
+      "query": "100%_",
+      "instr": [
+        "ch1/p2"
+      ],
+      "literal_exact": true,
+      "unicode61": [
+        "ch1/p2"
+      ],
+      "trigram": [
+        "ch1/p2"
+      ]
+    },
+    {
+      "query": "📖",
+      "instr": [
+        "ch1/p2",
+        "ch2/target"
+      ],
+      "literal_exact": true,
+      "unicode61": [],
+      "trigram": []
+    },
+    {
+      "query": "é",
+      "instr": [
+        "ch1/p2",
+        "ch2/target"
+      ],
+      "literal_exact": true,
+      "unicode61": [
+        "ch1/p2",
+        "ch2/target"
+      ],
+      "trigram": []
+    },
+    {
+      "query": "，",
+      "instr": [
+        "ch1/p1",
+        "ch1/quote",
+        "ch1/ruby",
+        "ch2/target",
+        "ch2/long0",
+        "ch2/long1",
+        "ch2/long2",
+        "ch2/long3",
+        "ch2/long4",
+        "ch2/long5",
+        "ch2/long6",
+        "ch2/long7",
+        "ch2/long8",
+        "ch2/long9",
+        "ch2/long10",
+        "ch2/long11",
+        "ch2/long12",
+        "ch2/long13",
+        "ch2/long14",
+        "ch2/long15"
+      ],
+      "literal_exact": true,
+      "unicode61": [],
+      "trigram": []
+    },
+    {
+      "query": "不存在词",
+      "instr": [],
+      "literal_exact": true,
+      "unicode61": [],
+      "trigram": []
+    }
+  ],
+  "all_literal_checks_passed": true,
+  "scope": "capability/accuracy only; no Flutter FFI binding selected or benchmark claim"
+}

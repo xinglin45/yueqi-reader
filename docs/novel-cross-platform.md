@@ -1,6 +1,6 @@
 # 小说 App：macOS 优先的四端代码布局
 
-日期：2026-10-15。状态：MAC-01已生成小说Flutter四端宿主，macOS基础壳通过；MAC-02已建立D1基础壳与纯Dart平台端口，Java、真实阅读业务和原生适配仍待实现；完整接口仍为目标草案。适用 [macOS 开发方案](novel-macos-plan.md)。
+日期：2026-10-15。状态：MAC-01已生成小说Flutter四端宿主，macOS基础壳通过；MAC-02已建立D1基础壳与纯Dart平台端口，MAC-06已完成macOS独立探针与四端替代路线研究，见[验收](verifications/mac-06-2026-10-19.md)；Java、生产阅读业务和正式原生适配仍待实现；完整接口仍为目标草案。适用 [macOS 开发方案](novel-macos-plan.md)。
 
 小说资源仅中文简繁，漫画语言模型保持中日韩。完整小说首版包括内置核验过的免费普通/18+来源和导入、在线搜书/阅读；includeAdultSources默认false且在请求前控制来源集合。搜索开关不撤销已有成人收藏阅读，具体见 [来源规则](novel-source-policy.md)。
 
@@ -66,7 +66,7 @@
 | packages/novel_sources | BookSource、REST/OPDS/有限规则适配、能力/许可模型 | 任意脚本执行或漫画 APK |
 | packages/comic_sources | 独立漫画接口与适配，保留后续 | 小说正文解析 |
 
-platform_services 当前只有说明文件。初始化后应区分纯接口与具体 Flutter 插件/平台实现，允许使用成熟插件，不要求自写全部原生绑定。共享接口先收敛最小能力，避免为尚未开发的平台编写假实现并报告成功。
+platform_services已实现纯Dart端口，MAC-06原生语音研究独立放在experiments，不被生产包导入。具体 Flutter 插件/平台实现仍须隔离，允许使用成熟插件，不要求自写全部原生绑定。共享接口先收敛最小能力，避免为尚未开发的平台编写假实现并报告成功。
 
 ## 4. 平台端口与降级
 

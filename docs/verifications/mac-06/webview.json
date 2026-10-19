@@ -1,0 +1,461 @@
+{
+  "records": [
+    {
+      "dom": {
+        "blocks": [
+          {
+            "id": "title1",
+            "text": "第一章　雨后山路",
+            "utf16_length": 8.0
+          },
+          {
+            "id": "p1",
+            "text": "清晨，山间来信放在窗边。山間來信仍保留繁體原文。",
+            "utf16_length": 24.0
+          },
+          {
+            "id": "p2",
+            "text": "标点：100%_完成；📖 é 后面是雨后山路。",
+            "utf16_length": 25.0
+          },
+          {
+            "id": "quote",
+            "text": "慢一点，读完这一段。",
+            "utf16_length": 10.0
+          },
+          {
+            "id": "ruby",
+            "text": "沿着山路，林舟向前走。",
+            "utf16_length": 11.0
+          },
+          {
+            "id": "font",
+            "text": " 内嵌字体试验；装饰不进入朗读。",
+            "utf16_length": 16.0
+          },
+          {
+            "id": "link",
+            "text": "去第二章的目标段落",
+            "utf16_length": 9.0
+          }
+        ],
+        "restorations": [
+          {
+            "finite_rect": true,
+            "columns": "1",
+            "exact": "雨后山路",
+            "width": "360px"
+          },
+          {
+            "finite_rect": true,
+            "columns": "2",
+            "width": "740px",
+            "exact": "雨后山路"
+          },
+          {
+            "finite_rect": true,
+            "columns": "1",
+            "width": "auto",
+            "exact": "雨后山路"
+          }
+        ],
+        "anchor": {
+          "block_id": "p2",
+          "exact": "雨后山路",
+          "end_utf16": 24.0,
+          "start_utf16": 20.0
+        },
+        "resource_tests": [
+          {
+            "blocked": true,
+            "kind": "https"
+          },
+          {
+            "kind": "file",
+            "blocked": true
+          },
+          {
+            "kind": "reader-probe",
+            "blocked": true
+          },
+          {
+            "kind": "reader-probe",
+            "blocked": true
+          }
+        ],
+        "path": "OEBPS/text/ch1.xhtml",
+        "offset_unit": "utf16_code_unit",
+        "book_script_executed": false,
+        "image": {
+          "present": true,
+          "loaded": true
+        },
+        "user_selection": null,
+        "selected": "雨后山路",
+        "highlights_supported": true,
+        "css": {
+          "strong_color": "rgb(159, 101, 75)",
+          "blockquote_border": "3px",
+          "ruby": true,
+          "embedded_font": true
+        }
+      },
+      "book_page_script_executed": false,
+      "served": [
+        "OEBPS/fonts/Phosphor-Light.ttf",
+        "OEBPS/images/hill.png",
+        "OEBPS/styles/book.css",
+        "OEBPS/text/ch1.xhtml"
+      ],
+      "blocked_navigations": 0,
+      "resource_denied": 2,
+      "canonical_mapping_equal": true,
+      "revision": "3d6d0a4ee10305897ef708f43e76375433998025b1417f0b655cb431090df701",
+      "chapter": 0
+    },
+    {
+      "dom": {
+        "blocks": [
+          {
+            "id": "title2",
+            "text": "第二章　山間來信",
+            "utf16_length": 8.0
+          },
+          {
+            "id": "target",
+            "text": "📖 é，目标位置在这里；这是用于选字、高亮、搜索与听书映射的同一段文字。",
+            "utf16_length": 38.0
+          },
+          {
+            "id": "long0",
+            "text": "第0段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long1",
+            "text": "第1段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long2",
+            "text": "第2段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long3",
+            "text": "第3段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long4",
+            "text": "第4段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long5",
+            "text": "第5段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long6",
+            "text": "第6段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long7",
+            "text": "第7段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long8",
+            "text": "第8段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long9",
+            "text": "第9段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long10",
+            "text": "第10段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long11",
+            "text": "第11段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long12",
+            "text": "第12段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long13",
+            "text": "第13段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long14",
+            "text": "第14段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long15",
+            "text": "第15段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          }
+        ],
+        "restorations": [
+          {
+            "finite_rect": true,
+            "columns": "1",
+            "width": "360px",
+            "exact": "目标位置"
+          },
+          {
+            "finite_rect": true,
+            "columns": "2",
+            "width": "740px",
+            "exact": "目标位置"
+          },
+          {
+            "finite_rect": true,
+            "columns": "1",
+            "exact": "目标位置",
+            "width": "auto"
+          }
+        ],
+        "anchor": {
+          "block_id": "target",
+          "exact": "目标位置",
+          "end_utf16": 10.0,
+          "start_utf16": 6.0
+        },
+        "resource_tests": [
+          {
+            "kind": "https",
+            "blocked": true
+          },
+          {
+            "blocked": true,
+            "kind": "file"
+          },
+          {
+            "kind": "reader-probe",
+            "blocked": true
+          },
+          {
+            "blocked": true,
+            "kind": "reader-probe"
+          }
+        ],
+        "path": "OEBPS/text/ch2.xhtml",
+        "offset_unit": "utf16_code_unit",
+        "image": {
+          "present": false,
+          "loaded": null
+        },
+        "book_script_executed": false,
+        "user_selection": null,
+        "highlights_supported": true,
+        "selected": "目标位置",
+        "css": {
+          "strong_color": null,
+          "blockquote_border": null,
+          "ruby": false,
+          "embedded_font": false
+        }
+      },
+      "resource_denied": 4,
+      "served": [
+        "OEBPS/fonts/Phosphor-Light.ttf",
+        "OEBPS/images/hill.png",
+        "OEBPS/styles/book.css",
+        "OEBPS/text/ch1.xhtml",
+        "OEBPS/text/ch2.xhtml"
+      ],
+      "book_page_script_executed": false,
+      "blocked_navigations": 0,
+      "canonical_mapping_equal": true,
+      "revision": "3d6d0a4ee10305897ef708f43e76375433998025b1417f0b655cb431090df701",
+      "chapter": 1
+    },
+    {
+      "resource_denied": 6,
+      "blocked_navigations": 0,
+      "dom": {
+        "blocks": [
+          {
+            "id": "title2",
+            "text": "第二章　山間來信",
+            "utf16_length": 8.0
+          },
+          {
+            "id": "target",
+            "text": "📖 é，目标位置在这里；这是用于选字、高亮、搜索与听书映射的同一段文字。",
+            "utf16_length": 38.0
+          },
+          {
+            "id": "long0",
+            "text": "第0段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long1",
+            "text": "第1段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long2",
+            "text": "第2段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long3",
+            "text": "第3段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long4",
+            "text": "第4段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long5",
+            "text": "第5段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long6",
+            "text": "第6段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long7",
+            "text": "第7段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long8",
+            "text": "第8段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long9",
+            "text": "第9段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 84.0
+          },
+          {
+            "id": "long10",
+            "text": "第10段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long11",
+            "text": "第11段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long12",
+            "text": "第12段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long13",
+            "text": "第13段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long14",
+            "text": "第14段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          },
+          {
+            "id": "long15",
+            "text": "第15段。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。窗外的山路渐渐明亮，朋友在路的尽头等待。",
+            "utf16_length": 85.0
+          }
+        ],
+        "restorations": [
+          {
+            "finite_rect": true,
+            "exact": "目标位置",
+            "width": "360px",
+            "columns": "1"
+          },
+          {
+            "finite_rect": true,
+            "columns": "2",
+            "width": "740px",
+            "exact": "目标位置"
+          },
+          {
+            "finite_rect": true,
+            "exact": "目标位置",
+            "width": "auto",
+            "columns": "1"
+          }
+        ],
+        "anchor": {
+          "block_id": "target",
+          "exact": "目标位置",
+          "end_utf16": 10.0,
+          "start_utf16": 6.0
+        },
+        "resource_tests": [
+          {
+            "blocked": true,
+            "kind": "https"
+          },
+          {
+            "kind": "file",
+            "blocked": true
+          },
+          {
+            "blocked": true,
+            "kind": "reader-probe"
+          },
+          {
+            "blocked": true,
+            "kind": "reader-probe"
+          }
+        ],
+        "path": "OEBPS/text/ch2.xhtml",
+        "offset_unit": "utf16_code_unit",
+        "book_script_executed": false,
+        "image": {
+          "present": false,
+          "loaded": null
+        },
+        "user_selection": {
+          "visual": "在这里",
+          "block_id": "target",
+          "exact": "在这里",
+          "end_utf16": 13.0,
+          "start_utf16": 10.0
+        },
+        "highlights_supported": true,
+        "selected": "目标位置",
+        "css": {
+          "strong_color": null,
+          "ruby": false,
+          "blockquote_border": null,
+          "embedded_font": false
+        }
+      },
+      "served": [
+        "OEBPS/fonts/Phosphor-Light.ttf",
+        "OEBPS/images/hill.png",
+        "OEBPS/styles/book.css",
+        "OEBPS/text/ch1.xhtml",
+        "OEBPS/text/ch2.xhtml"
+      ],
+      "book_page_script_executed": false,
+      "canonical_mapping_equal": true,
+      "revision": "3d6d0a4ee10305897ef708f43e76375433998025b1417f0b655cb431090df701",
+      "chapter": 1
+    }
+  ]
+}

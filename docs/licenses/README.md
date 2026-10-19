@@ -15,3 +15,9 @@ MAC-01原始清单由该提交的脚本生成；当前重建须显式提供`--ch
 [本批清单](mac-02-dependencies.json)记录实际应用锁文件解析的30包、11个运行时包（含App/core/platform_services），8个第三方运行时包的LICENSE原文由清单定位；未变化的7份复用mac-01原文及哈希，mac-02/仅留新增Phosphor原文。新增phosphor_icons 3.0.1：MIT，Phosphor维护分支的SDK兼容情况见[ADR-0002](../decisions/0002-mac02-shell-and-jobs.md)。无新增原生插件或CDN。源码项目许可证仍未选择。
 
 运行 `python3 tool/record_dependency_licenses.py --checkpoint mac-02` 更新本批清单；MAC-01文件保持历史快照。Release聚合声明实际大小/哈希见[MAC-02构建记录](../verifications/mac-02-build-metadata.json)。
+
+## MAC-06（2026-10-19）
+
+[本批清单](mac-06-dependencies.json)记录49包：运行闭包11、研究专用29、其他开发9。运行依赖未新增；研究入口使用精确epub_view3.3.0与html0.15.6及传递依赖，新增29份研究许可原文在mac-06/，未变化的运行许可复用旧快照。html旧版只为已知自产样本复现兼容问题，不能自动用于不可信生产导入，见[ADR-0003](../decisions/0003-mac06-epub-rendering.md)。
+
+样本使用Phosphor MIT字体，原许可同时嵌入EPUB，不把字体视作自产。可通过`python3 tool/record_dependency_licenses.py --checkpoint mac-06`重建当前清单；历史MAC-01/02不覆盖。Release的聚合NOTICES实际字节数/哈希见[构建记录](../verifications/mac-06/release-build.json)，研究dev依赖出现在聚合声明不等于生产入口集成了引擎。项目源码许可证仍未选择。

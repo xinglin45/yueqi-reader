@@ -8,6 +8,6 @@ MAC-01已初始化client四端Flutter宿主并验证macOS基础壳；MAC-02已�
 
 参见[仓库布局](../docs/repository-layout.md)、[架构](../docs/architecture.md)和[路线图](../docs/roadmap.md)。
 
-首批优先 macOS 自用安装包，按[完整功能方案](../docs/novel-macos-plan.md)、[任务与验收](../docs/novel-macos-backlog.md)、[四端代码边界](../docs/novel-cross-platform.md)推进；MAC-02应用壳已完成，下一主任务第03步MAC-06技术风险试验；工程检查版不代表完整阅读App。
+首批优先 macOS 自用安装包，按[完整功能方案](../docs/novel-macos-plan.md)、[任务与验收](../docs/novel-macos-backlog.md)、[四端代码边界](../docs/novel-cross-platform.md)推进；MAC-02应用壳与[MAC-06研究](../docs/verifications/mac-06-2026-10-19.md)已完成，下一主任务第04步MAC-03本地数据与位置协议；工程检查版不代表完整阅读App。
 
 小说资源仅中文简繁，免费普通/18+来源、内置＋导入、在线搜索阅读与18+搜索开关均为完整首版必需；默认不搜索成人源，关闭开关保留独立分组已有收藏阅读。规则见[小说来源策略](../docs/novel-source-policy.md)。

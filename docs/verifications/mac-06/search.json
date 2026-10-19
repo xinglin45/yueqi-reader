@@ -1,0 +1,361 @@
+{
+  "sqlite_version": "3.53.4",
+  "fts_compile_options": [
+    "ENABLE_FTS3",
+    "ENABLE_FTS3_PARENTHESIS",
+    "ENABLE_FTS5"
+  ],
+  "tokenizers": {
+    "unicode61": {
+      "available": true
+    },
+    "trigram": {
+      "available": true
+    }
+  },
+  "accuracy": [
+    {
+      "query": "山",
+      "expected": [
+        "ch1/title1",
+        "ch1/p1",
+        "ch1/p2",
+        "ch1/ruby",
+        "ch2/title2",
+        "ch2/long0",
+        "ch2/long1",
+        "ch2/long2",
+        "ch2/long3",
+        "ch2/long4",
+        "ch2/long5",
+        "ch2/long6",
+        "ch2/long7",
+        "ch2/long8",
+        "ch2/long9",
+        "ch2/long10",
+        "ch2/long11",
+        "ch2/long12",
+        "ch2/long13",
+        "ch2/long14",
+        "ch2/long15",
+        "trad",
+        "false"
+      ],
+      "instr": [
+        "ch1/title1",
+        "ch1/p1",
+        "ch1/p2",
+        "ch1/ruby",
+        "ch2/title2",
+        "ch2/long0",
+        "ch2/long1",
+        "ch2/long2",
+        "ch2/long3",
+        "ch2/long4",
+        "ch2/long5",
+        "ch2/long6",
+        "ch2/long7",
+        "ch2/long8",
+        "ch2/long9",
+        "ch2/long10",
+        "ch2/long11",
+        "ch2/long12",
+        "ch2/long13",
+        "ch2/long14",
+        "ch2/long15",
+        "trad",
+        "false"
+      ],
+      "instr_exact": true,
+      "unicode61": [],
+      "trigram": [],
+      "selected_strategy": "bounded_substring",
+      "selected_exact": true
+    },
+    {
+      "query": "山间",
+      "expected": [
+        "ch1/p1"
+      ],
+      "instr": [
+        "ch1/p1"
+      ],
+      "instr_exact": true,
+      "unicode61": [],
+      "trigram": [],
+      "selected_strategy": "bounded_substring",
+      "selected_exact": true
+    },
+    {
+      "query": "山间来信",
+      "expected": [
+        "ch1/p1"
+      ],
+      "instr": [
+        "ch1/p1"
+      ],
+      "instr_exact": true,
+      "unicode61": [],
+      "trigram": [
+        "ch1/p1"
+      ],
+      "selected_strategy": "trigram_plus_exact_verification",
+      "selected_exact": true
+    },
+    {
+      "query": "山間來信",
+      "expected": [
+        "ch1/p1",
+        "ch2/title2",
+        "trad"
+      ],
+      "instr": [
+        "ch1/p1",
+        "ch2/title2",
+        "trad"
+      ],
+      "instr_exact": true,
+      "unicode61": [
+        "ch2/title2"
+      ],
+      "trigram": [
+        "ch1/p1",
+        "ch2/title2",
+        "trad"
+      ],
+      "selected_strategy": "trigram_plus_exact_verification",
+      "selected_exact": true
+    },
+    {
+      "query": "100%_",
+      "expected": [
+        "ch1/p2",
+        "literal"
+      ],
+      "instr": [
+        "ch1/p2",
+        "literal"
+      ],
+      "instr_exact": true,
+      "unicode61": [
+        "ch1/p2",
+        "literal"
+      ],
+      "trigram": [
+        "ch1/p2",
+        "literal"
+      ],
+      "selected_strategy": "trigram_plus_exact_verification",
+      "selected_exact": true
+    },
+    {
+      "query": "📖",
+      "expected": [
+        "ch1/p2",
+        "ch2/target",
+        "literal"
+      ],
+      "instr": [
+        "ch1/p2",
+        "ch2/target",
+        "literal"
+      ],
+      "instr_exact": true,
+      "unicode61": [],
+      "trigram": [],
+      "selected_strategy": "bounded_substring",
+      "selected_exact": true
+    },
+    {
+      "query": "é",
+      "expected": [
+        "ch1/p2",
+        "ch2/target",
+        "nfc"
+      ],
+      "instr": [
+        "ch1/p2",
+        "ch2/target",
+        "nfc"
+      ],
+      "instr_exact": true,
+      "unicode61": [
+        "ch1/p2",
+        "ch2/target",
+        "nfc"
+      ],
+      "trigram": [],
+      "selected_strategy": "bounded_substring",
+      "selected_exact": true
+    },
+    {
+      "query": "é",
+      "expected": [
+        "nfc"
+      ],
+      "instr": [
+        "nfc"
+      ],
+      "instr_exact": true,
+      "unicode61": [
+        "nfc"
+      ],
+      "trigram": [],
+      "selected_strategy": "bounded_substring",
+      "selected_exact": true
+    },
+    {
+      "query": "，",
+      "expected": [
+        "ch1/p1",
+        "ch1/quote",
+        "ch1/ruby",
+        "ch2/target",
+        "ch2/long0",
+        "ch2/long1",
+        "ch2/long2",
+        "ch2/long3",
+        "ch2/long4",
+        "ch2/long5",
+        "ch2/long6",
+        "ch2/long7",
+        "ch2/long8",
+        "ch2/long9",
+        "ch2/long10",
+        "ch2/long11",
+        "ch2/long12",
+        "ch2/long13",
+        "ch2/long14",
+        "ch2/long15",
+        "literal",
+        "false"
+      ],
+      "instr": [
+        "ch1/p1",
+        "ch1/quote",
+        "ch1/ruby",
+        "ch2/target",
+        "ch2/long0",
+        "ch2/long1",
+        "ch2/long2",
+        "ch2/long3",
+        "ch2/long4",
+        "ch2/long5",
+        "ch2/long6",
+        "ch2/long7",
+        "ch2/long8",
+        "ch2/long9",
+        "ch2/long10",
+        "ch2/long11",
+        "ch2/long12",
+        "ch2/long13",
+        "ch2/long14",
+        "ch2/long15",
+        "literal",
+        "false"
+      ],
+      "instr_exact": true,
+      "unicode61": [],
+      "trigram": [],
+      "selected_strategy": "bounded_substring",
+      "selected_exact": true
+    },
+    {
+      "query": "OR \"NOT\"",
+      "expected": [
+        "literal"
+      ],
+      "instr": [
+        "literal"
+      ],
+      "instr_exact": true,
+      "unicode61": [
+        "literal"
+      ],
+      "trigram": [
+        "literal"
+      ],
+      "selected_strategy": "trigram_plus_exact_verification",
+      "selected_exact": true
+    },
+    {
+      "query": "不存在词",
+      "expected": [],
+      "instr": [],
+      "instr_exact": true,
+      "unicode61": [],
+      "trigram": [],
+      "selected_strategy": "trigram_plus_exact_verification",
+      "selected_exact": true
+    }
+  ],
+  "anchor_offsets": [
+    {
+      "block": "target",
+      "sql_unicode_scalar_offset": 5,
+      "utf16_offset": 6,
+      "utf16_length": 4,
+      "prefix": "📖 é，"
+    }
+  ],
+  "benchmark": {
+    "paragraphs": 10000,
+    "utf8_bytes": 4268887,
+    "database_bytes": 11755520,
+    "fts_build_seconds": 0.034,
+    "latency": {
+      "山": {
+        "instr": {
+          "p50_ms": 0.01,
+          "p95_ms": 0.014,
+          "hits": 50
+        }
+      },
+      "山路": {
+        "instr": {
+          "p50_ms": 0.009,
+          "p95_ms": 0.009,
+          "hits": 50
+        }
+      },
+      "唯一目标词": {
+        "instr": {
+          "p50_ms": 2.591,
+          "p95_ms": 2.746,
+          "hits": 1
+        },
+        "trigram_verified": {
+          "p50_ms": 0.01,
+          "p95_ms": 0.016,
+          "hits": 1
+        }
+      },
+      "不存在词": {
+        "instr": {
+          "p50_ms": 2.323,
+          "p95_ms": 2.47,
+          "hits": 0
+        },
+        "trigram_verified": {
+          "p50_ms": 0.006,
+          "p95_ms": 0.009,
+          "hits": 0
+        }
+      },
+      "📖": {
+        "instr": {
+          "p50_ms": 2.278,
+          "p95_ms": 2.297,
+          "hits": 0
+        }
+      }
+    }
+  },
+  "all_selected_checks_passed": true,
+  "limitations": [
+    "Python SQLite is a research runtime; rerun against the exact MAC-03 Flutter SQLite build",
+    "short queries use bounded substring scan, not accelerated FTS",
+    "no simplified/traditional automatic conversion or normalization of original IDs/text",
+    "LIMIT 50 is a probe bound, not final pagination/cancellation implementation"
+  ]
+}

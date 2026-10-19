@@ -12,7 +12,7 @@ from urllib.parse import unquote, urljoin, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 CLIENT = ROOT / '小说/client'
 parser = argparse.ArgumentParser()
-parser.add_argument('--checkpoint', required=True, choices=['mac-01', 'mac-02'])
+parser.add_argument('--checkpoint', required=True, choices=['mac-01', 'mac-02', 'mac-06'])
 checkpoint = parser.parse_args().checkpoint
 OUT = ROOT / 'docs/licenses'
 config_path = CLIENT / '.dart_tool/package_config.json'
@@ -38,12 +38,18 @@ def visit(name):
 
 
 visit('novel_app')
+production_runtime = set(runtime)
+if checkpoint == 'mac-06':
+    visit('epub_view')
+    visit('html')
+experiment = runtime - production_runtime
+runtime = production_runtime
 records = []
 for name, package in sorted(packages.items()):
     source = package['source']
     record = {
         'name': name, 'version': package['version'], 'source': source,
-        'scope': 'runtime' if name in runtime else 'development',
+        'scope': 'runtime' if name in runtime else 'mac06_experiment' if name in experiment else 'development',
     }
     if name in ('novel_app', 'reader_core', 'platform_services'):
         record['license_status'] = 'project_license_not_selected'
@@ -56,8 +62,8 @@ for name, package in sorted(packages.items()):
             raise RuntimeError('Missing license: ' + name)
         record['license_sha256'] = hashlib.sha256(license_file.read_bytes()).hexdigest()
         record['license_status'] = 'text_inspected'
-        if name in runtime:
-            prior = OUT / 'mac-01' / (name + '-LICENSE.txt')
+        if name in runtime or name in experiment:
+            prior = next((p for p in sorted(OUT.glob('mac-*/' + name + '-LICENSE.txt')) if hashlib.sha256(p.read_bytes()).hexdigest() == record['license_sha256']), OUT / 'mac-01' / (name + '-LICENSE.txt'))
             if checkpoint != 'mac-01' and prior.exists() and hashlib.sha256(prior.read_bytes()).hexdigest() == record['license_sha256']:
                 target = prior
             else:

@@ -1,0 +1,250 @@
+{
+  "scope": "probe process only; speech service/XPC memory excluded",
+  "samples": [
+    {
+      "elapsed_seconds": 0.0,
+      "rss_kib": 4048
+    },
+    {
+      "elapsed_seconds": 10.02,
+      "rss_kib": 53696
+    },
+    {
+      "elapsed_seconds": 20.03,
+      "rss_kib": 53664
+    },
+    {
+      "elapsed_seconds": 30.04,
+      "rss_kib": 53712
+    },
+    {
+      "elapsed_seconds": 40.05,
+      "rss_kib": 53808
+    },
+    {
+      "elapsed_seconds": 50.06,
+      "rss_kib": 53824
+    },
+    {
+      "elapsed_seconds": 60.08,
+      "rss_kib": 53856
+    },
+    {
+      "elapsed_seconds": 70.09,
+      "rss_kib": 53904
+    },
+    {
+      "elapsed_seconds": 80.1,
+      "rss_kib": 53920
+    },
+    {
+      "elapsed_seconds": 90.11,
+      "rss_kib": 53936
+    },
+    {
+      "elapsed_seconds": 100.12,
+      "rss_kib": 54000
+    },
+    {
+      "elapsed_seconds": 110.13,
+      "rss_kib": 54048
+    },
+    {
+      "elapsed_seconds": 120.14,
+      "rss_kib": 54064
+    },
+    {
+      "elapsed_seconds": 130.15,
+      "rss_kib": 54080
+    },
+    {
+      "elapsed_seconds": 140.16,
+      "rss_kib": 54096
+    },
+    {
+      "elapsed_seconds": 150.18,
+      "rss_kib": 54128
+    },
+    {
+      "elapsed_seconds": 160.19,
+      "rss_kib": 54160
+    },
+    {
+      "elapsed_seconds": 170.2,
+      "rss_kib": 54176
+    },
+    {
+      "elapsed_seconds": 180.21,
+      "rss_kib": 54192
+    },
+    {
+      "elapsed_seconds": 190.23,
+      "rss_kib": 54208
+    },
+    {
+      "elapsed_seconds": 200.23,
+      "rss_kib": 54240
+    },
+    {
+      "elapsed_seconds": 210.25,
+      "rss_kib": 54272
+    },
+    {
+      "elapsed_seconds": 220.26,
+      "rss_kib": 54304
+    },
+    {
+      "elapsed_seconds": 230.26,
+      "rss_kib": 54336
+    },
+    {
+      "elapsed_seconds": 240.27,
+      "rss_kib": 51824
+    },
+    {
+      "elapsed_seconds": 250.28,
+      "rss_kib": 51840
+    },
+    {
+      "elapsed_seconds": 260.29,
+      "rss_kib": 51888
+    },
+    {
+      "elapsed_seconds": 270.3,
+      "rss_kib": 51904
+    },
+    {
+      "elapsed_seconds": 280.31,
+      "rss_kib": 51936
+    },
+    {
+      "elapsed_seconds": 290.33,
+      "rss_kib": 51952
+    },
+    {
+      "elapsed_seconds": 300.33,
+      "rss_kib": 51968
+    },
+    {
+      "elapsed_seconds": 310.34,
+      "rss_kib": 51968
+    },
+    {
+      "elapsed_seconds": 320.35,
+      "rss_kib": 52000
+    },
+    {
+      "elapsed_seconds": 330.36,
+      "rss_kib": 52016
+    },
+    {
+      "elapsed_seconds": 340.37,
+      "rss_kib": 52032
+    },
+    {
+      "elapsed_seconds": 350.38,
+      "rss_kib": 52048
+    },
+    {
+      "elapsed_seconds": 360.39,
+      "rss_kib": 51904
+    },
+    {
+      "elapsed_seconds": 370.4,
+      "rss_kib": 51936
+    },
+    {
+      "elapsed_seconds": 380.41,
+      "rss_kib": 51952
+    },
+    {
+      "elapsed_seconds": 390.42,
+      "rss_kib": 51904
+    },
+    {
+      "elapsed_seconds": 400.43,
+      "rss_kib": 51920
+    },
+    {
+      "elapsed_seconds": 410.44,
+      "rss_kib": 51904
+    },
+    {
+      "elapsed_seconds": 420.45,
+      "rss_kib": 51920
+    },
+    {
+      "elapsed_seconds": 430.46,
+      "rss_kib": 51936
+    },
+    {
+      "elapsed_seconds": 440.47,
+      "rss_kib": 51952
+    },
+    {
+      "elapsed_seconds": 450.48,
+      "rss_kib": 51968
+    },
+    {
+      "elapsed_seconds": 460.49,
+      "rss_kib": 51984
+    },
+    {
+      "elapsed_seconds": 470.5,
+      "rss_kib": 52016
+    },
+    {
+      "elapsed_seconds": 480.51,
+      "rss_kib": 52032
+    },
+    {
+      "elapsed_seconds": 490.53,
+      "rss_kib": 52048
+    },
+    {
+      "elapsed_seconds": 500.54,
+      "rss_kib": 52064
+    },
+    {
+      "elapsed_seconds": 510.56,
+      "rss_kib": 52080
+    },
+    {
+      "elapsed_seconds": 520.56,
+      "rss_kib": 52112
+    },
+    {
+      "elapsed_seconds": 530.57,
+      "rss_kib": 52112
+    },
+    {
+      "elapsed_seconds": 540.58,
+      "rss_kib": 52128
+    },
+    {
+      "elapsed_seconds": 550.59,
+      "rss_kib": 52144
+    },
+    {
+      "elapsed_seconds": 560.6,
+      "rss_kib": 52160
+    },
+    {
+      "elapsed_seconds": 570.6,
+      "rss_kib": 52160
+    },
+    {
+      "elapsed_seconds": 580.61,
+      "rss_kib": 52192
+    },
+    {
+      "elapsed_seconds": 590.63,
+      "rss_kib": 52208
+    },
+    {
+      "elapsed_seconds": 600.64,
+      "rss_kib": 52224
+    }
+  ],
+  "peak_rss_kib": 54336
+}
