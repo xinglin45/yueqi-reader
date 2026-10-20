@@ -1,6 +1,6 @@
 # 架构设计
 
-状态：目标架构；MAC-01已初始化小说四端宿主和reader_core最小标识；MAC-02已实现D1应用壳、纯Dart平台端口与任务生命周期。MAC-06已验证受控WKWebView、中文精确检索及原生TTS小样，见[三项研究验收](verifications/mac-06-2026-10-19.md)；生产阅读/存储/原生适配/后端仍待实现，见[应用壳验收](verifications/mac-02-2026-10-16.md)。外部源/第三方项目都是候选，不代表已接入。
+状态：目标架构；MAC-01已初始化小说四端宿主和reader_core最小标识；MAC-02已实现D1应用壳、纯Dart平台端口与任务生命周期。MAC-06已验证受控WKWebView、中文精确检索及原生TTS小样，见[三项研究验收](verifications/mac-06-2026-10-19.md)；MAC-03已接入后台SQLite、系统资料目录、托管样本与稳定位置，见[存储决策](decisions/0006-mac03-local-storage-and-anchors.md)；通用导入/完整阅读/其他原生适配/后端仍待实现，见[应用壳验收](verifications/mac-02-2026-10-16.md)。外部源/第三方项目都是候选，不代表已接入。
 
 2026-10-16：自用开发采用[“地外文明”特殊区域策略](development-region-policy.md)，不指定现实地区、跳过地区专项核验，不以地区未知阻塞开发。来源自身访问资格与项目地区策略分开，后文现实地区/渠道字段供原始信息保存及将来发布使用，当前不增加地区门槛。
 
@@ -61,7 +61,7 @@ flowchart TB
 
 每款 App 独立数据库：novel.sqlite、comic.sqlite（逻辑名称，实际目录由平台 API 获取）。元数据入 SQLite；TXT/EPUB、章节和图片作为文件，数据库记录 hash、大小、引用与状态。
 
-建议表（逻辑草案，不是已迁移的表）：
+以下为全局完整目标表草案；当前小说实际11表及schema v3以[本地存储协议](storage/novel-schema.md)为准，未实现outbox/sync_state等后续功能：
 
 - library_items：app_kind、content_key、source_id、source_item_id、标题、语言、分级、许可记录引用。
 - progress：chapter_id、position_kind、position_payload、content_revision、device_seq、server_revision。
@@ -72,7 +72,7 @@ flowchart TB
 - outbox/sync_state：本地操作 ID、设备序号、游标与重试状态；本地数据修改和 outbox 入队同事务。
 - rating_overrides：用户主动分类、来源原始分级与证据；用户修改不能降低来源/地区强制门槛。
 
-content_key：网络来源采用 app_kind + source_id + source_item_id；本地导入先用内容摘要和格式生成稳定身份。不同来源版本/译本不自动认定同一本书；跨源对应由显式映射维护。
+content_key：网络来源采用 app_kind + source_id + source_item_id；本地book_id独立随机生成，用内容摘要/格式/解析版本检测文档重复和修订，不以摘要替代可持续书籍身份。不同来源版本/译本不自动认定同一本书；跨源对应由显式映射维护。
 
 小说位置：TXT 内容偏移/段落锚点，EPUB 采用引擎可稳定恢复的 CFI 或 spine+片段位置；保存修订与上下文。不云同步排版页号。
 漫画位置：chapter_id + 稳定 page_id/索引 + 页内比例 + 阅读方向；页面清单变化时先匹配 page_id，再使用可解释回退。

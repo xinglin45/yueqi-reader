@@ -2,8 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'app/app.dart';
-import 'app/dependencies.dart';
+import 'app/startup.dart';
 import 'application/diagnostics.dart';
 
 void main() {
@@ -24,5 +23,5 @@ void main() {
       ),
     ),
   );
-  runApp(NovelApp(dependencies: AppDependencies.local()));
+  runApp(const NovelStartup());
 }

@@ -12,7 +12,7 @@ from urllib.parse import unquote, urljoin, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 CLIENT = ROOT / '小说/client'
 parser = argparse.ArgumentParser()
-parser.add_argument('--checkpoint', required=True, choices=['mac-01', 'mac-02', 'mac-06'])
+parser.add_argument('--checkpoint', required=True, choices=['mac-01', 'mac-02', 'mac-06', 'mac-03'])
 checkpoint = parser.parse_args().checkpoint
 OUT = ROOT / 'docs/licenses'
 config_path = CLIENT / '.dart_tool/package_config.json'
@@ -39,7 +39,7 @@ def visit(name):
 
 visit('novel_app')
 production_runtime = set(runtime)
-if checkpoint == 'mac-06':
+if checkpoint in ('mac-06', 'mac-03'):
     visit('epub_view')
     visit('html')
 experiment = runtime - production_runtime
@@ -51,7 +51,7 @@ for name, package in sorted(packages.items()):
         'name': name, 'version': package['version'], 'source': source,
         'scope': 'runtime' if name in runtime else 'mac06_experiment' if name in experiment else 'development',
     }
-    if name in ('novel_app', 'reader_core', 'platform_services'):
+    if name in ('novel_app', 'reader_core', 'platform_services', 'reader_storage'):
         record['license_status'] = 'project_license_not_selected'
     else:
         folder = roots[name]

@@ -135,3 +135,14 @@ final class UnavailablePlatform
   @override
   Future<PlatformResult<void>> hideReading() async => _unsupported();
 }
+
+/// Infrastructure paths supplied by the platform adapter, never by a document.
+final class AppStorageLocations {
+  const AppStorageLocations({required this.support, required this.cache});
+  final String support;
+  final String cache;
+}
+
+abstract interface class StorageLocationProvider {
+  Future<AppStorageLocations> locations();
+}

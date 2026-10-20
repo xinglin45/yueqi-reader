@@ -1,6 +1,6 @@
 # 阅栖 macOS 小说 App：详细开发步骤
 
-日期：2026-10-15。本文是可交给后续 Codex 逐项执行的实施计划，**MAC-01、01A、MAC-02与MAC-06研究已完成，生产阅读功能尚未实现**。项目显示名保持“阅读软件”，小说 App 暂定“阅栖”。功能基线见 [完整功能方案](novel-macos-plan.md)，任务状态以 [MAC backlog](novel-macos-backlog.md)为准。
+日期：2026-10-15。本文是可交给后续 Codex 逐项执行的实施计划，**MAC-01、01A、MAC-02、MAC-06与MAC-03已完成，通用导入/完整阅读器尚未实现**。项目显示名保持“阅读软件”，小说 App 暂定“阅栖”。功能基线见 [完整功能方案](novel-macos-plan.md)，任务状态以 [MAC backlog](novel-macos-backlog.md)为准。
 
 ## 交付范围与执行方式
 
@@ -41,7 +41,7 @@ MAC-00为已完成规划；MAC-25同步与MAC-26其他平台为后续任务。20
 
 ## 代码落点与设计基线
 
-以下路径/类型按任务逐步实现。MAC-01已有lib/main.dart、test、四端宿主与reader_core最小包；MAC-02已建立lib/app、features和最小平台端口；MAC-06增加独立tool/mac06探针，数据库仍待MAC-03。所有产品业务在小说/client，不按手机/PC或开发/生产复制代码。
+以下路径/类型按任务逐步实现。MAC-01已有lib/main.dart、test、四端宿主与reader_core最小包；MAC-02已建立lib/app、features和最小平台端口；MAC-06增加独立tool/mac06探针，MAC-03已接入本地SQLite/文件与位置协议。所有产品业务在小说/client，不按手机/PC或开发/生产复制代码。
 
 | 位置 | 实现职责 |
 |---|---|
@@ -57,7 +57,7 @@ MAC-00为已完成规划；MAC-25同步与MAC-26其他平台为后续任务。20
 | 小说/client/test、integration_test | 单元/组件/本地集成测试，公共端点不作为CI依赖 |
 | fixtures | 小型自产中文样本与生成器，记录出处；不提交私人书籍或成人正文 |
 
-拟用Riverpod装配和状态管理、go_router导航、Drift封装SQLite；均待联合兼容试验与版本锁定。EPUB与TTS先做小样再定具体绑定。环境事实和维护者依据见 [环境核验](development-environment.md)。不一次性初始化所有共享包和服务端空工程。
+MAC-02采用SDK装配/路由；MAC-03采用精确sqlite3 3.7.1后台连接与显式SQL，详见ADR-0006。Riverpod/go_router/Drift仍为未引入候选，不冒充已用依赖。EPUB与TTS先做小样再定具体绑定。环境事实和维护者依据见 [环境核验](development-environment.md)。不一次性初始化所有共享包和服务端空工程。
 
 页面方案：左侧导航包括书架、在线搜书、来源、下载、笔记、统计、设置；阅读页面可收起侧栏，带目录/笔记面板。成人收藏为独立分组，入口受资格/隐私锁控制，不能被搜索开关误删。初版单主窗口，路由参数只携带书籍/章节ID。手机后续改导航布局，共享同一用例与数据协议。
 
@@ -118,7 +118,7 @@ MAC-00为已完成规划；MAC-25同步与MAC-26其他平台为后续任务。20
 
 ## 04：本地数据与稳定位置
 
-对应MAC-03，依赖MAC-02。落点：小说领域模型、App数据库、reader_storage。
+对应MAC-03，依赖MAC-02。状态：2026-10-20已完成，见[验收](verifications/mac-03-2026-10-20.md)、[ADR-0006](decisions/0006-mac03-local-storage-and-anchors.md)及[存储协议](storage/novel-schema.md)。落点：小说领域模型、App数据库、reader_storage；当前用户可保存自产样本与手动段落位置，通用解析/导入待后续任务。
 
 1. 定义Book、Edition/DocumentRevision、Chapter、Resource、ReadingPosition、ListeningPosition、Bookmark/Annotation、Collection/Tag、SourceBinding、ImportJob、DownloadJob与Settings。正文/图片用文件，SQLite存引用、状态和索引。
 2. 导入文件用内容hash识别重复；书名不是唯一键。线上身份用source_id/source_item_id；本地稳定book_id独立于路径，换源不会静默合并内容身份。
@@ -326,4 +326,4 @@ MAC-00为已完成规划；MAC-25同步与MAC-26其他平台为后续任务。20
 - MAC-26：Windows、Android、iOS逐端补文件授权、窗口/触控、生命周期、TTS与安装签名；共用小说业务源码，各有独立构建与回归记录。macOS生成宿主不能替代这些验证。
 - 漫画继续独立client/server与图片阅读引擎；只复用稳定基础接口，不复制小说App再改名字。
 
-此前第00步MAC-18续验记录已交付，任务未完成；本批按用户最新要求提前交付01A的[D1设计包](design/novel-macos/design-spec-D1.md)，已获用户明确确认，01A已完成，MAC-01与MAC-02亦已完成，见[第02步验收](verifications/mac-02-2026-10-16.md)。第03步MAC-06技术风险研究亦已完成，见[验收](verifications/mac-06-2026-10-19.md)；下一主任务为第04步MAC-03本地数据与位置协议；原有本地开发与来源研究可并行的依赖关系保留，无需重新确认已确定的中文/免费/18+策略。
+此前第00步MAC-18续验记录已交付，任务未完成；本批按用户最新要求提前交付01A的[D1设计包](design/novel-macos/design-spec-D1.md)，已获用户明确确认，01A已完成，MAC-01与MAC-02亦已完成，见[第02步验收](verifications/mac-02-2026-10-16.md)。第03步MAC-06技术风险研究亦已完成，见[验收](verifications/mac-06-2026-10-19.md)；第04步MAC-03亦已完成，下一主任务为第05步MAC-16分级与隐私基础；原有本地开发与来源研究可并行的依赖关系保留，无需重新确认已确定的中文/免费/18+策略。

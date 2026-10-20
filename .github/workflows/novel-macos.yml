@@ -7,6 +7,7 @@ on:
       - '小说/client/**'
       - 'fixtures/novel/mac06/**'
       - 'packages/reader_core/**'
+      - 'packages/reader_storage/**'
       - 'packages/platform_services/**'
       - 'tool/**'
       - '.github/workflows/novel-macos.yml'
@@ -16,6 +17,7 @@ on:
       - '小说/client/**'
       - 'fixtures/novel/mac06/**'
       - 'packages/reader_core/**'
+      - 'packages/reader_storage/**'
       - 'packages/platform_services/**'
       - 'tool/**'
       - '.github/workflows/novel-macos.yml'
@@ -42,3 +44,5 @@ jobs:
       - name: Build macOS release
         working-directory: 小说/client
         run: ../../tool/flutterw build macos --release --no-pub
+      - name: Finalize and verify internal ad-hoc checkpoint
+        run: python3 tool/sign_macos_internal.py

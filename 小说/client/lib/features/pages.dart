@@ -1,3 +1,5 @@
+import 'preview_position.dart';
+
 import 'package:phosphor_icons/phosphor_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:platform_services/platform_services.dart';
@@ -219,8 +221,8 @@ class _LibraryPageState extends State<LibraryPage> {
       if (widget.recent || _tab == 1)
         const EmptyState(
           icon: PhosphorIconsLight.clock,
-          title: '阅读记录从下一次开始',
-          message: '阅读进度与在读记录将在 MAC-08/09 接入。演示样本不生成真实进度。',
+          title: '从书架继续阅读',
+          message: '最近阅读列表尚未接入；已保存的样本可在书架打开并恢复记住的段落。',
         )
       else if (_tab == 2)
         const EmptyState(
@@ -249,7 +251,7 @@ class _LibraryPageState extends State<LibraryPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '本次会话 · ${books.length} 本',
+                '${books.every((book) => book.persistent) ? '本机书架' : '本次会话'} · ${books.length} 本',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontSize: 12,
@@ -366,7 +368,11 @@ class ReaderPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              '${preview.book.title}  /  ${preview.book.demo ? '自产演示 · 无进度保存' : '阅读预览'}',
+              '${preview.book.title}  /  ${preview.book.persistent
+                  ? '自产样本 · 段落位置可保存'
+                  : preview.book.demo
+                  ? '自产演示 · 无进度保存'
+                  : '阅读预览'}',
               style: TextStyle(
                 fontSize: 12,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -387,19 +393,11 @@ class ReaderPage extends StatelessWidget {
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 28),
-            for (final paragraph in preview.paragraphs)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 28),
-                child: SelectableText(
-                  paragraph,
-                  style: const TextStyle(
-                    fontFamily: 'Songti SC',
-                    fontFamilyFallback: ['STSong', 'serif'],
-                    fontSize: 24,
-                    height: 1.9,
-                  ),
-                ),
-              ),
+            PreviewParagraphs(
+              preview: preview,
+              positions: dependencies.positions,
+              readOnly: dependencies.storageReadOnly,
+            ),
             const SizedBox(height: 20),
             const Divider(),
             const SizedBox(height: 20),
@@ -503,8 +501,10 @@ class SettingsPage extends StatefulWidget {
     super.key,
     required this.dark,
     required this.onThemeChanged,
+    this.persisted = false,
   });
   final bool dark;
+  final bool persisted;
   final VoidCallback onThemeChanged;
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -537,7 +537,7 @@ class _SettingsPageState extends State<SettingsPage> {
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: const Text('深色外观'),
-          subtitle: const Text('当前会话生效；持久化设置在 MAC-03/15 接入'),
+          subtitle: Text(widget.persisted ? '下次打开时保留你的选择' : '仅在本次会话中使用'),
           value: widget.dark,
           onChanged: (_) => widget.onThemeChanged(),
         ),
@@ -577,10 +577,14 @@ class _SettingsPageState extends State<SettingsPage> {
           subtitle: Text('Enter / 空格激活按钮；Esc 关闭对话框或窄窗侧栏。全局快捷键在 MAC-13 接入。'),
         ),
       if (_section == 4)
-        const ListTile(
+        ListTile(
           contentPadding: EdgeInsets.zero,
-          title: Text('本阶段不保存私人数据'),
-          subtitle: Text('尚未接入 SQLite、安全存储、成年声明、隐私锁或同步。演示样本与主题仅保留于本次会话。'),
+          title: const Text('本地资料'),
+          subtitle: Text(
+            widget.persisted
+                ? '样本、段落位置和外观已保存在这台设备上。成年声明、隐私锁和同步尚未接入。'
+                : '当前为会话内预览，未连接本地资料库。',
+          ),
         ),
     ],
   );

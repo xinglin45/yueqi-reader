@@ -20,9 +20,22 @@ class _NovelAppState extends State<NovelApp> {
   late final AppNavigation _navigation;
   late final ShellRouter _router;
   bool _dark = false;
+  final _messenger = GlobalKey<ScaffoldMessengerState>();
+  Future<void> _toggleTheme() async {
+    setState(() => _dark = !_dark);
+    try {
+      await widget.dependencies.persistTheme?.call(_dark);
+    } catch (_) {
+      _messenger.currentState?.showSnackBar(
+        const SnackBar(content: Text('外观已切换，但未能保存。下次打开可能需要重新选择。')),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _dark = widget.dependencies.initialDark;
     _navigation = widget.navigation ?? AppNavigation();
     _router = ShellRouter(
       navigation: _navigation,
@@ -30,7 +43,7 @@ class _NovelAppState extends State<NovelApp> {
         location: location,
         dependencies: widget.dependencies,
         navigation: _navigation,
-        onThemeChanged: () => setState(() => _dark = !_dark),
+        onThemeChanged: _toggleTheme,
       ),
     );
   }
@@ -45,6 +58,23 @@ class _NovelAppState extends State<NovelApp> {
   @override
   Widget build(BuildContext context) => MaterialApp.router(
     title: '阅栖',
+    scaffoldMessengerKey: _messenger,
+    builder: (context, child) => Column(
+      children: [
+        if (widget.dependencies.storageReadOnly)
+          Material(
+            color: Theme.of(context).colorScheme.errorContainer,
+            child: const SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: EdgeInsets.all(12),
+                child: Text('本地资料暂时以只读方式打开，本次更改不会保存。原资料已保留，请退出后查看恢复说明。'),
+              ),
+            ),
+          ),
+        Expanded(child: child!),
+      ],
+    ),
     debugShowCheckedModeBanner: false,
     theme: paperTheme(Brightness.light),
     darkTheme: paperTheme(Brightness.dark),
@@ -217,8 +247,10 @@ class _ReaderShellState extends State<ReaderShell> {
                                     ),
                                   ),
                                   const SizedBox(height: 8),
-                                  const Text(
-                                    '正在预览\n仅本次会话',
+                                  Text(
+                                    _currentPreview!.persistent
+                                        ? '本机样本\n位置可保存'
+                                        : '正在预览\n仅本次会话',
                                     style: TextStyle(fontSize: 11, height: 1.8),
                                   ),
                                 ],
@@ -237,7 +269,7 @@ class _ReaderShellState extends State<ReaderShell> {
               icon: const Icon(PhosphorIconsLight.info, size: 16),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text('阶段说明 · MAC-02', style: TextStyle(fontSize: 12)),
+                child: Text('阶段说明 · MAC-03', style: TextStyle(fontSize: 12)),
               ),
             ),
             TextButton.icon(
@@ -261,7 +293,7 @@ class _ReaderShellState extends State<ReaderShell> {
       content: const SizedBox(
         width: 420,
         child: Text(
-          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n真实导入、阅读引擎、数据库、系统听书和低存在感窗口将在后续任务接入。演示内容为自产文本，仅保留于本次会话。\n\n获准普通/18+在线来源仍为 0/0。',
+          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。真实导入、完整阅读引擎、系统听书和低存在感窗口将在后续任务接入。\n\n获准普通/18+在线来源仍为 0/0。',
           style: TextStyle(height: 1.8),
         ),
       ),
@@ -426,6 +458,9 @@ class _ReaderShellState extends State<ReaderShell> {
     AppPage.search => SearchPage(navigation: widget.navigation),
     AppPage.sources => const SourcesPage(),
     AppPage.settings => SettingsPage(
+      persisted:
+          widget.dependencies.persistTheme != null &&
+          !widget.dependencies.storageReadOnly,
       dark: Theme.of(context).brightness == Brightness.dark,
       onThemeChanged: widget.onThemeChanged,
     ),

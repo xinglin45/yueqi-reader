@@ -2,7 +2,22 @@
 
 本文件定义实现任务的输入边界，不是已运行的API/OpenAPI，也不固定Dart/Java类签名。外部地址的整体状态见 [data-sources.md](data-sources.md)，2026-10-15部分技术观测不等于完整接入批准。
 
-MAC-01已实现的最小共享标识为[ReaderProduct](../packages/reader_core/lib/reader_core.dart)，namespace固定novel/comic；不包含系统路径或App引用。来源/同步仍待实现；MAC-02已落地最小Repository、平台端口与任务草案，见下节，不能据此声明真实系统能力通过。
+MAC-01已实现的最小共享标识为[ReaderProduct](../packages/reader_core/lib/reader_core.dart)，namespace固定novel/comic；不包含系统路径或App引用。来源/同步仍待实现；MAC-02建立壳与端口，MAC-03接入真实本地存储，其他能力按下表区分。
+
+## MAC-03已落地契约（2026-10-20）
+
+| 契约 | 实现与语义 | 限制/后续 |
+|---|---|---|
+| StorageLocationProvider | platform_services纯Dart端口返回AppStorageLocations；SystemStorageLocations在小说基础设施隔离path_provider；装配层追加novel/comic | 路径只流向基础设施，不进入领域/位置/日志；其他端未构建 |
+| StorageDatabase | reader_storage后台isolate串行拥有连接；query只读，transaction批次/expectedChanges原子前置条件；StorageFailure仅安全错误码 | SQL仅应用源码；后续大批次/取消/多窗口需按任务补充 |
+| SchemaStep/恢复 | 连续版本；迁移前完整快照及核验，DDL事务回滚，失败/新版本库只读；不可读/初始化失败明确错误且保留原文件 | 无自动覆盖旧库或用户恢复选择器，见[恢复说明](storage/recovery.md) |
+| ContentFiles | 有界摘要对象写入、校验、rename后元数据提交；read核验，audit报告缺失/孤儿 | 默认8MiB小样预算；外部大文件流式导入待MAC-04，不自动删除孤儿 |
+| LibraryRepository | 原load/addDemonstration/preview签名保持；生产LocalLibrary使用真实库，持久随机book_id/修订/托管样本；SessionLibrary只为组件测试 | UI仅自产TXT样本预览，通用导入/引擎未实现；load单批200条，管理/分页待MAC-08 |
+| DocumentAnchor | domain/documents.dart：wire v1、TXT/EPUB结构锚点、UTF-16范围、exact/上下文指纹与边界校验；返回exact/context候选/chapterStart/unresolved | 仅exact自动使用，候选/回退不覆盖旧记录；正式解析器/阅读器在MAC-05/07/09 |
+| PositionRepository | loadPosition/savePosition按book_id＋reading/listening分离；保存带expectedSequence，0仅首次创建；修订外键和CAS避免串书/过期覆盖 | 当前UI为样本手动“记住这一段”，未自动记录滚动或接通听书 |
+| 设置与元数据基础 | theme实际跨启动保留；schema v3含11表与领域类型，权限/核验unknown保留；元数据revision/墓碑为未来同步边界 | 未实现成年声明/隐私锁、笔记、下载调度、在线接入或网络outbox |
+
+身份、表约束与偏移转换见[存储协议](storage/novel-schema.md)，取舍见[ADR-0006](decisions/0006-mac03-local-storage-and-anchors.md)，实测见[验收](verifications/mac-03-2026-10-20.md)。下方MAC-02表保留该批次的原有端口边界；生产LibraryRepository已由本节覆盖，文件选择/凭据/语音/窗口端口仍unsupported。
 
 ## MAC-06研究结论对后续契约的约束（2026-10-19）
 
@@ -60,7 +75,7 @@ AdultAcknowledgement（待实现）：仅保存本机`age_acknowledged`及声明
 - ReadingPosition与ListeningPosition分别持久化；用户明确切换后才用听书位置打开阅读，不能互相静默覆盖。
 - ReadingSession（01A设计约定，待Flutter实现）：独立保存content_key、content_revision、DocumentAnchor、推进状态与session_id，四种显示表面订阅同一会话，不复制游标。ReaderWindowState另存surface(normal/menubar/strip/mini)、可见性、屏幕/归一化位置、尺寸、文字与背景透明度、置顶/穿透和焦点策略。hide暂停推进并隐藏所有内容表面；restore重用原锚点且保持暂停；presentation必须显式结束后再主动restore。原生菜单栏/窗口/快捷键通过platform_services端口，解析器不直接控制窗口。详见[D1设计规范](design/novel-macos/design-spec-D1.md)。
 
-代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为完整目标设计；本批实际签名仅限上方MAC-02最小契约表，后续任务可按验证结果扩展。
+代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为完整目标设计；本批实际签名以以上MAC-03契约与MAC-02端口表为准，后续任务可按验证结果扩展。
 
 ## 小说来源 BookSource
 

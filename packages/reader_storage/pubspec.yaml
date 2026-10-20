@@ -1,0 +1,12 @@
+name: reader_storage
+description: Product-isolated local SQLite worker and content-addressed files.
+version: 0.0.1
+publish_to: none
+environment:
+  sdk: '>=3.13.5 <4.0.0'
+dependencies:
+  reader_core:
+    path: ../reader_core
+  sqlite3: 3.7.1
+  crypto: 3.0.7
+  path: 1.9.1

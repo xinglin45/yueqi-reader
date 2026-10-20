@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-20",
+  "phase": "verify",
+  "process_id": 19847,
+  "worker": {
+    "version": 3,
+    "read_only": false,
+    "recovery": null,
+    "backup": null,
+    "sqlite_version": "Version(libVersion: 3.54.0, sourceId: 2026-10-09 15:46:58 be8d059e9a49089ab2dce5ed26dd87aaf598fdc5fbe0b107c0dd758464bcd5e3, number: 3054000)"
+  },
+  "book_id": "6776321d1a626982b7687c9454adff9e",
+  "reading_block": "p1",
+  "reading_sequence": 4,
+  "paragraphs": 3,
+  "theme": "dark",
+  "document_count": 1,
+  "search_checks": [
+    {
+      "query": "山",
+      "literal_hits": 1,
+      "trigram_hits": 0,
+      "unicode61_hits": 0,
+      "strategy": "substring"
+    },
+    {
+      "query": "山间",
+      "literal_hits": 1,
+      "trigram_hits": 0,
+      "unicode61_hits": 0,
+      "strategy": "substring"
+    },
+    {
+      "query": "山间来信",
+      "literal_hits": 1,
+      "trigram_hits": 1,
+      "unicode61_hits": 1,
+      "strategy": "trigram_then_verify"
+    },
+    {
+      "query": "山間來信",
+      "literal_hits": 1,
+      "trigram_hits": 1,
+      "unicode61_hits": 1,
+      "strategy": "trigram_then_verify"
+    },
+    {
+      "query": "📖",
+      "literal_hits": 1,
+      "trigram_hits": 0,
+      "unicode61_hits": 0,
+      "strategy": "substring"
+    },
+    {
+      "query": "é",
+      "literal_hits": 1,
+      "trigram_hits": 0,
+      "unicode61_hits": 1,
+      "strategy": "substring"
+    },
+    {
+      "query": "100%_",
+      "literal_hits": 1,
+      "trigram_hits": 1,
+      "unicode61_hits": 1,
+      "strategy": "trigram_then_verify"
+    },
+    {
+      "query": "，",
+      "literal_hits": 1,
+      "trigram_hits": 0,
+      "unicode61_hits": 0,
+      "strategy": "substring"
+    },
+    {
+      "query": "不存在词",
+      "literal_hits": 0,
+      "trigram_hits": 0,
+      "unicode61_hits": 0,
+      "strategy": "trigram_then_verify"
+    }
+  ],
+  "schema": [
+    {
+      "name": "annotations",
+      "sql": "CREATE TABLE annotations (\n      id TEXT PRIMARY KEY, book_id TEXT NOT NULL, document_id TEXT NOT NULL,\n      kind TEXT NOT NULL CHECK(kind IN ('bookmark','highlight','note')),\n      anchor TEXT NOT NULL CHECK(json_valid(anchor)), note TEXT NOT NULL DEFAULT '',\n      row_revision INTEGER NOT NULL DEFAULT 1,\n      deleted INTEGER NOT NULL DEFAULT 0 CHECK(deleted IN (0,1)), updated_at INTEGER NOT NULL,\n      FOREIGN KEY(book_id,document_id) REFERENCES documents(book_id,id)\n    ) STRICT"
+    },
+    {
+      "name": "books",
+      "sql": "CREATE TABLE books (\n      id TEXT PRIMARY KEY, title TEXT NOT NULL, language TEXT NOT NULL,\n      rating TEXT NOT NULL DEFAULT 'unknown' CHECK(rating IN ('general','adult','unknown','prohibited')),\n      rating_evidence TEXT, raw_rating TEXT, row_revision INTEGER NOT NULL DEFAULT 1,\n      deleted INTEGER NOT NULL DEFAULT 0 CHECK(deleted IN (0,1)),\n      created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL\n    ) STRICT"
+    },
+    {
+      "name": "chapters",
+      "sql": "CREATE TABLE chapters (\n      id TEXT NOT NULL, document_id TEXT NOT NULL REFERENCES documents(id),\n      ordinal INTEGER NOT NULL CHECK(ordinal>=0), title TEXT NOT NULL,\n      spine_href TEXT NOT NULL, PRIMARY KEY(document_id,id), UNIQUE(document_id,ordinal)\n    ) STRICT"
+    },
+    {
+      "name": "collection_books",
+      "sql": "CREATE TABLE collection_books (\n      collection_id TEXT NOT NULL REFERENCES collections(id),\n      book_id TEXT NOT NULL REFERENCES books(id), PRIMARY KEY(collection_id,book_id)\n    ) STRICT"
+    },
+    {
+      "name": "collections",
+      "sql": "CREATE TABLE collections (\n      id TEXT PRIMARY KEY, label TEXT NOT NULL,\n      kind TEXT NOT NULL CHECK(kind IN ('collection','tag','adult')),\n      row_revision INTEGER NOT NULL DEFAULT 1,\n      deleted INTEGER NOT NULL DEFAULT 0 CHECK(deleted IN (0,1))\n    ) STRICT"
+    },
+    {
+      "name": "documents",
+      "sql": "CREATE TABLE \"documents\" (\n      id TEXT PRIMARY KEY, book_id TEXT NOT NULL REFERENCES books(id),\n      digest TEXT NOT NULL CHECK(length(digest)=64),\n      kind TEXT NOT NULL CHECK(kind IN ('txt','epub')),\n      media_type TEXT NOT NULL, byte_length INTEGER NOT NULL CHECK(byte_length>=0),\n      parser_version TEXT NOT NULL, created_at INTEGER NOT NULL,\n      UNIQUE(book_id,id), UNIQUE(digest,kind,parser_version)\n    ) STRICT"
+    },
+    {
+      "name": "jobs",
+      "sql": "CREATE TABLE jobs (\n      id TEXT PRIMARY KEY, kind TEXT NOT NULL CHECK(kind IN ('import','download')),\n      book_id TEXT REFERENCES books(id), state TEXT NOT NULL,\n      progress REAL CHECK(progress IS NULL OR (progress>=0 AND progress<=1)),\n      error_code TEXT, updated_at INTEGER NOT NULL\n    ) STRICT"
+    },
+    {
+      "name": "positions",
+      "sql": "CREATE TABLE positions (\n      book_id TEXT NOT NULL, channel TEXT NOT NULL CHECK(channel IN ('reading','listening')),\n      document_id TEXT NOT NULL, anchor TEXT NOT NULL CHECK(json_valid(anchor)),\n      local_seq INTEGER NOT NULL CHECK(local_seq>0), updated_at INTEGER NOT NULL,\n      PRIMARY KEY(book_id,channel),\n      FOREIGN KEY(book_id,document_id) REFERENCES documents(book_id,id)\n    ) STRICT"
+    },
+    {
+      "name": "resources",
+      "sql": "CREATE TABLE resources (\n      document_id TEXT NOT NULL REFERENCES documents(id), href TEXT NOT NULL,\n      digest TEXT NOT NULL CHECK(length(digest)=64), media_type TEXT NOT NULL,\n      byte_length INTEGER NOT NULL CHECK(byte_length>=0),\n      cache_permission TEXT NOT NULL DEFAULT 'unknown' CHECK(cache_permission IN ('unknown','allowed','denied')),\n      PRIMARY KEY(document_id,href)\n    ) STRICT"
+    },
+    {
+      "name": "settings",
+      "sql": "CREATE TABLE settings (\n      key TEXT PRIMARY KEY CHECK(key IN ('theme','text_scale')),\n      value TEXT NOT NULL CHECK(json_valid(value)), row_revision INTEGER NOT NULL DEFAULT 1\n    ) STRICT"
+    },
+    {
+      "name": "source_bindings",
+      "sql": "CREATE TABLE source_bindings (\n      id TEXT PRIMARY KEY, book_id TEXT NOT NULL REFERENCES books(id),\n      source_id TEXT NOT NULL, source_item_id TEXT NOT NULL,\n      verification TEXT NOT NULL DEFAULT 'unknown',\n      cache_permission TEXT NOT NULL DEFAULT 'unknown' CHECK(cache_permission IN ('unknown','allowed','denied')),\n      credential_ref TEXT, row_revision INTEGER NOT NULL DEFAULT 1,\n      deleted INTEGER NOT NULL DEFAULT 0 CHECK(deleted IN (0,1)),\n      UNIQUE(source_id,source_item_id)\n    ) STRICT"
+    },
+    {
+      "name": "books_visibility",
+      "sql": "CREATE INDEX books_visibility ON books(deleted,rating)"
+    },
+    {
+      "name": "positions_document",
+      "sql": "CREATE INDEX positions_document ON positions(document_id)"
+    }
+  ],
+  "source_counts": {
+    "normal": 0,
+    "adult": 0
+  }
+}

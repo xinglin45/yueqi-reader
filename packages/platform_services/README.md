@@ -1,6 +1,6 @@
 # platform_services
 
-MAC-02已建立实际纯Dart包，小说App通过构造装配依赖此包。只提供[文件、受控凭据引用、语音及阅读窗口端口](lib/platform_services.dart)与统一PlatformResult。没有Flutter、AppKit、系统绝对路径、原生插件或任一产品依赖。
+MAC-02已建立实际纯Dart包，小说App通过构造装配依赖此包。只提供[文件、受控凭据引用、语音及阅读窗口端口](lib/platform_services.dart)与统一PlatformResult。没有Flutter、AppKit、硬编码系统路径、原生插件或任一产品依赖。MAC-03增加仅面向装配/基础设施的StorageLocationProvider，具体path_provider适配放在小说infrastructure，领域不接触路径。
 
 UnavailablePlatform对所有动作返回unsupported，语音能力为无暂停/无偏移，不伪造成功或Keychain。FileGrant/CredentialRef只携带本机不透明引用，不能作为可同步凭据或文件路径；SpeechEvent按sessionId归属，偏移单位必须显式声明。SecureStore本批只定义查找/删除受控引用，写入/认证消费协议在实际来源会话接入时再补，不把字符串密钥返回UI。
 

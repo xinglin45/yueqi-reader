@@ -50,3 +50,5 @@ __pycache__/
 /packages/reader_core/pubspec.lock
 
 /packages/platform_services/pubspec.lock
+
+/packages/reader_storage/pubspec.lock

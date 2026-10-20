@@ -1,13 +1,18 @@
 name: novel_app
-description: "阅读软件：阅栖小说客户端，MAC-02应用壳与MAC-06独立技术探针。"
+description: "阅读软件：阅栖小说客户端，D1应用壳、本地存储与独立技术探针。"
 publish_to: 'none'
-version: 0.0.3+3
+version: 0.0.4+4
 
 environment:
   sdk: ^3.13.5
   flutter: ">=3.47.7"
 
 dependencies:
+  crypto: 3.0.7
+  path: 1.9.1
+  path_provider: 2.1.6
+  reader_storage:
+    path: ../../packages/reader_storage
   phosphor_icons: 3.0.1
   platform_services:
     path: ../../packages/platform_services
