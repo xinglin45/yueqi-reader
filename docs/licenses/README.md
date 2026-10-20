@@ -29,3 +29,7 @@ MAC-01原始清单由该提交的脚本生成；当前重建须显式提供`--ch
 实际新增sqlite3 3.7.1（Dart绑定MIT）、path_provider2.1.6及其各端实现、crypto3.0.7/path1.9.1（从研究闭包转为直接运行依赖）与本项目reader_storage。SQLite原始交付代码的[官方公共领域声明](https://sqlite.org/copyright.html)与Dart绑定许可证分开记录，不把它推及其他依赖或项目源码许可证。本次选择普通SQLite预编译库，未引入SQLCipher/多加密扩展或收费服务。构建hook按上游内置摘要校验下载资产；Release内实际sqlite3/objective_c代码哈希见[构建记录](../verifications/mac-03/release-build.json)。
 
 重建命令：`python3 tool/record_dependency_licenses.py --checkpoint mac-03`。所有pub包精确解析结果由App锁文件留存，实际LICENSE原文/哈希已核对。系统SDK仍按系统许可使用；留存第三方声明不替本项目选择源码许可证，也不代表来源作品或未来分发渠道均已批准。
+
+## MAC-16（2026-10-20）
+
+[本批清单](mac-16-dependencies.json)仍为77包，运行闭包47、研究21、其他开发9；无新增依赖/插件/权限/许可原文，复用既有文件与哈希。App升级0.0.5+5，源码许可证仍未选定。可运行`python3 tool/record_dependency_licenses.py --checkpoint mac-16`重新核对，历史清单不覆盖。

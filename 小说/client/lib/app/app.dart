@@ -1,3 +1,6 @@
+import '../domain/access.dart';
+import '../features/access_controls.dart';
+
 import 'package:phosphor_icons/phosphor_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,11 +42,16 @@ class _NovelAppState extends State<NovelApp> {
     _navigation = widget.navigation ?? AppNavigation();
     _router = ShellRouter(
       navigation: _navigation,
-      builder: (location) => ReaderShell(
-        location: location,
-        dependencies: widget.dependencies,
-        navigation: _navigation,
-        onThemeChanged: _toggleTheme,
+      builder: (location) => StreamBuilder<AccessState>(
+        stream: widget.dependencies.access?.changes,
+        initialData: widget.dependencies.access?.state ?? const AccessState(),
+        builder: (context, snapshot) => ReaderShell(
+          key: ValueKey(snapshot.data!.visibilityRevision),
+          location: location,
+          dependencies: widget.dependencies,
+          navigation: _navigation,
+          onThemeChanged: _toggleTheme,
+        ),
       ),
     );
   }
@@ -269,7 +277,7 @@ class _ReaderShellState extends State<ReaderShell> {
               icon: const Icon(PhosphorIconsLight.info, size: 16),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text('阶段说明 · MAC-03', style: TextStyle(fontSize: 12)),
+                child: Text('阶段说明 · MAC-16', style: TextStyle(fontSize: 12)),
               ),
             ),
             TextButton.icon(
@@ -420,6 +428,18 @@ class _ReaderShellState extends State<ReaderShell> {
               icon: const Icon(PhosphorIconsLight.rectangle),
             ),
           ],
+          if (widget.dependencies.access case final access?)
+            IconButton(
+              key: const ValueKey('privacy-lock'),
+              tooltip: access.state.privacyLocked ? '解锁隐私' : '锁定隐私',
+              icon: Icon(
+                access.state.privacyLocked ? Icons.lock : Icons.lock_open,
+              ),
+              onPressed: () => accessAction(
+                context,
+                access.state.privacyLocked ? access.unlock : access.lock,
+              ),
+            ),
           IconButton(
             key: const ValueKey('toggle-theme'),
             onPressed: widget.onThemeChanged,
@@ -455,9 +475,14 @@ class _ReaderShellState extends State<ReaderShell> {
       navigation: widget.navigation,
       onOpened: _opened,
     ),
-    AppPage.search => SearchPage(navigation: widget.navigation),
+    AppPage.search => SearchPage(
+      navigation: widget.navigation,
+      access: widget.dependencies.access,
+      discovery: widget.dependencies.discovery,
+    ),
     AppPage.sources => const SourcesPage(),
     AppPage.settings => SettingsPage(
+      access: widget.dependencies.access,
       persisted:
           widget.dependencies.persistTheme != null &&
           !widget.dependencies.storageReadOnly,

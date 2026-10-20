@@ -1,6 +1,6 @@
 # 架构设计
 
-状态：目标架构；MAC-01已初始化小说四端宿主和reader_core最小标识；MAC-02已实现D1应用壳、纯Dart平台端口与任务生命周期。MAC-06已验证受控WKWebView、中文精确检索及原生TTS小样，见[三项研究验收](verifications/mac-06-2026-10-19.md)；MAC-03已接入后台SQLite、系统资料目录、托管样本与稳定位置，见[存储决策](decisions/0006-mac03-local-storage-and-anchors.md)；通用导入/完整阅读/其他原生适配/后端仍待实现，见[应用壳验收](verifications/mac-02-2026-10-16.md)。外部源/第三方项目都是候选，不代表已接入。
+状态：目标架构；MAC-01已初始化小说四端宿主和reader_core最小标识；MAC-02已实现D1应用壳、纯Dart平台端口与任务生命周期。MAC-06已验证受控WKWebView、中文精确检索及原生TTS小样，见[三项研究验收](verifications/mac-06-2026-10-19.md)；MAC-03已接入后台SQLite、系统资料目录、托管样本与稳定位置，见[存储决策](decisions/0006-mac03-local-storage-and-anchors.md)；MAC-16将内容分级存入schema4，本机声明与搜索/隐私状态隔离于设备目录，策略与会话作废见[ADR-0007](decisions/0007-mac16-local-access-and-privacy.md)；通用导入/完整阅读/其他原生适配/后端仍待实现，见[应用壳验收](verifications/mac-02-2026-10-16.md)。外部源/第三方项目都是候选，不代表已接入。
 
 2026-10-16：自用开发采用[“地外文明”特殊区域策略](development-region-policy.md)，不指定现实地区、跳过地区专项核验，不以地区未知阻塞开发。来源自身访问资格与项目地区策略分开，后文现实地区/渠道字段供原始信息保存及将来发布使用，当前不增加地区门槛。
 
@@ -61,7 +61,7 @@ flowchart TB
 
 每款 App 独立数据库：novel.sqlite、comic.sqlite（逻辑名称，实际目录由平台 API 获取）。元数据入 SQLite；TXT/EPUB、章节和图片作为文件，数据库记录 hash、大小、引用与状态。
 
-以下为全局完整目标表草案；当前小说实际11表及schema v3以[本地存储协议](storage/novel-schema.md)为准，未实现outbox/sync_state等后续功能：
+以下为全局完整目标表草案；当前小说实际12表及schema v4以[本地存储协议](storage/novel-schema.md)为准，未实现outbox/sync_state等后续功能：
 
 - library_items：app_kind、content_key、source_id、source_item_id、标题、语言、分级、许可记录引用。
 - progress：chapter_id、position_kind、position_payload、content_revision、device_seq、server_revision。

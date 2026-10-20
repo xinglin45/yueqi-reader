@@ -109,4 +109,22 @@ final List<SchemaStep> novelSchema = List.unmodifiable([
       'DROP TABLE temp.migrate_$table',
     'CREATE INDEX positions_document ON positions(document_id)',
   ]),
+  contentPolicySchema,
+]);
+
+/// Device declaration/search/lock flags remain outside this library schema.
+const contentPolicySchema = SchemaStep(4, [
+  '''CREATE TABLE content_policy (
+    book_id TEXT PRIMARY KEY REFERENCES books(id),
+    raw_rating TEXT, level TEXT NOT NULL CHECK(level IN ('general','mature','restricted','unknown','prohibited')),
+    minimum_age INTEGER CHECK(minimum_age IS NULL OR minimum_age>=0),
+    original_regions TEXT NOT NULL DEFAULT '[]' CHECK(json_valid(original_regions)),
+    evidence TEXT, policy_version TEXT NOT NULL,
+    regional_review TEXT NOT NULL DEFAULT 'skipped_by_user' CHECK(regional_review='skipped_by_user'),
+    source_access TEXT NOT NULL DEFAULT 'unknown' CHECK(source_access IN ('notRequired','allowed','loginRequired','ageRequired','paid','expired','unknown'))
+  ) STRICT''',
+  '''INSERT INTO content_policy(book_id,raw_rating,level,evidence,policy_version,source_access)
+    SELECT id,raw_rating,CASE rating WHEN 'adult' THEN 'restricted' ELSE rating END,
+      rating_evidence,'legacy-v3',CASE WHEN rating='general' AND rating_evidence='owned-preview-v1' THEN 'notRequired' ELSE 'unknown' END FROM books''',
+  'CREATE INDEX content_policy_level ON content_policy(level)',
 ]);

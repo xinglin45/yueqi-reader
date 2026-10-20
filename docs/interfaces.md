@@ -15,7 +15,7 @@ MAC-01已实现的最小共享标识为[ReaderProduct](../packages/reader_core/l
 | LibraryRepository | 原load/addDemonstration/preview签名保持；生产LocalLibrary使用真实库，持久随机book_id/修订/托管样本；SessionLibrary只为组件测试 | UI仅自产TXT样本预览，通用导入/引擎未实现；load单批200条，管理/分页待MAC-08 |
 | DocumentAnchor | domain/documents.dart：wire v1、TXT/EPUB结构锚点、UTF-16范围、exact/上下文指纹与边界校验；返回exact/context候选/chapterStart/unresolved | 仅exact自动使用，候选/回退不覆盖旧记录；正式解析器/阅读器在MAC-05/07/09 |
 | PositionRepository | loadPosition/savePosition按book_id＋reading/listening分离；保存带expectedSequence，0仅首次创建；修订外键和CAS避免串书/过期覆盖 | 当前UI为样本手动“记住这一段”，未自动记录滚动或接通听书 |
-| 设置与元数据基础 | theme实际跨启动保留；schema v3含11表与领域类型，权限/核验unknown保留；元数据revision/墓碑为未来同步边界 | 未实现成年声明/隐私锁、笔记、下载调度、在线接入或网络outbox |
+| 设置与元数据基础 | theme实际跨启动保留；schema v3含11表与领域类型，权限/核验unknown保留；元数据revision/墓碑为未来同步边界 | 本行保留MAC-03交付范围；成年声明/隐私锁后由MAC-16覆盖；笔记、下载调度、在线接入或网络outbox未实现 |
 
 身份、表约束与偏移转换见[存储协议](storage/novel-schema.md)，取舍见[ADR-0006](decisions/0006-mac03-local-storage-and-anchors.md)，实测见[验收](verifications/mac-03-2026-10-20.md)。下方MAC-02表保留该批次的原有端口边界；生产LibraryRepository已由本节覆盖，文件选择/凭据/语音/窗口端口仍unsupported。
 
@@ -75,7 +75,7 @@ AdultAcknowledgement（待实现）：仅保存本机`age_acknowledged`及声明
 - ReadingPosition与ListeningPosition分别持久化；用户明确切换后才用听书位置打开阅读，不能互相静默覆盖。
 - ReadingSession（01A设计约定，待Flutter实现）：独立保存content_key、content_revision、DocumentAnchor、推进状态与session_id，四种显示表面订阅同一会话，不复制游标。ReaderWindowState另存surface(normal/menubar/strip/mini)、可见性、屏幕/归一化位置、尺寸、文字与背景透明度、置顶/穿透和焦点策略。hide暂停推进并隐藏所有内容表面；restore重用原锚点且保持暂停；presentation必须显式结束后再主动restore。原生菜单栏/窗口/快捷键通过platform_services端口，解析器不直接控制窗口。详见[D1设计规范](design/novel-macos/design-spec-D1.md)。
 
-代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为完整目标设计；本批实际签名以以上MAC-03契约与MAC-02端口表为准，后续任务可按验证结果扩展。
+代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为完整目标设计；本批实际签名以MAC-16访问边界、MAC-03契约与MAC-02端口表为准，后续任务可按验证结果扩展。
 
 ## 小说来源 BookSource
 
@@ -141,3 +141,15 @@ payload 仅允许书架、进度、书签和非敏感设置；所有字段按 en
 ## 验收场景
 
 使用自产 fixture：翻页后断网/重启；改字体恢复文本锚点；右到左双页与长图位置；429 退避；凭据过期；目录版本变化；重复 push；两设备同时跳读；旧设备上传删除前的书签；游标失效；跨账户访问被拒；年龄资格过期深链和缓存都锁定。
+
+## MAC-16已实现的本机访问边界
+
+实现：[领域策略](../小说/client/lib/domain/access.dart)、[状态控制器](../小说/client/lib/application/access.dart)、[搜索协调器](../小说/client/lib/application/discovery.dart)，约束见[ADR-0007](decisions/0007-mac16-local-access-and-privacy.md)。这部分属于小说client；其他产品/平台落地仍须各自验收。
+
+- `mayRead(ContentRating, AccessState)`与`mayDiscover(DiscoverySource, AccessState)`分别处理已有作品和发现请求；includeAdultSources=false不会撤销已有阅读许可。
+- `DeviceAccessStore.read/write`仅本机，严格local JSON v1/adult-v1，无定期到期；未知/损坏状态不得授权。portableAccessFields为空，导入访问状态一律拒绝，不与设备本机状态反序列化混用。
+- `AccessController.registerProtectedStop`用于清除/锁定/来源资格失效时同步停用发布者；`visibilityRevision`使旧内容失效，搜索偏好单独变更不增加此代际。异步操作结束再次检查资格，不把旧请求的结果/恢复回调当作授权。
+- `AdultLibrary.loadAdult/addClassificationCard`受当前资格控制；LocalLibrary.preview/loadPosition/savePosition独立门禁；调用者不能靠普通路由绕过。
+- `DiscoveryCoordinator.search/cancel`在fetch前过滤enabled/approved/accessible/Chinese/mode；mixed只有可靠普通路径才可在OFF参与，取消代际防迟到。生产sources为空；暂无HTTP、重试、来源导入或持久搜索缓存，不能冒充MAC-17/20已完成。
+
+后续新目录、封面、笔记、缓存和原生TTS/通知/窗口必须沿用同一策略和作废机制；不能只隐藏搜索结果或忘记旧会话。

@@ -1,3 +1,7 @@
+import '../application/access.dart';
+import '../application/discovery.dart';
+import '../infrastructure/device_access_store.dart';
+
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
@@ -20,6 +24,8 @@ final class AppDependencies {
     required this.speech,
     required this.windows,
     this.positions,
+    this.access,
+    this.discovery,
     this.storageReadOnly = false,
     this.initialDark = false,
     this.persistTheme,
@@ -42,19 +48,44 @@ final class AppDependencies {
     final directory = p.join(locations.support, ReaderProduct.novel.namespace);
     await Directory(p.join(locations.cache, ReaderProduct.novel.namespace))
         .create(recursive: true);
-    final database = await StorageDatabase.open(
-      directory: directory,
-      product: ReaderProduct.novel,
-      migrations: novelSchema,
+    final fresh = !await File(p.join(directory, 'novel.sqlite')).exists();
+    final access = await AccessController.open(
+      LocalDeviceAccessStore(p.join(locations.support, 'novel-device')),
     );
+    if (fresh) {
+      try {
+        await access.clearAcknowledgement();
+        await access.unlock();
+      } catch (_) {
+        /* Ordinary reading remains available, grants fail closed. */
+      }
+    }
+    final discovery = DiscoveryCoordinator(
+      access,
+      const [],
+      (_, _, _, _) async => const [],
+    );
+    StorageDatabase? opened;
     try {
-      final library = LocalLibrary(database, ContentFiles(directory));
+      final database = await StorageDatabase.open(
+        directory: directory,
+        product: ReaderProduct.novel,
+        migrations: novelSchema,
+      );
+      opened = database;
+      final library = LocalLibrary(
+        database,
+        ContentFiles(directory),
+        access: access,
+      );
       final dark =
           !database.readOnly && await library.loadSetting('theme') == 'dark';
       const platform = UnavailablePlatform();
       return AppDependencies(
         library: library,
         positions: library,
+        access: access,
+        discovery: discovery,
         files: platform,
         secrets: platform,
         speech: platform,
@@ -63,14 +94,22 @@ final class AppDependencies {
         initialDark: dark,
         persistTheme: (value) =>
             library.saveSetting('theme', value ? 'dark' : 'light'),
-        close: database.close,
+        close: () async {
+          await discovery.dispose();
+          await access.dispose();
+          await database.close();
+        },
       );
     } catch (_) {
-      await database.close();
+      await discovery.dispose();
+      await access.dispose();
+      await opened?.close();
       rethrow;
     }
   }
 
+  final AccessController? access;
+  final DiscoveryCoordinator? discovery;
   final PositionRepository? positions;
   final bool storageReadOnly, initialDark;
   final Future<void> Function(bool dark)? persistTheme;

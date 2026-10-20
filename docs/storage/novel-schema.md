@@ -1,6 +1,6 @@
 # 小说本地数据与位置协议 v1
 
-日期：2026-10-20。数据库schema **v3**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v3.sql)供审阅，不代替源码迁移。
+日期：2026-10-20。数据库schema **v4**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v4.sql)供审阅，不代替源码迁移。
 
 ## 存放与表职责
 
@@ -14,8 +14,9 @@
 | resources / ResourceRecord | (document_id,href)、摘要、类型、大小、cache_permission三态 | 样本文本为已知自产allowed；其他默认unknown |
 | positions / StoredPosition | (book_id,channel)、document_id、anchor JSON、local_seq、更新时间；(book_id,document_id)复合外键 | 阅读/听书独立持久位置；UI仅样本手动段落检查点 |
 | annotations / AnnotationRecord | bookmark/highlight/note；关联书籍/修订；anchor、note、row_revision、deleted | schema/模型已定义；MAC-11产品用例待实现 |
-| collections / CollectionRecord | collection/tag/adult；独立id、标签、revision/墓碑 | schema/模型已定义；分组门禁MAC-16、管理MAC-08待实现 |
-| collection_books | 书籍与分组复合主键/外键 | 关系基础，未接产品分组操作 |
+| content_policy / ContentRating | book_id外键；原始/内部评级、最低年龄/来源地区/证据/策略/来源资格 | MAC-16门禁，unknown/prohibited不自动归普通；地区skipped_by_user |
+| collections / CollectionRecord | collection/tag/adult；独立id、标签、revision/墓碑 | schema/模型已定义；MAC-16成人分组已实现；一般管理MAC-08待实现 |
+| collection_books | 书籍与分组复合主键/外键 | MAC-16中性分级卡片与独立成人分组关系 |
 | source_bindings / SourceBinding | source_id＋source_item_id唯一；对应本地book_id、核验/缓存unknown、仅credential_ref、revision/墓碑 | 未来显式来源绑定，尚无真实接入 |
 | jobs / StoredJob | 持久job_id、import/download、状态/进度/安全错误码/时间 | 任务模型基础；调度/恢复产品用例待MAC-04/21 |
 | settings | key白名单theme/text_scale；JSON值、row_revision | 深浅色实际持久；其余设置后续 |
@@ -41,6 +42,8 @@ SQLite事务涵盖书籍、修订、章节与资源引用；外部文件与SQL�
 
 ## 迁移兼容
 
-首次稳定交付含v1→v2→v3内部序列。升级前先生成并核验独立SQLite快照；失败拒绝升级，DDL失败事务回滚。遇到未来版本只读打开、不降级；无法读取或首次初始化失败则显示启动错误，保留原文件。恢复流程见[恢复说明](recovery.md)。
+内部交付含v1→v2→v3→v4序列；v4增加分级策略，迁移只对已知自产普通样本填notRequired，其余来源资格unknown。升级前先生成并核验独立SQLite快照；失败拒绝升级，DDL失败事务回滚。遇到未来版本只读打开、不降级；无法读取或首次初始化失败则显示启动错误，保留原文件。恢复流程见[恢复说明](recovery.md)。
 
-生产入口LocalLibrary已接入；SessionLibrary为会话内组件测试替身，启动失败不切换替身。schema/类型齐全不代表成人门禁、真实导入、通用阅读器、书签/下载产品功能已完成。
+生产入口LocalLibrary已接入；SessionLibrary为会话内组件测试替身，启动失败不切换替身。schema/类型齐全不代表真实导入、通用阅读器、书签/下载产品功能已完成。
+
+设备声明/search/lock不在任何书库表中；novel-device为兄弟目录，不可随App书库备份或同步。定义与当前限制见[ADR-0007](../decisions/0007-mac16-local-access-and-privacy.md)。历史schema3快照保持在[旧DDL](novel-schema-v3.sql)。

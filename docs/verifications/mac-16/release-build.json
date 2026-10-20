@@ -1,0 +1,46 @@
+{
+  "verified_date": "2026-10-20",
+  "checkpoint": "MAC-16",
+  "version": "0.0.5+5",
+  "bundle_id": "local.yueqi.novel",
+  "minimum_macos": "12.0",
+  "executable_architectures": "arm64",
+  "dart_aot_architectures": "arm64",
+  "schema_version": 4,
+  "signature": "ad-hoc; finalized with tool/sign_macos_internal.py; deep strict verification passed",
+  "release_entitlements": {
+    "com.apple.security.app-sandbox": true,
+    "com.apple.security.get-task-allow": true
+  },
+  "notarized": false,
+  "notices_uncompressed_bytes": 1345810,
+  "notices_sha256": "a83a26b2d140a544db5077dbc1f316b8ce017f7834acb30b7f419c695da7aee0",
+  "native_assets": [
+    {
+      "path": "Contents/Frameworks/sqlite3.framework/Versions/A/sqlite3",
+      "bytes": 1669392,
+      "sha256": "e7301982a121e9e21c98ed948653f2310ab8c2ae47a967002c053f5d07e18d73"
+    },
+    {
+      "path": "Contents/Frameworks/objective_c.framework/Versions/A/objective_c",
+      "bytes": 184336,
+      "sha256": "4cf1ced73ff63e09ad8b25cd9de4b750faa15ac6f80b38b07f08d884852c09e1"
+    }
+  ],
+  "build_output": "小说/client/build/macos/Build/Products/Release/阅栖.app",
+  "tool_reported_size_mb": 29.9,
+  "debug_build_passed": true,
+  "release_build_passed": true,
+  "flutter_dart_test_count": 42,
+  "python_test_count": 13,
+  "source_approvals": {
+    "normal": 0,
+    "adult": 0
+  },
+  "gui_verification": "Actual Release unconfirmed declaration/cancel, preserved ordinary sample/theme/paragraph, privacy settings OFF. Confirmation flows tested in isolated temporary data only.",
+  "gui_screenshots": [
+    "declaration-unchecked.png",
+    "ordinary-reader-after-cancel.png",
+    "privacy-settings-unconfirmed.png"
+  ]
+}

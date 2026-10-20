@@ -7,12 +7,16 @@ final class BookSummary {
     required this.subtitle,
     this.demo = false,
     this.persistent = false,
+    this.protected = false,
   });
   final String id;
   final String title;
   final String subtitle;
   final bool demo;
   final bool persistent;
+
+  /// Presentation hint only; authorization uses ContentRating, never this flag.
+  final bool protected;
 }
 
 /// Temporary presentation content, deliberately not a DocumentReader engine.
@@ -42,4 +46,9 @@ abstract interface class LibraryRepository {
   Future<JobResult<List<BookSummary>>> load(JobContext job);
   Future<JobResult<List<BookSummary>>> addDemonstration(JobContext job);
   Future<JobResult<ReadingPreview>> preview(String bookId, JobContext job);
+}
+
+abstract interface class AdultLibrary {
+  Future<JobResult<List<BookSummary>>> loadAdult(JobContext job);
+  Future<JobResult<List<BookSummary>>> addClassificationCard(JobContext job);
 }

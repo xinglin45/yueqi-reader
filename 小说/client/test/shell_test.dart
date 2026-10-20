@@ -201,7 +201,7 @@ void main() {
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('import-book')));
       await tester.pumpAndSettle();
-      expect(find.text('需要文件访问权限'), findsOneWidget);
+      expect(find.text('当前无法访问'), findsOneWidget);
       files.next = const PlatformSuccess(
         FileGrant(id: 'opaque', displayName: '自产.txt'),
       );

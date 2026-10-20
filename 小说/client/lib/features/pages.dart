@@ -1,3 +1,7 @@
+import 'access_controls.dart';
+import '../application/access.dart';
+import '../application/discovery.dart';
+
 import 'preview_position.dart';
 
 import 'package:phosphor_icons/phosphor_icons.dart';
@@ -224,6 +228,14 @@ class _LibraryPageState extends State<LibraryPage> {
           title: '从书架继续阅读',
           message: '最近阅读列表尚未接入；已保存的样本可在书架打开并恢复记住的段落。',
         )
+      else if (_tab == 2 &&
+          widget.dependencies.access != null &&
+          widget.dependencies.library is AdultLibrary)
+        AdultCollection(
+          access: widget.dependencies.access!,
+          library: widget.dependencies.library as AdultLibrary,
+          navigation: widget.navigation,
+        )
       else if (_tab == 2)
         const EmptyState(
           icon: PhosphorIconsLight.lockSimple,
@@ -422,7 +434,14 @@ class ReaderPage extends StatelessWidget {
 }
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key, required this.navigation});
+  const SearchPage({
+    super.key,
+    required this.navigation,
+    this.access,
+    this.discovery,
+  });
+  final AccessController? access;
+  final DiscoveryCoordinator? discovery;
   final AppNavigation navigation;
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -431,6 +450,11 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final _query = TextEditingController();
   bool _submitted = false;
+  Future<void> _search() async {
+    await widget.discovery?.search(_query.text);
+    if (mounted) setState(() => _submitted = true);
+  }
+
   @override
   void dispose() {
     _query.dispose();
@@ -448,15 +472,18 @@ class _SearchPageState extends State<SearchPage> {
           labelText: '书名或作者',
           prefixIcon: const Icon(PhosphorIconsLight.magnifyingGlass),
           suffixIcon: IconButton(
-            onPressed: () => setState(() => _submitted = true),
+            onPressed: _search,
             tooltip: '检查可用来源',
             icon: const Icon(PhosphorIconsLight.arrowRight),
           ),
         ),
-        onSubmitted: (_) => setState(() => _submitted = true),
+        onSubmitted: (_) => _search(),
       ),
       const SizedBox(height: 20),
-      const Text('18+ 搜索：关闭 · 当前没有参与请求的来源', style: TextStyle(fontSize: 12)),
+      if (widget.access != null)
+        AdultSearchSwitch(access: widget.access!)
+      else
+        const Text('18+ 搜索：关闭 · 当前没有参与请求的来源', style: TextStyle(fontSize: 12)),
       EmptyState(
         icon: PhosphorIconsLight.globe,
         title: _submitted ? '尚无可用来源，未发出搜索请求' : '先为阅读添加来源',
@@ -502,9 +529,11 @@ class SettingsPage extends StatefulWidget {
     required this.dark,
     required this.onThemeChanged,
     this.persisted = false,
+    this.access,
   });
   final bool dark;
   final bool persisted;
+  final AccessController? access;
   final VoidCallback onThemeChanged;
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -582,10 +611,12 @@ class _SettingsPageState extends State<SettingsPage> {
           title: const Text('本地资料'),
           subtitle: Text(
             widget.persisted
-                ? '样本、段落位置和外观已保存在这台设备上。成年声明、隐私锁和同步尚未接入。'
+                ? '样本、段落位置和外观已保存在这台设备上。成年声明与隐私锁仅在本机保存，同步尚未接入。'
                 : '当前为会话内预览，未连接本地资料库。',
           ),
         ),
+      if (_section == 4 && widget.access != null)
+        AccessSettings(access: widget.access!),
     ],
   );
 }

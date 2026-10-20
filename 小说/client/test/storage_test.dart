@@ -317,7 +317,7 @@ void main() {
         point,
         expectedSequence: 0,
       ),
-      throwsA(isA<StorageFailure>()),
+      throwsA(isA<AppFailure>()),
     );
   });
   test('v1 upgrade backs up data; injected migration failure remains read-only and recoverable', () async {
@@ -362,7 +362,7 @@ void main() {
     db = await open(dir.path);
     addTearDown(db.close);
     library = LocalLibrary(db, ContentFiles(dir.path));
-    expect(db.info['version'], 3);
+    expect(db.info['version'], 4);
     expect(db.readOnly, false);
     expect((await library.load(job())).value.single.id, book.id);
     expect(await library.loadSetting('theme'), null);

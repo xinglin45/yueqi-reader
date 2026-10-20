@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import '../application/jobs.dart';
 
 String failureTitle(FailureCode code) => switch (code) {
-  FailureCode.permissionDenied => '需要文件访问权限',
+  FailureCode.permissionDenied => '当前无法访问',
   FailureCode.offline => '暂时无法连接',
   FailureCode.corrupt => '无法读取这份数据',
   FailureCode.missing => '找不到这本书',
@@ -15,7 +15,7 @@ String failureTitle(FailureCode code) => switch (code) {
   FailureCode.unexpected => '这次操作未完成',
 };
 String failureHelp(FailureCode code) => switch (code) {
-  FailureCode.permissionDenied => '请重新授权或选择可访问的文件，然后重试。',
+  FailureCode.permissionDenied => '请检查成年声明、隐私锁或来源自身的访问条件；文件操作请检查文件授权。',
   FailureCode.offline => '请检查连接后重试。已有本地内容不依赖网络。',
   FailureCode.corrupt => '请保留原文件，重新选择有效数据后重试。',
   FailureCode.missing => '可以返回书架重新选择；演示样本仅保留于本次会话。',
