@@ -98,7 +98,7 @@ final class ShellRouter extends RouterDelegate<AppLocation>
   final AppNavigation navigation;
   final Widget Function(AppLocation) builder;
   @override
-  final navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   @override
   AppLocation get currentConfiguration => navigation.location;
   @override
@@ -106,6 +106,7 @@ final class ShellRouter extends RouterDelegate<AppLocation>
       navigation.replace(configuration);
   @override
   Future<bool> popRoute() async => navigation.back();
+  void refresh() => notifyListeners();
   @override
   Widget build(BuildContext context) => Navigator(
     key: navigatorKey,

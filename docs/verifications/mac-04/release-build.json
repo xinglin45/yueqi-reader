@@ -1,0 +1,66 @@
+{
+  "verified_date": "2026-10-21",
+  "checkpoint": "MAC-04",
+  "version": "0.0.6+6",
+  "bundle_id": "local.yueqi.novel",
+  "minimum_macos": "12.0",
+  "executable_architectures": "arm64",
+  "dart_aot_architectures": "arm64",
+  "schema_version": 5,
+  "signature": "ad-hoc; finalized with tool/sign_macos_internal.py; deep strict verification passed",
+  "release_entitlements": {
+    "com.apple.security.app-sandbox": true,
+    "com.apple.security.files.bookmarks.app-scope": true,
+    "com.apple.security.files.user-selected.read-only": true,
+    "com.apple.security.get-task-allow": true
+  },
+  "notarized": false,
+  "notices_uncompressed_bytes": 1345810,
+  "notices_sha256": "a83a26b2d140a544db5077dbc1f316b8ce017f7834acb30b7f419c695da7aee0",
+  "native_assets": [
+    {
+      "path": "Contents/Frameworks/sqlite3.framework/Versions/A/sqlite3",
+      "bytes": 1669392,
+      "sha256": "e7301982a121e9e21c98ed948653f2310ab8c2ae47a967002c053f5d07e18d73"
+    },
+    {
+      "path": "Contents/Frameworks/objective_c.framework/Versions/A/objective_c",
+      "bytes": 184336,
+      "sha256": "b1d57ce2be538d592bdc23d9312988e640a63e6f6e5d732e6e79dbe63694083d"
+    }
+  ],
+  "application_executable": {
+    "path": "Contents/MacOS/阅栖",
+    "bytes": 194576,
+    "sha256": "535348e0509a896989ed4f702653eca41b3b365e337701f98ece80b22701e951"
+  },
+  "dart_aot": {
+    "path": "Contents/Frameworks/App.framework/Versions/A/App",
+    "bytes": 6336928,
+    "sha256": "faeb3d552583d5b5b275339ea5e449391acbeb48f2799685dabc4da0d91d6481"
+  },
+  "build_output": "小说/client/build/macos/Build/Products/Release/阅栖.app",
+  "tool_reported_size_mb": 30.4,
+  "debug_build_passed": true,
+  "release_build_passed": true,
+  "flutter_dart_test_count": 55,
+  "python_test_count": 13,
+  "source_approvals": {
+    "normal": 0,
+    "adult": 0
+  },
+  "gui_verification": "Debug isolated native picker/GB18030 managed and EPUB reference imported, both survived process restart. Final production Release retained existing sample/position; explicit Finder Open With this Release entered gated preview and cancel kept 1 book. No production age declaration submitted.",
+  "manual_limits": [
+    "Physical cross-window Finder drag not independently retested; incoming port widget test passed.",
+    "Cold-start file open and other file providers await full MAC-13 desktop regression.",
+    "Disk full and expired grants covered by fault injection/fakes, not physical full disk or every native provider."
+  ],
+  "gui_screenshots": [
+    "native-managed-restart.png",
+    "native-reference-restart.png",
+    "release-preserved-library.png",
+    "release-preserved-position.png",
+    "release-system-open-preview.png",
+    "release-system-open.png"
+  ]
+}

@@ -110,6 +110,7 @@ final List<SchemaStep> novelSchema = List.unmodifiable([
     'CREATE INDEX positions_document ON positions(document_id)',
   ]),
   contentPolicySchema,
+  importSchema,
 ]);
 
 /// Device declaration/search/lock flags remain outside this library schema.
@@ -127,4 +128,14 @@ const contentPolicySchema = SchemaStep(4, [
     SELECT id,raw_rating,CASE rating WHEN 'adult' THEN 'restricted' ELSE rating END,
       rating_evidence,'legacy-v3',CASE WHEN rating='general' AND rating_evidence='owned-preview-v1' THEN 'notRequired' ELSE 'unknown' END FROM books''',
   'CREATE INDEX content_policy_level ON content_policy(level)',
+]);
+
+const importSchema = SchemaStep(5, [
+  """CREATE TABLE imports (
+    document_id TEXT PRIMARY KEY REFERENCES documents(id),
+    mode TEXT NOT NULL CHECK(mode IN ('managed','reference')),
+    grant_id TEXT, encoding TEXT CHECK(encoding IN ('utf8','utf16le','utf16be','gb18030','big5')),
+    status TEXT NOT NULL CHECK(status='awaiting_parser'),
+    CHECK((mode='managed' AND grant_id IS NULL) OR (mode='reference' AND grant_id IS NOT NULL))
+  ) STRICT""",
 ]);

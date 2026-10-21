@@ -1,0 +1,15 @@
+[
+  {
+    "encoding" : "gb18030",
+    "exact_owned_text" : true,
+    "file" : "GB18030.txt"
+  },
+  {
+    "encoding" : "big5",
+    "exact_owned_text" : true,
+    "file" : "Big5.txt"
+  },
+  {
+    "malformed_rejected" : true
+  }
+]

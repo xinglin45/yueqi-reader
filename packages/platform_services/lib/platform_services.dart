@@ -146,3 +146,14 @@ final class AppStorageLocations {
 abstract interface class StorageLocationProvider {
   Future<AppStorageLocations> locations();
 }
+
+/// Batch document capability. Bytes/paths remain inside adapters; consumers use
+/// a read-only stream and local opaque IDs. Bookmarks never enter sync payloads.
+abstract interface class DocumentAccess implements FileAccess {
+  Future<PlatformResult<List<FileGrant>>> chooseDocuments();
+  Stream<List<FileGrant>> get incomingDocuments;
+  Stream<List<int>> readDocument(FileGrant grant);
+  Future<void> retainGrant(FileGrant grant);
+  Future<void> releaseGrant(FileGrant grant);
+  Future<void> forgetGrant(FileGrant grant);
+}

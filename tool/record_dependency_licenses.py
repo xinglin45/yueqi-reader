@@ -12,7 +12,7 @@ from urllib.parse import unquote, urljoin, urlparse
 ROOT = Path(__file__).resolve().parent.parent
 CLIENT = ROOT / '小说/client'
 parser = argparse.ArgumentParser()
-parser.add_argument('--checkpoint', required=True, choices=['mac-01', 'mac-02', 'mac-06', 'mac-03', 'mac-16'])
+parser.add_argument('--checkpoint', required=True, choices=['mac-01', 'mac-02', 'mac-06', 'mac-03', 'mac-16', 'mac-04'])
 checkpoint = parser.parse_args().checkpoint
 OUT = ROOT / 'docs/licenses'
 config_path = CLIENT / '.dart_tool/package_config.json'
@@ -39,7 +39,7 @@ def visit(name):
 
 visit('novel_app')
 production_runtime = set(runtime)
-if checkpoint in ('mac-06', 'mac-03', 'mac-16'):
+if checkpoint in ('mac-06', 'mac-03', 'mac-16', 'mac-04'):
     visit('epub_view')
     visit('html')
 experiment = runtime - production_runtime

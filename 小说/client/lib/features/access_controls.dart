@@ -1,3 +1,6 @@
+import 'import_flow.dart';
+import '../app/dependencies.dart';
+
 import 'package:flutter/material.dart';
 
 import '../application/access.dart';
@@ -139,10 +142,12 @@ class AdultCollection extends StatefulWidget {
     required this.access,
     required this.library,
     required this.navigation,
+    this.dependencies,
   });
   final AccessController access;
   final AdultLibrary library;
   final AppNavigation navigation;
+  final AppDependencies? dependencies;
   @override
   State<AdultCollection> createState() => _AdultCollectionState();
 }
@@ -193,9 +198,19 @@ class _AdultCollectionState extends State<AdultCollection> {
                 ListTile(
                   title: Text(book.title),
                   subtitle: Text(book.subtitle),
-                  onTap: () => widget.navigation.go(
-                    AppLocation(AppPage.reader, bookId: book.id),
-                  ),
+                  onTap: () {
+                    if (!book.previewAvailable && widget.dependencies != null) {
+                      showImportedStatus(
+                        context,
+                        widget.dependencies!,
+                        book.id,
+                      );
+                    } else {
+                      widget.navigation.go(
+                        AppLocation(AppPage.reader, bookId: book.id),
+                      );
+                    }
+                  },
                 ),
             ],
           ),

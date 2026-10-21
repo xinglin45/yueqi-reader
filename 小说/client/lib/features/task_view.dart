@@ -19,7 +19,8 @@ String failureHelp(FailureCode code) => switch (code) {
   FailureCode.offline => '请检查连接后重试。已有本地内容不依赖网络。',
   FailureCode.corrupt => '请保留原文件，重新选择有效数据后重试。',
   FailureCode.missing => '可以返回书架重新选择；演示样本仅保留于本次会话。',
-  FailureCode.unsupported => '文件导入在 MAC-04/13 接入；本阶段可以体验自产演示样本。',
+  FailureCode.unsupported =>
+    '此阅读或平台能力尚未接入。已导入文件可查看状态，TXT/EPUB阅读解析在 MAC-05/07 接入。',
   FailureCode.unexpected => '请重试或返回上一页。诊断仅保留错误类别。',
 };
 

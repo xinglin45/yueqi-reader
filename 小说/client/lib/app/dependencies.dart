@@ -1,3 +1,7 @@
+import '../domain/importing.dart';
+import '../infrastructure/importing/local_importer.dart';
+import '../infrastructure/importing/text_inspector.dart';
+import '../infrastructure/mac_document_access.dart';
 import '../application/access.dart';
 import '../application/discovery.dart';
 import '../infrastructure/device_access_store.dart';
@@ -24,6 +28,7 @@ final class AppDependencies {
     required this.speech,
     required this.windows,
     this.positions,
+    this.importer,
     this.access,
     this.discovery,
     this.storageReadOnly = false,
@@ -43,7 +48,11 @@ final class AppDependencies {
       windows: platform,
     );
   }
-  static Future<AppDependencies> open(StorageLocationProvider provider) async {
+  static Future<AppDependencies> open(
+    StorageLocationProvider provider, {
+    DocumentAccess? documents,
+    LegacyTextPreview? legacy,
+  }) async {
     final locations = await provider.locations();
     final directory = p.join(locations.support, ReaderProduct.novel.namespace);
     await Directory(p.join(locations.cache, ReaderProduct.novel.namespace))
@@ -66,6 +75,7 @@ final class AppDependencies {
       (_, _, _, _) async => const [],
     );
     StorageDatabase? opened;
+    DocumentAccess? documentFiles;
     try {
       final database = await StorageDatabase.open(
         directory: directory,
@@ -81,12 +91,29 @@ final class AppDependencies {
       final dark =
           !database.readOnly && await library.loadSetting('theme') == 'dark';
       const platform = UnavailablePlatform();
+      documentFiles =
+          documents ?? (Platform.isMacOS ? MacDocumentAccess() : null);
+      final importer = documentFiles == null || database.readOnly
+          ? null
+          : LocalImporter(
+              library,
+              access,
+              documentFiles,
+              directory,
+              TextInspector(
+                legacy ??
+                    ((path, encoding) => (documentFiles as MacDocumentAccess)
+                        .legacyPreview(path, encoding)),
+              ),
+            );
+      await importer?.initialize();
       return AppDependencies(
         library: library,
         positions: library,
         access: access,
         discovery: discovery,
-        files: platform,
+        files: documentFiles ?? platform,
+        importer: importer,
         secrets: platform,
         speech: platform,
         windows: platform,
@@ -95,19 +122,23 @@ final class AppDependencies {
         persistTheme: (value) =>
             library.saveSetting('theme', value ? 'dark' : 'light'),
         close: () async {
+          await importer?.dispose();
           await discovery.dispose();
           await access.dispose();
+          if (documentFiles is MacDocumentAccess) await documentFiles.dispose();
           await database.close();
         },
       );
     } catch (_) {
       await discovery.dispose();
       await access.dispose();
+      if (documentFiles is MacDocumentAccess) await documentFiles.dispose();
       await opened?.close();
       rethrow;
     }
   }
 
+  final DocumentImporter? importer;
   final AccessController? access;
   final DiscoveryCoordinator? discovery;
   final PositionRepository? positions;

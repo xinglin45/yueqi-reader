@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-20",
+  "provenance": "Project-owned neutral fixture text and generated archives; no adult body or external assets.",
+  "files": [
+    {
+      "name": "BOM-utf8.txt",
+      "bytes": 95,
+      "sha256": "3275406b273c3355175f6ffca29dc1d8e844a08ecc5284a466e1d668fb2fc5c9"
+    },
+    {
+      "name": "Big5.txt",
+      "bytes": 60,
+      "sha256": "d941b6759e92150e1812d1104c49486d7f2bbc002776f6a5ab3c5c5edc50b0d1"
+    },
+    {
+      "name": "GB18030.txt",
+      "bytes": 64,
+      "sha256": "7496eaf4d35727f0d339248e55ab162ade9405767ea32906e8c9884b44b74574"
+    },
+    {
+      "name": "UTF16BE.txt",
+      "bytes": 64,
+      "sha256": "4534c18743e220ff5fa55982cfc204e621179a592a33ada20435179a5db25167"
+    },
+    {
+      "name": "UTF16LE.txt",
+      "bytes": 70,
+      "sha256": "a1c5059414d811f8ce9a1cd2d10f48d43102ba5be126f8427a0a0cf4e421e999"
+    },
+    {
+      "name": "加密标记.epub",
+      "bytes": 1102,
+      "sha256": "85f9a358f36d1ac9f88a1dff29692d69dabbdcba00d1f34430fd0f13917aa959"
+    },
+    {
+      "name": "同名A.txt",
+      "bytes": 34,
+      "sha256": "14aa10075cb222cfe8335bf243ae7de99b86254566479512b7152f93ae31faa8"
+    },
+    {
+      "name": "同名B.txt",
+      "bytes": 34,
+      "sha256": "2ac07e2cc0a962d97a3b8aa6c91b80184bc88101e78cddfb8e72d505b34fce58"
+    },
+    {
+      "name": "坏包.epub",
+      "bytes": 14,
+      "sha256": "342ba18682298236bea6ab81f1e71ff1cf029ea5d5a227b18841880633eaddb2"
+    },
+    {
+      "name": "外部实体.epub",
+      "bytes": 881,
+      "sha256": "59ad40e8e6f00cd8e098356220275962fed0749d0ffb9e0b45092f77601ed361"
+    },
+    {
+      "name": "展开超限.epub",
+      "bytes": 18398,
+      "sha256": "00c7947e3255056811465be54c7b52f9559c4b2bee76ac05b4d9b0e3838690db"
+    },
+    {
+      "name": "有效.epub",
+      "bytes": 965,
+      "sha256": "965e854fd05266252ed3c68578026d486ed4affb61d5a93569d7cc2f216fcbd8"
+    },
+    {
+      "name": "简体-utf8.txt",
+      "bytes": 92,
+      "sha256": "27016fdd5e5a98fc2c07cdd49ae1a7c004735b9944991fcd4bed83c5f38297e3"
+    },
+    {
+      "name": "路径穿越.epub",
+      "bytes": 1073,
+      "sha256": "8365b6a5379387619e22ae678ce39504a72dc7dc06e6b1c0c31723129e1f44d3"
+    },
+    {
+      "name": "错误编码.txt",
+      "bytes": 4,
+      "sha256": "9da8af507d6b566f2e1ef0ff9fa9e18eb4131eb9d9431e902556d439ff424d3f"
+    }
+  ]
+}

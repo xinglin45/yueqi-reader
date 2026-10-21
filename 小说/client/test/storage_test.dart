@@ -362,7 +362,7 @@ void main() {
     db = await open(dir.path);
     addTearDown(db.close);
     library = LocalLibrary(db, ContentFiles(dir.path));
-    expect(db.info['version'], 4);
+    expect(db.info['version'], 5);
     expect(db.readOnly, false);
     expect((await library.load(job())).value.single.id, book.id);
     expect(await library.loadSetting('theme'), null);

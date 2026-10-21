@@ -29,10 +29,13 @@ final class LocalLibrary
   BookSummary _book(Map<String, Object?> row) => BookSummary(
     id: row['id']! as String,
     title: row['title']! as String,
-    subtitle: row['parser_hint'] == 'classification-card-v1'
+    subtitle: row['parser_hint'] == 'import-v1'
+        ? '文件已导入 · 阅读解析待接入'
+        : row['parser_hint'] == 'classification-card-v1'
         ? '标签测试 · 不含成人正文'
         : '原创演示短篇 · 已保存在本机',
-    demo: row['parser_hint'] != 'classification-card-v1',
+    demo: row['parser_hint'] == parser,
+    previewAvailable: row['parser_hint'] != 'import-v1',
     protected: _rating(row).protected,
     persistent: true,
   );
@@ -74,6 +77,10 @@ final class LocalLibrary
       : 'NULL AS policy_level';
   String get _policyJoin =>
       _hasPolicy ? 'LEFT JOIN content_policy p ON p.book_id=b.id' : '';
+  Future<void> checkAccess(String bookId) async {
+    await _admit(bookId);
+  }
+
   Future<ContentRating> _admit(String bookId) async {
     final rows = await database.query(
       'SELECT b.id,b.rating,b.rating_evidence,$_policyColumns FROM books b $_policyJoin WHERE b.id=? AND b.deleted=0',

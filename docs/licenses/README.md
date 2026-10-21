@@ -33,3 +33,7 @@ MAC-01原始清单由该提交的脚本生成；当前重建须显式提供`--ch
 ## MAC-16（2026-10-20）
 
 [本批清单](mac-16-dependencies.json)仍为77包，运行闭包47、研究21、其他开发9；无新增依赖/插件/权限/许可原文，复用既有文件与哈希。App升级0.0.5+5，源码许可证仍未选定。可运行`python3 tool/record_dependency_licenses.py --checkpoint mac-16`重新核对，历史清单不覆盖。
+
+## MAC-04（2026-10-21）
+
+[本批清单](mac-04-dependencies.json)仍为77包，运行闭包49、研究19、其他开发9；xml6.6.1及其已有petitparser依赖从研究转入运行范围，无版本升级、新第三方包或新增许可原文。生产EPUB只采用有界ZIP校验器与XML元信息检查，未接入研究用epub_view引擎。macOS文件和中文旧编码适配使用系统AppKit/CoreFoundation，无新增原生插件。重建：`python3 tool/record_dependency_licenses.py --checkpoint mac-04`；既有许可哈希复用，源码许可证仍未选择。

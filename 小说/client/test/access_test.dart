@@ -77,6 +77,7 @@ Future<void> copyTree(Directory source, Directory target) async {
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   test('five ratings, source conditions, raw unknown and upstream minimum age fail closed', () {
     for (final level in RatingLevel.values) {
       for (final upstream in SourceAccess.values) {
@@ -391,7 +392,7 @@ void main() {
         product: ReaderProduct.novel,
         migrations: novelSchema,
       );
-      expect(db.info['version'], 4);
+      expect(db.info['version'], 5);
       final rows = await db.query(
         "SELECT * FROM content_policy WHERE book_id='unknown'",
       );

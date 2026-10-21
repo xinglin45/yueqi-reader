@@ -1,3 +1,4 @@
+import 'import_flow.dart';
 import 'access_controls.dart';
 import '../application/access.dart';
 import '../application/discovery.dart';
@@ -165,10 +166,12 @@ class LibraryPage extends StatefulWidget {
     required this.dependencies,
     required this.navigation,
     this.recent = false,
+    this.onImport,
   });
   final AppDependencies dependencies;
   final AppNavigation navigation;
   final bool recent;
+  final VoidCallback? onImport;
   @override
   State<LibraryPage> createState() => _LibraryPageState();
 }
@@ -177,8 +180,14 @@ class _LibraryPageState extends State<LibraryPage> {
   final _task = GlobalKey<TaskViewState<List<BookSummary>>>();
   int _tab = 0;
   bool _grid = true;
-  void _open(BookSummary book) =>
-      widget.navigation.go(AppLocation(AppPage.reader, bookId: book.id));
+  void _open(BookSummary book) {
+    if (!book.previewAvailable) {
+      showImportedStatus(context, widget.dependencies, book.id);
+      return;
+    }
+    widget.navigation.go(AppLocation(AppPage.reader, bookId: book.id));
+  }
+
   @override
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -188,7 +197,9 @@ class _LibraryPageState extends State<LibraryPage> {
         eyebrow: '留一点时间，给阅读',
         action: FilledButton.icon(
           key: const ValueKey('import-book'),
-          onPressed: () => showImport(context, widget.dependencies.files),
+          onPressed:
+              widget.onImport ??
+              () => showImport(context, widget.dependencies.files),
           icon: const Icon(PhosphorIconsLight.plus, size: 18),
           label: const Text('导入书籍'),
         ),
@@ -232,6 +243,7 @@ class _LibraryPageState extends State<LibraryPage> {
           widget.dependencies.access != null &&
           widget.dependencies.library is AdultLibrary)
         AdultCollection(
+          dependencies: widget.dependencies,
           access: widget.dependencies.access!,
           library: widget.dependencies.library as AdultLibrary,
           navigation: widget.navigation,
@@ -284,7 +296,18 @@ class _LibraryPageState extends State<LibraryPage> {
                             InkWell(
                               onTap: () => _open(book),
                               borderRadius: BorderRadius.circular(4),
-                              child: const Cover(width: 148),
+                              child: book.demo
+                                  ? const Cover(width: 148)
+                                  : const SizedBox(
+                                      width: 148,
+                                      height: 222,
+                                      child: Center(
+                                        child: Icon(
+                                          PhosphorIconsLight.fileText,
+                                          size: 48,
+                                        ),
+                                      ),
+                                    ),
                             ),
                             const SizedBox(height: 12),
                             Text(
@@ -308,7 +331,9 @@ class _LibraryPageState extends State<LibraryPage> {
                             const SizedBox(height: 12),
                             TextButton(
                               onPressed: () => _open(book),
-                              child: const Text('打开阅读预览'),
+                              child: Text(
+                                book.previewAvailable ? '打开阅读预览' : '查看文件状态',
+                              ),
                             ),
                           ],
                         ),
@@ -319,7 +344,9 @@ class _LibraryPageState extends State<LibraryPage> {
                 for (final book in books)
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    leading: const Cover(width: 40),
+                    leading: book.demo
+                        ? const Cover(width: 40)
+                        : const Icon(PhosphorIconsLight.fileText),
                     title: Text(book.title),
                     subtitle: Text(book.subtitle),
                     trailing: const Icon(PhosphorIconsLight.caretRight),

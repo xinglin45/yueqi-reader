@@ -8,12 +8,14 @@ final class BookSummary {
     this.demo = false,
     this.persistent = false,
     this.protected = false,
+    this.previewAvailable = true,
   });
   final String id;
   final String title;
   final String subtitle;
   final bool demo;
   final bool persistent;
+  final bool previewAvailable;
 
   /// Presentation hint only; authorization uses ContentRating, never this flag.
   final bool protected;

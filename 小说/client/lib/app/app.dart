@@ -1,3 +1,8 @@
+import 'dart:async';
+
+import 'package:platform_services/platform_services.dart';
+
+import '../features/import_flow.dart';
 import '../domain/access.dart';
 import '../features/access_controls.dart';
 
@@ -23,6 +28,46 @@ class _NovelAppState extends State<NovelApp> {
   late final AppNavigation _navigation;
   late final ShellRouter _router;
   bool _dark = false;
+  int _libraryEpoch = 0;
+  bool _importing = false;
+  final _importQueue = <List<FileGrant>?>[];
+  StreamSubscription<List<FileGrant>>? _incoming;
+  Future<void> _openImport([List<FileGrant>? grants]) async {
+    if (grants?.isEmpty == true) return;
+    _importQueue.add(grants);
+    if (_importing) return;
+    _importing = true;
+    try {
+      while (mounted && _importQueue.isNotEmpty) {
+        final next = _importQueue.removeAt(0);
+        final context = _router.navigatorKey.currentContext;
+        if (context == null || !context.mounted) continue;
+        if (widget.dependencies.storageReadOnly) {
+          stageNotice(context, '资料暂时只读', '当前不能保存导入文件，请退出后按照恢复说明处理。');
+          if (widget.dependencies.files case final DocumentAccess files) {
+            for (final grant in next ?? <FileGrant>[]) {
+              await files.releaseGrant(grant);
+            }
+          }
+          continue;
+        }
+        if (widget.dependencies.importer == null) {
+          await showImport(context, widget.dependencies.files);
+          continue;
+        } else {
+          await showImportFlow(context, widget.dependencies, grants: next);
+        }
+        if (mounted) {
+          _libraryEpoch++;
+          _navigation.replace(const AppLocation(AppPage.library));
+          _router.refresh();
+        }
+      }
+    } finally {
+      _importing = false;
+    }
+  }
+
   final _messenger = GlobalKey<ScaffoldMessengerState>();
   Future<void> _toggleTheme() async {
     setState(() => _dark = !_dark);
@@ -48,16 +93,27 @@ class _NovelAppState extends State<NovelApp> {
         builder: (context, snapshot) => ReaderShell(
           key: ValueKey(snapshot.data!.visibilityRevision),
           location: location,
+          libraryEpoch: _libraryEpoch,
+          onImport: () => _openImport(),
           dependencies: widget.dependencies,
           navigation: _navigation,
           onThemeChanged: _toggleTheme,
         ),
       ),
     );
+    if (widget.dependencies.files case final DocumentAccess files) {
+      _incoming = files.incomingDocuments.listen((grants) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) unawaited(_openImport(grants));
+        });
+        WidgetsBinding.instance.scheduleFrame();
+      });
+    }
   }
 
   @override
   void dispose() {
+    _incoming?.cancel();
     _router.dispose();
     if (widget.navigation == null) _navigation.dispose();
     super.dispose();
@@ -99,11 +155,14 @@ class ReaderShell extends StatefulWidget {
     required this.dependencies,
     required this.navigation,
     required this.onThemeChanged,
+    required this.onImport,
+    required this.libraryEpoch,
   });
   final AppLocation location;
   final AppDependencies dependencies;
   final AppNavigation navigation;
-  final VoidCallback onThemeChanged;
+  final VoidCallback onThemeChanged, onImport;
+  final int libraryEpoch;
   @override
   State<ReaderShell> createState() => _ReaderShellState();
 }
@@ -277,7 +336,7 @@ class _ReaderShellState extends State<ReaderShell> {
               icon: const Icon(PhosphorIconsLight.info, size: 16),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text('阶段说明 · MAC-16', style: TextStyle(fontSize: 12)),
+                child: Text('阶段说明 · MAC-04', style: TextStyle(fontSize: 12)),
               ),
             ),
             TextButton.icon(
@@ -301,7 +360,7 @@ class _ReaderShellState extends State<ReaderShell> {
       content: const SizedBox(
         width: 420,
         child: Text(
-          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。真实导入、完整阅读引擎、系统听书和低存在感窗口将在后续任务接入。\n\n获准普通/18+在线来源仍为 0/0。',
+          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；导入文件的正式阅读解析、系统听书和低存在感窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
           style: TextStyle(height: 1.8),
         ),
       ),
@@ -454,7 +513,7 @@ class _ReaderShellState extends State<ReaderShell> {
           ),
           if (!reading)
             IconButton(
-              onPressed: () => showImport(context, widget.dependencies.files),
+              onPressed: widget.onImport,
               tooltip: '导入书籍',
               icon: const Icon(PhosphorIconsLight.plus),
             ),
@@ -467,6 +526,7 @@ class _ReaderShellState extends State<ReaderShell> {
     AppPage.library || AppPage.recent => LibraryPage(
       dependencies: widget.dependencies,
       navigation: widget.navigation,
+      onImport: widget.onImport,
       recent: widget.location.page == AppPage.recent,
     ),
     AppPage.reader => ReaderPage(
@@ -551,7 +611,10 @@ class _ReaderShellState extends State<ReaderShell> {
                                 48,
                               ),
                               child: KeyedSubtree(
-                                key: ValueKey(widget.location.path),
+                                key: ValueKey((
+                                  widget.location.path,
+                                  widget.libraryEpoch,
+                                )),
                                 child: _page(),
                               ),
                             ),

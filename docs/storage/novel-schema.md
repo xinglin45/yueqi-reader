@@ -1,6 +1,6 @@
 # 小说本地数据与位置协议 v1
 
-日期：2026-10-20。数据库schema **v4**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v4.sql)供审阅，不代替源码迁移。
+日期：2026-10-21。数据库schema **v5**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v5.sql)供审阅，不代替源码迁移。
 
 ## 存放与表职责
 
@@ -19,6 +19,7 @@
 | collection_books | 书籍与分组复合主键/外键 | MAC-16中性分级卡片与独立成人分组关系 |
 | source_bindings / SourceBinding | source_id＋source_item_id唯一；对应本地book_id、核验/缓存unknown、仅credential_ref、revision/墓碑 | 未来显式来源绑定，尚无真实接入 |
 | jobs / StoredJob | 持久job_id、import/download、状态/进度/安全错误码/时间 | 任务模型基础；调度/恢复产品用例待MAC-04/21 |
+| imports | document_id主外键；mode、仅本机grant_id、encoding、awaiting_parser | MAC-04导入索引，托管正文在objects；引用无永久副本 |
 | settings | key白名单theme/text_scale；JSON值、row_revision | 深浅色实际持久；其余设置后续 |
 
 row_revision仅本机元数据代际；updated_at是UTC epoch毫秒，不能作为未来跨设备唯一冲突顺序。后续MAC-25补服务修订/设备序号与协议，不创建空转outbox。删除有墓碑，当前UI尚未开放清库/删书。
@@ -42,8 +43,14 @@ SQLite事务涵盖书籍、修订、章节与资源引用；外部文件与SQL�
 
 ## 迁移兼容
 
-内部交付含v1→v2→v3→v4序列；v4增加分级策略，迁移只对已知自产普通样本填notRequired，其余来源资格unknown。升级前先生成并核验独立SQLite快照；失败拒绝升级，DDL失败事务回滚。遇到未来版本只读打开、不降级；无法读取或首次初始化失败则显示启动错误，保留原文件。恢复流程见[恢复说明](recovery.md)。
+内部交付含v1→v2→v3→v4→v5序列；v4增加分级策略，迁移只对已知自产普通样本填notRequired，其余来源资格unknown。升级前先生成并核验独立SQLite快照；失败拒绝升级，DDL失败事务回滚。遇到未来版本只读打开、不降级；无法读取或首次初始化失败则显示启动错误，保留原文件。恢复流程见[恢复说明](recovery.md)。
 
-生产入口LocalLibrary已接入；SessionLibrary为会话内组件测试替身，启动失败不切换替身。schema/类型齐全不代表真实导入、通用阅读器、书签/下载产品功能已完成。
+生产入口LocalLibrary已接入；SessionLibrary为会话内组件测试替身，启动失败不切换替身。MAC-04已实现真实导入；schema/类型齐全不代表通用阅读器、书签/下载产品功能已完成。
 
 设备声明/search/lock不在任何书库表中；novel-device为兄弟目录，不可随App书库备份或同步。定义与当前限制见[ADR-0007](../decisions/0007-mac16-local-access-and-privacy.md)。历史schema3快照保持在[旧DDL](novel-schema-v3.sql)。
+
+## MAC-04导入索引
+
+v5只新增imports，不重写旧书籍、样本段落位置与声明。`import-v1`修订保存原始摘要、字节数与格式，尚无解析章节；状态固定awaiting_parser。托管与引用的新增书籍/策略/修订/资源/索引同一SQL事务提交，摘要相同沿用已有书籍与分级，不按标题合并。托管对象损坏/缺失可重新导入相同摘要修复，不重写元数据。
+
+引用只保存不透明设备grant_id，实际安全范围书签位于novel-device/grants。两个字段均不可跨设备同步：未来备份导出须剔除grant_id或转换为待关联；恢复后由用户重新关联同摘要原件。本批未实现MAC-14备份导出。暂存目录import-stage不属于书库正文，单写入租约取得后清理旧暂存。文件与SQL无法跨系统原子提交，崩溃可能留下未引用对象，沿用audit报告而非自动删正文。见[ADR-0008](../decisions/0008-mac04-document-import.md)。
