@@ -50,11 +50,11 @@ void main() {
         await tester.ensureVisible(confirm);
         await tester.tap(confirm);
         await frames(tester);
-        await waitFor(tester, find.textContaining('文件已入库；TXT分章'));
+        await waitFor(tester, find.textContaining('文件已入库；TXT可'));
         expect(find.textContaining('文件结构或完整性检查失败'), findsOneWidget);
         await tester.tap(find.text('返回书架'));
         await frames(tester);
-        await waitFor(tester, find.text('查看文件状态'));
+        await waitFor(tester, find.text('打开 TXT 阅读'));
         expect(find.byType(Image), findsNothing);
         expect(
           await tester.runAsync(

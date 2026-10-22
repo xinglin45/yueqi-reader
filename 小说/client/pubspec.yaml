@@ -1,13 +1,14 @@
 name: novel_app
 description: "阅读软件：阅栖小说客户端，D1应用壳、本地存储与独立技术探针。"
 publish_to: 'none'
-version: 0.0.6+6
+version: 0.0.7+7
 
 environment:
   sdk: ^3.13.5
   flutter: ">=3.47.7"
 
 dependencies:
+  ffi: 2.2.0
   xml: 6.6.1
   crypto: 3.0.7
   path: 1.9.1

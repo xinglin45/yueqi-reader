@@ -395,11 +395,114 @@ final class LocalImporter implements DocumentImporter {
   Future<Map<String, Object?>> _record(String bookId) async {
     await library.checkAccess(bookId);
     final rows = await library.database.query(
-      'SELECT i.*,d.digest,d.kind,d.byte_length FROM imports i JOIN documents d ON d.id=i.document_id WHERE d.book_id=?',
+      'SELECT i.*,d.digest,d.kind,d.byte_length,b.title,b.rating FROM imports i JOIN documents d ON d.id=i.document_id JOIN books b ON b.id=d.book_id WHERE d.book_id=?',
       [bookId],
     );
     if (rows.isEmpty) throw const ImportFailure(ImportIssue.unsupported);
     return rows.single;
+  }
+
+  Future<Map<String, Object?>> sourceRecord(String bookId) => _record(bookId);
+
+  Future<T> withSnapshot<T>(
+    String bookId,
+    JobContext job,
+    Future<T> Function(File, Map<String, Object?>) action,
+  ) async {
+    final ticket = access.state.visibilityRevision;
+    final row = await _record(bookId);
+    job.checkCancelled();
+    if (row['mode'] == 'managed') {
+      final file = File(p.join(root, 'objects', row['digest']! as String));
+      if (await FileSystemEntity.type(file.path, followLinks: false) !=
+          FileSystemEntityType.file) {
+        throw const ImportFailure(ImportIssue.missing);
+      }
+      final result = await action(file, row);
+      job.checkCancelled();
+      await library.checkAccess(bookId);
+      if (ticket != access.state.visibilityRevision) {
+        throw const ImportFailure(ImportIssue.permission);
+      }
+      return result;
+    }
+    final grant = await files.restoreGrant(row['grant_id']! as String);
+    if (grant is! PlatformSuccess<FileGrant>) {
+      throw const ImportFailure(ImportIssue.permission);
+    }
+    File? snapshot;
+    try {
+      final (file, digest, _) = await _copy(grant.value, job);
+      snapshot = file;
+      if (digest != row['digest']) {
+        throw const ImportFailure(ImportIssue.changed);
+      }
+      final result = await action(file, row);
+      job.checkCancelled();
+      await library.checkAccess(bookId);
+      if (ticket != access.state.visibilityRevision) {
+        throw const ImportFailure(ImportIssue.permission);
+      }
+      return result;
+    } finally {
+      if (snapshot != null && await snapshot.exists()) await snapshot.delete();
+      await files.releaseGrant(grant.value);
+    }
+  }
+
+  Future<List<int>> readRange(
+    String bookId,
+    int start,
+    int end,
+    JobContext job,
+  ) async {
+    final ticket = access.state.visibilityRevision;
+    final row = await _record(bookId);
+    if (start < 0 ||
+        end <= start ||
+        end > (row['byte_length']! as int) ||
+        end - start > 128 * 1024) {
+      throw const ImportFailure(ImportIssue.corrupt);
+    }
+    final bytes = <int>[];
+    if (row['mode'] == 'managed') {
+      final file = File(p.join(root, 'objects', row['digest']! as String));
+      if (await FileSystemEntity.type(file.path, followLinks: false) !=
+          FileSystemEntityType.file) {
+        throw const ImportFailure(ImportIssue.missing);
+      }
+      await for (final chunk in file.openRead(start, end)) {
+        job.checkCancelled();
+        bytes.addAll(chunk);
+      }
+    } else {
+      final grant = await files.restoreGrant(row['grant_id']! as String);
+      if (grant is! PlatformSuccess<FileGrant>) {
+        throw const ImportFailure(ImportIssue.permission);
+      }
+      try {
+        await for (final chunk in files.readDocumentRange(
+          grant.value,
+          start,
+          end,
+        )) {
+          job.checkCancelled();
+          bytes.addAll(chunk);
+          if (bytes.length > end - start) {
+            throw const ImportFailure(ImportIssue.corrupt);
+          }
+        }
+      } finally {
+        await files.releaseGrant(grant.value);
+      }
+    }
+    job.checkCancelled();
+    await library.checkAccess(bookId);
+    if (bytes.length != end - start ||
+        ticket != access.state.visibilityRevision) {
+      throw const ImportFailure(ImportIssue.changed);
+    }
+    return bytes;
   }
 
   @override

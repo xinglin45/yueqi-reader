@@ -1,6 +1,6 @@
 # 小说本地数据与位置协议 v1
 
-日期：2026-10-21。数据库schema **v5**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v5.sql)供审阅，不代替源码迁移。
+日期：2026-10-22。数据库schema **v6**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v6.sql)供审阅，不代替源码迁移。
 
 ## 存放与表职责
 
@@ -10,7 +10,7 @@
 |---|---|---|
 | books / BookSummary | 随机book_id；标题不唯一，中文语言与rating/evidence；row_revision和deleted墓碑 | 本机书架及自产样本 |
 | documents / DocumentRevision（Edition） | id、book_id、digest、kind、parser_version；(digest,kind,parser_version)唯一；原始大小/类型/时间 | 托管TXT样本修订；同文件换解析器可保留旧修订 |
-| chapters / ChapterRecord | (document_id,id)主键、ordinal唯一、spine_href | 自产样本章；TXT/EPUB实际解析后续接入 |
+| chapters / ChapterRecord | (document_id,id)主键、ordinal唯一、spine_href | 自产样本章；TXT解析版本目录已接入，EPUB仍后续 |
 | resources / ResourceRecord | (document_id,href)、摘要、类型、大小、cache_permission三态 | 样本文本为已知自产allowed；其他默认unknown |
 | positions / StoredPosition | (book_id,channel)、document_id、anchor JSON、local_seq、更新时间；(book_id,document_id)复合外键 | 阅读/听书独立持久位置；UI仅样本手动段落检查点 |
 | annotations / AnnotationRecord | bookmark/highlight/note；关联书籍/修订；anchor、note、row_revision、deleted | schema/模型已定义；MAC-11产品用例待实现 |
@@ -43,7 +43,7 @@ SQLite事务涵盖书籍、修订、章节与资源引用；外部文件与SQL�
 
 ## 迁移兼容
 
-内部交付含v1→v2→v3→v4→v5序列；v4增加分级策略，迁移只对已知自产普通样本填notRequired，其余来源资格unknown。升级前先生成并核验独立SQLite快照；失败拒绝升级，DDL失败事务回滚。遇到未来版本只读打开、不降级；无法读取或首次初始化失败则显示启动错误，保留原文件。恢复流程见[恢复说明](recovery.md)。
+内部交付含v1→v2→v3→v4→v5→v6序列；v4增加分级策略，迁移只对已知自产普通样本填notRequired，其余来源资格unknown。升级前先生成并核验独立SQLite快照；失败拒绝升级，DDL失败事务回滚。遇到未来版本只读打开、不降级；无法读取或首次初始化失败则显示启动错误，保留原文件。恢复流程见[恢复说明](recovery.md)。
 
 生产入口LocalLibrary已接入；SessionLibrary为会话内组件测试替身，启动失败不切换替身。MAC-04已实现真实导入；schema/类型齐全不代表通用阅读器、书签/下载产品功能已完成。
 
@@ -54,3 +54,9 @@ SQLite事务涵盖书籍、修订、章节与资源引用；外部文件与SQL�
 v5只新增imports，不重写旧书籍、样本段落位置与声明。`import-v1`修订保存原始摘要、字节数与格式，尚无解析章节；状态固定awaiting_parser。托管与引用的新增书籍/策略/修订/资源/索引同一SQL事务提交，摘要相同沿用已有书籍与分级，不按标题合并。托管对象损坏/缺失可重新导入相同摘要修复，不重写元数据。
 
 引用只保存不透明设备grant_id，实际安全范围书签位于novel-device/grants。两个字段均不可跨设备同步：未来备份导出须剔除grant_id或转换为待关联；恢复后由用户重新关联同摘要原件。本批未实现MAC-14备份导出。暂存目录import-stage不属于书库正文，单写入租约取得后清理旧暂存。文件与SQL无法跨系统原子提交，崩溃可能留下未引用对象，沿用audit报告而非自动删正文。见[ADR-0008](../decisions/0008-mac04-document-import.md)。
+
+## MAC-05版本化TXT索引
+
+v6新增txt_indices（源导入外键、解析文档、规则、编码、块/单位/章节数与摘要）、txt_chapter_ranges（通用chapters对应块范围）、txt_active（每书活动解析版本），共16表。原始documents/imports及其awaiting_parser状态保留，是否已有可读TXT通过txt_active判断。解析版使用新的document_id与parser_version，原始摘要不变；旧锚点和旧解析版保留。
+
+txt-stage为候选/中断暂存，启动持有写入租约后清理；txt-indices/文档ID只存96字节定长块索引与目录manifest，不存规范化全文。原件仍从objects或设备引用读取。正文块ID/章节ID仅在解析版本内稳定；分章确认不更新positions，旧版本位置由UI提示复核，用户主动保存才替换。未来备份可重建索引，引用授权仍不可便携导出。格式、上限、提交边界及故障处理见[ADR-0009](../decisions/0009-mac05-txt-index.md)。历史schema5快照保留在[旧DDL](novel-schema-v5.sql)。

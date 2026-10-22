@@ -1,0 +1,753 @@
+{
+  "verified_date": "2026-10-22",
+  "sdk_pin": "../../tool/flutter-sdk.json",
+  "application_lockfile": "../../小说/client/pubspec.lock",
+  "packages": [
+    {
+      "name": "archive",
+      "version": "3.6.1",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "32f97d332eae7453ec4079858e6f1d74be85beeb6d3881068b47d02a379cccea",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/archive-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/archive/versions/3.6.1"
+    },
+    {
+      "name": "args",
+      "version": "2.7.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "dfb09c74e29386cd3e2719f32d4995d59526179753931d31840757c77fbf2791",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/args-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/args/versions/2.7.0"
+    },
+    {
+      "name": "async",
+      "version": "2.13.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "ff15faa32a2e638107b7789592b14426162a75ba620044ee2340a20ec6ce5e73",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/async-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/async/versions/2.13.1"
+    },
+    {
+      "name": "boolean_selector",
+      "version": "2.1.2",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "b71519245009a3b8f126196a5408ec031e216e8e0d985085958c6543f82a8a2a",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/boolean_selector-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/boolean_selector/versions/2.1.2"
+    },
+    {
+      "name": "characters",
+      "version": "1.4.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "0371d1da6a57fb791db29d29b95333429205f51f3cb2eb3a0c12d91838a38744",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/characters-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/characters/versions/1.4.1"
+    },
+    {
+      "name": "clock",
+      "version": "1.1.3",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/clock/versions/1.1.3"
+    },
+    {
+      "name": "code_assets",
+      "version": "2.1.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "21ae23b0b9ff67a2dc75ab085d1e8db8ac548c5faf370af17f28dd2ef3b52b7b",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/code_assets-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/code_assets/versions/2.1.0"
+    },
+    {
+      "name": "collection",
+      "version": "1.19.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "ff15faa32a2e638107b7789592b14426162a75ba620044ee2340a20ec6ce5e73",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/collection-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/collection/versions/1.19.1"
+    },
+    {
+      "name": "crypto",
+      "version": "3.0.7",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "ad6a71997da90924b2cfb1fb47ec46537f70faf469efe016168794ae45ed6888",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/crypto-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/crypto/versions/3.0.7"
+    },
+    {
+      "name": "csslib",
+      "version": "1.0.2",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "dfb09c74e29386cd3e2719f32d4995d59526179753931d31840757c77fbf2791",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/csslib-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/csslib/versions/1.0.2"
+    },
+    {
+      "name": "epub_view",
+      "version": "3.3.0",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "c887752fce67e3547d5de2798ba7b4d680f7f284bf4c3e8ddd7913738f49e75f",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/epub_view-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/epub_view/versions/3.3.0"
+    },
+    {
+      "name": "epubx",
+      "version": "4.0.0",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "6a55dd0a7da4701beda30bd25558c2796bc0bf45768c8e75a392c655038710e1",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/epubx-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/epubx/versions/4.0.0"
+    },
+    {
+      "name": "equatable",
+      "version": "2.1.0",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "07720a43bdabe44206067a2bffd1089dcdc4cc5b0b7f8169308c2f8ba6ad0c86",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/equatable-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/equatable/versions/2.1.0"
+    },
+    {
+      "name": "fake_async",
+      "version": "1.3.3",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/fake_async/versions/1.3.3"
+    },
+    {
+      "name": "ffi",
+      "version": "2.2.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "0371d1da6a57fb791db29d29b95333429205f51f3cb2eb3a0c12d91838a38744",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/ffi-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/ffi/versions/2.2.0"
+    },
+    {
+      "name": "file",
+      "version": "7.0.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "f6df86b1412172537273e8e80ee2fb8a66aa7307ce0b39ea5ddab47ca41b8c49",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/file-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/file/versions/7.0.1"
+    },
+    {
+      "name": "flutter",
+      "version": "0.0.0",
+      "source": "sdk",
+      "scope": "runtime",
+      "license_sha256": "a598db94b6290ffbe10b5ecf911057b6a943351c727fdda9e5f2891d68700a20",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/flutter-LICENSE.txt"
+    },
+    {
+      "name": "flutter_html",
+      "version": "3.0.0",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "35620e82f006faaef90edd4644d5882a485ae62d3e2446fcf420226e138c31c7",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/flutter_html-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/flutter_html/versions/3.0.0"
+    },
+    {
+      "name": "flutter_lints",
+      "version": "6.0.0",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "89519eca6f7b9529b35bdddd623a58c3af06a88c458dbd6531ddb4675acf75a9",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/flutter_lints/versions/6.0.0"
+    },
+    {
+      "name": "flutter_test",
+      "version": "0.0.0",
+      "source": "sdk",
+      "scope": "development",
+      "license_sha256": "a598db94b6290ffbe10b5ecf911057b6a943351c727fdda9e5f2891d68700a20",
+      "license_status": "text_inspected"
+    },
+    {
+      "name": "glob",
+      "version": "2.2.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/glob-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/glob/versions/2.2.0"
+    },
+    {
+      "name": "hooks",
+      "version": "2.2.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "21ae23b0b9ff67a2dc75ab085d1e8db8ac548c5faf370af17f28dd2ef3b52b7b",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/hooks-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/hooks/versions/2.2.0"
+    },
+    {
+      "name": "html",
+      "version": "0.15.6",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "6ed8a26ed0f30589422f86356eed53bb6dacffc3e2fd4feddc944c4331945151",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/html-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/html/versions/0.15.6"
+    },
+    {
+      "name": "http",
+      "version": "1.6.0",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/http-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/http/versions/1.6.0"
+    },
+    {
+      "name": "http_parser",
+      "version": "4.1.2",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/http_parser-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/http_parser/versions/4.1.2"
+    },
+    {
+      "name": "image",
+      "version": "3.3.0",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "b63ad55bc9e8a1809fe960ff3c56813e1a1478783187ab5b69e5ba273c8ca1db",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/image-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/image/versions/3.3.0"
+    },
+    {
+      "name": "jni",
+      "version": "1.1.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "08a004aa8956c3cf3b24f7f69c966247233953e18e6afaa61191ea47b7eb70f6",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/jni-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/jni/versions/1.1.0"
+    },
+    {
+      "name": "jni_flutter",
+      "version": "1.0.4+1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "b1fcb475d67817411f335ac92872507011e574c4cb29cfdaaf7707b75641932c",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/jni_flutter-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/jni_flutter/versions/1.0.4+1"
+    },
+    {
+      "name": "jni_util",
+      "version": "1.0.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "b1fcb475d67817411f335ac92872507011e574c4cb29cfdaaf7707b75641932c",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/jni_util-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/jni_util/versions/1.0.0"
+    },
+    {
+      "name": "leak_tracker",
+      "version": "11.0.2",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "08a004aa8956c3cf3b24f7f69c966247233953e18e6afaa61191ea47b7eb70f6",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/leak_tracker/versions/11.0.2"
+    },
+    {
+      "name": "leak_tracker_flutter_testing",
+      "version": "3.0.10",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "08a004aa8956c3cf3b24f7f69c966247233953e18e6afaa61191ea47b7eb70f6",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/leak_tracker_flutter_testing/versions/3.0.10"
+    },
+    {
+      "name": "leak_tracker_testing",
+      "version": "3.0.2",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "08a004aa8956c3cf3b24f7f69c966247233953e18e6afaa61191ea47b7eb70f6",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/leak_tracker_testing/versions/3.0.2"
+    },
+    {
+      "name": "lints",
+      "version": "6.1.0",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "421fe78c3b5df297f8b4ab2c74f2450a274ee6d245a113091f6b9f90570af193",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/lints/versions/6.1.0"
+    },
+    {
+      "name": "list_counter",
+      "version": "1.0.2",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "dd90dbdc0f884919cda63739bd046f70e54a7c0051be2f812a6dd4f6cdd32d90",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/list_counter-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/list_counter/versions/1.0.2"
+    },
+    {
+      "name": "logging",
+      "version": "1.3.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "dfb09c74e29386cd3e2719f32d4995d59526179753931d31840757c77fbf2791",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/logging-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/logging/versions/1.3.0"
+    },
+    {
+      "name": "matcher",
+      "version": "0.12.20",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/matcher-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/matcher/versions/0.12.20"
+    },
+    {
+      "name": "material_color_utilities",
+      "version": "0.13.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "d103f246ef4c18dab8af0c1dcf6a8af884e5cff554da7261a48ac43c17d98f2e",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/material_color_utilities-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/material_color_utilities/versions/0.13.0"
+    },
+    {
+      "name": "meta",
+      "version": "1.19.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "b71519245009a3b8f126196a5408ec031e216e8e0d985085958c6543f82a8a2a",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/meta-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/meta/versions/1.19.0"
+    },
+    {
+      "name": "native_toolchain_c",
+      "version": "0.19.5",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "aa81abb1ac43e40d2f5a606385edd37e974a5858d4109f7f439dd43d964487a7",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/native_toolchain_c-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/native_toolchain_c/versions/0.19.5"
+    },
+    {
+      "name": "novel_app",
+      "version": "0.0.7+7",
+      "source": "root",
+      "scope": "runtime",
+      "license_status": "project_license_not_selected"
+    },
+    {
+      "name": "objective_c",
+      "version": "9.6.2",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "1cda25a8de6880c5338de0b4a06ee89e8537c213eb1379c16a4c035bfd198b5c",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/objective_c-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/objective_c/versions/9.6.2"
+    },
+    {
+      "name": "package_config",
+      "version": "3.0.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "0371d1da6a57fb791db29d29b95333429205f51f3cb2eb3a0c12d91838a38744",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/package_config-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/package_config/versions/3.0.0"
+    },
+    {
+      "name": "path",
+      "version": "1.9.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/path-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/path/versions/1.9.1"
+    },
+    {
+      "name": "path_provider",
+      "version": "2.1.6",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/path_provider-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/path_provider/versions/2.1.6"
+    },
+    {
+      "name": "path_provider_android",
+      "version": "2.3.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/path_provider_android-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/path_provider_android/versions/2.3.1"
+    },
+    {
+      "name": "path_provider_foundation",
+      "version": "2.6.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/path_provider_foundation-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/path_provider_foundation/versions/2.6.0"
+    },
+    {
+      "name": "path_provider_linux",
+      "version": "2.2.2",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/path_provider_linux-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/path_provider_linux/versions/2.2.2"
+    },
+    {
+      "name": "path_provider_platform_interface",
+      "version": "2.1.3",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/path_provider_platform_interface-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/path_provider_platform_interface/versions/2.1.3"
+    },
+    {
+      "name": "path_provider_windows",
+      "version": "2.3.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "89519eca6f7b9529b35bdddd623a58c3af06a88c458dbd6531ddb4675acf75a9",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/path_provider_windows-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/path_provider_windows/versions/2.3.0"
+    },
+    {
+      "name": "petitparser",
+      "version": "7.0.2",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "d2e8ffdbe89acbc10d5d1f2b03e7dbddf0a9f1742e809176682b62ef3d573b3e",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/petitparser-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/petitparser/versions/7.0.2"
+    },
+    {
+      "name": "phosphor_icons",
+      "version": "3.0.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "687fbe52d0eb5c2353eca27a4037e889145ee0b584d3b1abf67581c4a4a4e47c",
+      "license_status": "text_inspected",
+      "retained_license": "mac-02/phosphor_icons-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/phosphor_icons/versions/3.0.1"
+    },
+    {
+      "name": "platform",
+      "version": "3.2.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "143839f62c9b7f88143ea9f688361c27050888acde7696b34e04414bd254fafc",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/platform-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/platform/versions/3.2.0"
+    },
+    {
+      "name": "platform_services",
+      "version": "0.0.1",
+      "source": "path",
+      "scope": "runtime",
+      "license_status": "project_license_not_selected"
+    },
+    {
+      "name": "plugin_platform_interface",
+      "version": "2.1.8",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "89519eca6f7b9529b35bdddd623a58c3af06a88c458dbd6531ddb4675acf75a9",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/plugin_platform_interface-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/plugin_platform_interface/versions/2.1.8"
+    },
+    {
+      "name": "process",
+      "version": "5.0.6",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "5f018bbc25a55406d7a4e1d3229135439e315210b0050ca56dbb367a4934e85d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/process-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/process/versions/5.0.6"
+    },
+    {
+      "name": "pub_semver",
+      "version": "2.2.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/pub_semver-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/pub_semver/versions/2.2.1"
+    },
+    {
+      "name": "quiver",
+      "version": "3.2.2",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/quiver-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/quiver/versions/3.2.2"
+    },
+    {
+      "name": "reader_core",
+      "version": "0.0.1",
+      "source": "path",
+      "scope": "runtime",
+      "license_status": "project_license_not_selected"
+    },
+    {
+      "name": "reader_storage",
+      "version": "0.0.1",
+      "source": "path",
+      "scope": "runtime",
+      "license_status": "project_license_not_selected"
+    },
+    {
+      "name": "record_use",
+      "version": "1.1.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "1cda25a8de6880c5338de0b4a06ee89e8537c213eb1379c16a4c035bfd198b5c",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/record_use-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/record_use/versions/1.1.1"
+    },
+    {
+      "name": "scrollable_positioned_list",
+      "version": "0.3.8",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "d347790d98693ff63129eafe676bac5cb5247c972f1a36f631bfa0e4dbb17293",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/scrollable_positioned_list-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/scrollable_positioned_list/versions/0.3.8"
+    },
+    {
+      "name": "sky_engine",
+      "version": "0.0.0",
+      "source": "sdk",
+      "scope": "runtime",
+      "license_sha256": "3c0040023a5789bf56d6bf41fd44f08b21758523d41f128fb7dd6beb398d1191",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/sky_engine-LICENSE.txt"
+    },
+    {
+      "name": "source_span",
+      "version": "1.10.2",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/source_span-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/source_span/versions/1.10.2"
+    },
+    {
+      "name": "sqlite3",
+      "version": "3.7.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "67e5d73a3a0c6e41f33d688a672b1161bf7f16e04da9ae48a7a14f1ba7436a4d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/sqlite3-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/sqlite3/versions/3.7.1"
+    },
+    {
+      "name": "stack_trace",
+      "version": "1.12.2",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "ff0b91d4f3c32b25cb6ec84985e8da89b0ba2a2b2f7eef353cda5e5423a20390",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/stack_trace-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/stack_trace/versions/1.12.2"
+    },
+    {
+      "name": "stream_channel",
+      "version": "2.1.4",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "ff15faa32a2e638107b7789592b14426162a75ba620044ee2340a20ec6ce5e73",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/stream_channel-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/stream_channel/versions/2.1.4"
+    },
+    {
+      "name": "string_scanner",
+      "version": "1.4.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "3c32b53167c7dae9190c38dab5dd9fe1789c53623ebc7d1babcb29914c5b3f16",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/string_scanner-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/string_scanner/versions/1.4.1"
+    },
+    {
+      "name": "term_glyph",
+      "version": "1.2.2",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "ea97a7558a7bd7cee4e2355f7529e3cbebb0dcbb546ddb9a90f10c9eb6b08da5",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/term_glyph-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/term_glyph/versions/1.2.2"
+    },
+    {
+      "name": "test_api",
+      "version": "0.7.12",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "ff1b9f0df9036c04be424b1e3ce12789bea880ad5ffc3a48e069ae2d40a087a4",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/test_api-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/test_api/versions/0.7.12"
+    },
+    {
+      "name": "typed_data",
+      "version": "1.4.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "ff15faa32a2e638107b7789592b14426162a75ba620044ee2340a20ec6ce5e73",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/typed_data-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/typed_data/versions/1.4.0"
+    },
+    {
+      "name": "universal_file",
+      "version": "1.0.0",
+      "source": "hosted",
+      "scope": "mac06_experiment",
+      "license_sha256": "ad417dd3c978253f5ba004728101c5fb2f6befc0797dea41d30b7739ec0aa236",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/universal_file-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/universal_file/versions/1.0.0"
+    },
+    {
+      "name": "vector_math",
+      "version": "2.4.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "420f7739f169097f0aad1242045169cd643c8f1d94e62866fad265ae4c369b7d",
+      "license_status": "text_inspected",
+      "retained_license": "mac-01/vector_math-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/vector_math/versions/2.4.0"
+    },
+    {
+      "name": "vm_service",
+      "version": "15.4.0",
+      "source": "hosted",
+      "scope": "development",
+      "license_sha256": "ad6a71997da90924b2cfb1fb47ec46537f70faf469efe016168794ae45ed6888",
+      "license_status": "text_inspected",
+      "upstream": "https://pub.dev/packages/vm_service/versions/15.4.0"
+    },
+    {
+      "name": "web",
+      "version": "1.1.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "aa913ff50d7542eb8cc35b9f48a80928ac6819ba9057f85d424655e3e8dc271c",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/web-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/web/versions/1.1.1"
+    },
+    {
+      "name": "xdg_directories",
+      "version": "1.1.0",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "89519eca6f7b9529b35bdddd623a58c3af06a88c458dbd6531ddb4675acf75a9",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/xdg_directories-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/xdg_directories/versions/1.1.0"
+    },
+    {
+      "name": "xml",
+      "version": "6.6.1",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "1f18a2e5a5c57381d93efa92df86477eb1205689b345417c90fcfdc09fa4fa1f",
+      "license_status": "text_inspected",
+      "retained_license": "mac-06/xml-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/xml/versions/6.6.1"
+    },
+    {
+      "name": "yaml",
+      "version": "3.1.4",
+      "source": "hosted",
+      "scope": "runtime",
+      "license_sha256": "d47b93335401b052d79a2f5a3710e4cf7b5aed782faedf84d40fbdd6eb934ec7",
+      "license_status": "text_inspected",
+      "retained_license": "mac-03/yaml-LICENSE.txt",
+      "upstream": "https://pub.dev/packages/yaml/versions/3.1.4"
+    }
+  ]
+}

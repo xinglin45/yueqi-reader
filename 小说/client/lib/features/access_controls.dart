@@ -199,7 +199,9 @@ class _AdultCollectionState extends State<AdultCollection> {
                   title: Text(book.title),
                   subtitle: Text(book.subtitle),
                   onTap: () {
-                    if (!book.previewAvailable && widget.dependencies != null) {
+                    if (!book.previewAvailable &&
+                        !book.importedTxt &&
+                        widget.dependencies != null) {
                       showImportedStatus(
                         context,
                         widget.dependencies!,

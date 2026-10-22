@@ -1,0 +1,65 @@
+{
+  "verified_date": "2026-10-22",
+  "checkpoint": "MAC-05",
+  "version": "0.0.7+7",
+  "bundle_id": "local.yueqi.novel",
+  "minimum_macos": "12.0",
+  "executable_architectures": "arm64",
+  "dart_aot_architectures": "arm64",
+  "schema_version": 6,
+  "signature": "ad-hoc; finalized with tool/sign_macos_internal.py; deep strict verification passed",
+  "release_entitlements": {
+    "com.apple.security.app-sandbox": true,
+    "com.apple.security.files.bookmarks.app-scope": true,
+    "com.apple.security.files.user-selected.read-only": true,
+    "com.apple.security.get-task-allow": true
+  },
+  "notarized": false,
+  "notices_uncompressed_bytes": 1345810,
+  "notices_sha256": "a83a26b2d140a544db5077dbc1f316b8ce017f7834acb30b7f419c695da7aee0",
+  "native_assets": [
+    {
+      "path": "Contents/Frameworks/sqlite3.framework/Versions/A/sqlite3",
+      "bytes": 1669392,
+      "sha256": "e7301982a121e9e21c98ed948653f2310ab8c2ae47a967002c053f5d07e18d73"
+    },
+    {
+      "path": "Contents/Frameworks/objective_c.framework/Versions/A/objective_c",
+      "bytes": 184336,
+      "sha256": "f542f057c0e50f842d439f29603915e504e198f640806fb51e0536aa2c81ec44"
+    }
+  ],
+  "application_executable": {
+    "path": "Contents/MacOS/阅栖",
+    "bytes": 194784,
+    "sha256": "e0e294b5d142d0fd457d9babad7b1b716e2797d8e06abe971ed2363854b9b0ab"
+  },
+  "dart_aot": {
+    "path": "Contents/Frameworks/App.framework/Versions/A/App",
+    "bytes": 6599584,
+    "sha256": "86a07a35369c9e75ecbc25c2b44049fb49f4756eb56ee23c30961dc82f6cc639"
+  },
+  "build_output": "小说/client/build/macos/Build/Products/Release/阅栖.app",
+  "tool_reported_size_mb": 30.7,
+  "debug_build_passed": true,
+  "release_build_passed": true,
+  "flutter_dart_test_count": 64,
+  "python_test_count": 13,
+  "source_approvals": {
+    "normal": 0,
+    "adult": 0
+  },
+  "gui_verification": "Debug isolated native picker imported project-owned TXT in reference mode, directory preview/apply/jump and exact manual position survived restart with native grant. Production Release retained the existing one-book library/theme and paragraph 2 position. No production age declaration submitted.",
+  "manual_limits": [
+    "Parser AOT performance excludes Flutter layout, import and SQL; no full reader performance claim.",
+    "Physical disk full, power loss and every file provider not independently reproduced; cancellation and database failure covered by tests.",
+    "Final demo-status wording fixed after 64-test full regression; final Debug/Release rebuilt and Release startup checked."
+  ],
+  "gui_screenshots": [
+    "native-directory-preview.png",
+    "native-reference-position-restored.png",
+    "native-reference-status.png",
+    "release-preserved-library.png",
+    "release-preserved-position.png"
+  ]
+}

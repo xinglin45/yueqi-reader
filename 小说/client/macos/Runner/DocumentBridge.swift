@@ -144,7 +144,12 @@ final class DocumentBridge {
     case "open":
       guard readers.count < 4 else { throw failure("permission") }
       let handle = UUID().uuidString
-      readers[handle] = (try FileHandle(forReadingFrom: url), url, scoped)
+      let start = (args["start"] as? NSNumber)?.int64Value ?? 0
+      guard start >= 0, start <= Int64(size) else { throw failure("missing") }
+      let file = try FileHandle(forReadingFrom: url)
+      do { try file.seek(toOffset: UInt64(start)) }
+      catch { try? file.close(); throw error }
+      readers[handle] = (file, url, scoped)
       transferred = true
       return handle
     case "retain":

@@ -111,6 +111,7 @@ final List<SchemaStep> novelSchema = List.unmodifiable([
   ]),
   contentPolicySchema,
   importSchema,
+  txtSchema,
 ]);
 
 /// Device declaration/search/lock flags remain outside this library schema.
@@ -137,5 +138,30 @@ const importSchema = SchemaStep(5, [
     grant_id TEXT, encoding TEXT CHECK(encoding IN ('utf8','utf16le','utf16be','gb18030','big5')),
     status TEXT NOT NULL CHECK(status='awaiting_parser'),
     CHECK((mode='managed' AND grant_id IS NULL) OR (mode='reference' AND grant_id IS NOT NULL))
+  ) STRICT""",
+]);
+
+const txtSchema = SchemaStep(6, [
+  """CREATE TABLE txt_indices (
+    document_id TEXT PRIMARY KEY REFERENCES documents(id),
+    source_document_id TEXT NOT NULL REFERENCES imports(document_id),
+    encoding TEXT NOT NULL, rules TEXT NOT NULL CHECK(json_valid(rules)),
+    block_count INTEGER NOT NULL CHECK(block_count>0 AND block_count<=1000000),
+    utf16_length INTEGER NOT NULL CHECK(utf16_length>0),
+    chapter_count INTEGER NOT NULL CHECK(chapter_count>0 AND chapter_count<=20001),
+    index_digest TEXT NOT NULL CHECK(length(index_digest)=64),
+    text_digest TEXT NOT NULL CHECK(length(text_digest)=64)
+  ) STRICT""",
+  """CREATE TABLE txt_chapter_ranges (
+    document_id TEXT NOT NULL, chapter_id TEXT NOT NULL,
+    first_block INTEGER NOT NULL CHECK(first_block>=0),
+    end_block INTEGER NOT NULL CHECK(end_block>first_block),
+    PRIMARY KEY(document_id,chapter_id),
+    FOREIGN KEY(document_id,chapter_id) REFERENCES chapters(document_id,id)
+  ) STRICT""",
+  """CREATE TABLE txt_active (
+    book_id TEXT PRIMARY KEY REFERENCES books(id),
+    document_id TEXT NOT NULL REFERENCES txt_indices(document_id),
+    FOREIGN KEY(book_id,document_id) REFERENCES documents(book_id,id)
   ) STRICT""",
 ]);

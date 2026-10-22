@@ -57,6 +57,9 @@ class ImportFiles implements DocumentAccess {
   }
 
   @override
+  Stream<List<int>> readDocumentRange(FileGrant grant, int start, int end) =>
+      File(paths[grant.id]!).openRead(start, end);
+  @override
   Future<void> retainGrant(FileGrant grant) async {
     retained.add(grant.id);
   }

@@ -64,16 +64,31 @@ final class MacDocumentAccess implements DocumentAccess {
   }
 
   @override
-  Stream<List<int>> readDocument(FileGrant grant) async* {
+  Stream<List<int>> readDocument(FileGrant grant) => _read(grant, 0, null);
+  @override
+  Stream<List<int>> readDocumentRange(FileGrant grant, int start, int end) =>
+      _read(grant, start, end);
+  Stream<List<int>> _read(FileGrant grant, int start, int? end) async* {
+    if (start < 0 || (end != null && (end < start || end > 64 * 1024 * 1024))) {
+      throw const ImportFailure(ImportIssue.tooLarge);
+    }
+    var remaining = end == null ? null : end - start;
     String? handle;
     try {
-      handle = await channel.invokeMethod<String>('open', {'id': grant.id});
-      while (true) {
+      handle = await channel.invokeMethod<String>('open', {
+        'id': grant.id,
+        'start': start,
+      });
+      while (remaining == null || remaining > 0) {
         final chunk = await channel.invokeMethod<Uint8List>('read', {
           'handle': handle,
         });
         if (chunk == null || chunk.isEmpty) break;
-        yield chunk;
+        final accepted = remaining != null && remaining < chunk.length
+            ? Uint8List.sublistView(chunk, 0, remaining)
+            : chunk;
+        yield accepted;
+        if (remaining != null) remaining -= accepted.length;
       }
     } on PlatformException catch (e) {
       throw ImportFailure(

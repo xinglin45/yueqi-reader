@@ -1,4 +1,6 @@
 import '../domain/importing.dart';
+import '../domain/txt.dart';
+import '../infrastructure/txt/local_txt_reader.dart';
 import '../infrastructure/importing/local_importer.dart';
 import '../infrastructure/importing/text_inspector.dart';
 import '../infrastructure/mac_document_access.dart';
@@ -29,6 +31,7 @@ final class AppDependencies {
     required this.windows,
     this.positions,
     this.importer,
+    this.txt,
     this.access,
     this.discovery,
     this.storageReadOnly = false,
@@ -107,6 +110,8 @@ final class AppDependencies {
               ),
             );
       await importer?.initialize();
+      final txt = importer == null ? null : LocalTxtReader(importer);
+      await txt?.initialize();
       return AppDependencies(
         library: library,
         positions: library,
@@ -114,6 +119,7 @@ final class AppDependencies {
         discovery: discovery,
         files: documentFiles ?? platform,
         importer: importer,
+        txt: txt,
         secrets: platform,
         speech: platform,
         windows: platform,
@@ -122,6 +128,7 @@ final class AppDependencies {
         persistTheme: (value) =>
             library.saveSetting('theme', value ? 'dark' : 'light'),
         close: () async {
+          await txt?.dispose();
           await importer?.dispose();
           await discovery.dispose();
           await access.dispose();
@@ -139,6 +146,7 @@ final class AppDependencies {
   }
 
   final DocumentImporter? importer;
+  final TxtDocumentReader? txt;
   final AccessController? access;
   final DiscoveryCoordinator? discovery;
   final PositionRepository? positions;

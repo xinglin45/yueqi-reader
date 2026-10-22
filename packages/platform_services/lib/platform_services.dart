@@ -153,6 +153,7 @@ abstract interface class DocumentAccess implements FileAccess {
   Future<PlatformResult<List<FileGrant>>> chooseDocuments();
   Stream<List<FileGrant>> get incomingDocuments;
   Stream<List<int>> readDocument(FileGrant grant);
+  Stream<List<int>> readDocumentRange(FileGrant grant, int start, int end);
   Future<void> retainGrant(FileGrant grant);
   Future<void> releaseGrant(FileGrant grant);
   Future<void> forgetGrant(FileGrant grant);

@@ -1,0 +1,2 @@
+# Preserve the deliberately CRLF-encoded source bytes and fixture hash.
+fixtures/novel/mac05/*.txt -text whitespace=cr-at-eol

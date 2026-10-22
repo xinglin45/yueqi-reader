@@ -1,0 +1,38 @@
+{
+  "mode": "Dart AOT standalone parser isolate; not Flutter Release rendering",
+  "results": [
+    {
+      "mib": 10,
+      "bytes": 10485760,
+      "parse_ms": 643,
+      "blocks": 169339,
+      "chapters": 338,
+      "index_bytes": 16256544,
+      "peak_process_rss_bytes": 93044736,
+      "exact_all_text_hash": true
+    },
+    {
+      "mib": 50,
+      "bytes": 52428800,
+      "parse_ms": 3163,
+      "blocks": 846695,
+      "chapters": 1690,
+      "index_bytes": 81282720,
+      "peak_process_rss_bytes": 93044736,
+      "exact_all_text_hash": true
+    }
+  ],
+  "verified_date": "2026-10-22",
+  "machine": {
+    "arch": "arm64",
+    "cpu": "Apple M5 Pro",
+    "memory_bytes": 68719476736,
+    "macos": "27.0.1"
+  },
+  "sdk_pin": "../../../tool/flutter-sdk.json",
+  "source_sha256": {
+    "小说/client/lib/infrastructure/txt/parser.dart": "2d9abc88f4ac0655f6d96dc8ac383e0dd36d34886d7d8e4cf0c4cb6e1d2f271d",
+    "小说/client/lib/infrastructure/txt/decoder.dart": "3e506f706d2648a24eb56d6145947aeae7b2152750c4b143d7715f4180906a98",
+    "小说/client/tool/mac05/benchmark.dart": "36d3fc8f228c83aa5321968a4872b23c78fa4c0c4dc8a24621c7e1b18759110c"
+  }
+}

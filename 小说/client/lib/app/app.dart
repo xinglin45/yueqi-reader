@@ -316,7 +316,7 @@ class _ReaderShellState extends State<ReaderShell> {
                                   const SizedBox(height: 8),
                                   Text(
                                     _currentPreview!.persistent
-                                        ? '本机样本\n位置可保存'
+                                        ? '本机内容\n位置可保存'
                                         : '正在预览\n仅本次会话',
                                     style: TextStyle(fontSize: 11, height: 1.8),
                                   ),
@@ -336,7 +336,7 @@ class _ReaderShellState extends State<ReaderShell> {
               icon: const Icon(PhosphorIconsLight.info, size: 16),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text('阶段说明 · MAC-04', style: TextStyle(fontSize: 12)),
+                child: Text('阶段说明 · MAC-05', style: TextStyle(fontSize: 12)),
               ),
             ),
             TextButton.icon(
@@ -360,7 +360,7 @@ class _ReaderShellState extends State<ReaderShell> {
       content: const SizedBox(
         width: 420,
         child: Text(
-          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；导入文件的正式阅读解析、系统听书和低存在感窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
+          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；TXT已可后台分章、目录跳转和分块阅读；EPUB正式阅读、系统听书和低存在感窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
           style: TextStyle(height: 1.8),
         ),
       ),

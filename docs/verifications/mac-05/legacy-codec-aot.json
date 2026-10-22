@@ -1,0 +1,17 @@
+{
+  "mode": "Dart AOT; system CoreFoundation",
+  "results": [
+    {
+      "encoding": "gb18030",
+      "byte_split_roundtrip": true,
+      "source_end": 64,
+      "emoji_checked": true
+    },
+    {
+      "encoding": "big5",
+      "byte_split_roundtrip": true,
+      "source_end": 60,
+      "emoji_checked": false
+    }
+  ]
+}

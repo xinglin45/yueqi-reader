@@ -392,7 +392,7 @@ void main() {
         product: ReaderProduct.novel,
         migrations: novelSchema,
       );
-      expect(db.info['version'], 5);
+      expect(db.info['version'], 6);
       final rows = await db.query(
         "SELECT * FROM content_policy WHERE book_id='unknown'",
       );

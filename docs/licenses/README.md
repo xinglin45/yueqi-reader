@@ -37,3 +37,7 @@ MAC-01原始清单由该提交的脚本生成；当前重建须显式提供`--ch
 ## MAC-04（2026-10-21）
 
 [本批清单](mac-04-dependencies.json)仍为77包，运行闭包49、研究19、其他开发9；xml6.6.1及其已有petitparser依赖从研究转入运行范围，无版本升级、新第三方包或新增许可原文。生产EPUB只采用有界ZIP校验器与XML元信息检查，未接入研究用epub_view引擎。macOS文件和中文旧编码适配使用系统AppKit/CoreFoundation，无新增原生插件。重建：`python3 tool/record_dependency_licenses.py --checkpoint mac-04`；既有许可哈希复用，源码许可证仍未选择。
+
+## MAC-05（2026-10-22）
+
+[本批清单](mac-05-dependencies.json)仍为77包，运行闭包49、研究19、开发9；ffi2.2.0从已有运行传递依赖改为精确直接声明，无新包/升级/许可原文。TXT解析/索引由本项目实现，旧中文编码复用系统CoreFoundation，未复制第三方编码表、未采用系统iconv作生产解析器。许可原文与哈希沿用既有快照；源码许可证仍未选定。重建：`python3 tool/record_dependency_licenses.py --checkpoint mac-05`。

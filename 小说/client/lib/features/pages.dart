@@ -1,4 +1,5 @@
 import 'import_flow.dart';
+import 'txt_reader.dart';
 import 'access_controls.dart';
 import '../application/access.dart';
 import '../application/discovery.dart';
@@ -181,7 +182,7 @@ class _LibraryPageState extends State<LibraryPage> {
   int _tab = 0;
   bool _grid = true;
   void _open(BookSummary book) {
-    if (!book.previewAvailable) {
+    if (!book.previewAvailable && !book.importedTxt) {
       showImportedStatus(context, widget.dependencies, book.id);
       return;
     }
@@ -332,7 +333,11 @@ class _LibraryPageState extends State<LibraryPage> {
                             TextButton(
                               onPressed: () => _open(book),
                               child: Text(
-                                book.previewAvailable ? '打开阅读预览' : '查看文件状态',
+                                book.importedTxt
+                                    ? '打开 TXT 阅读'
+                                    : book.previewAvailable
+                                    ? '打开阅读预览'
+                                    : '查看文件状态',
                               ),
                             ),
                           ],
@@ -387,7 +392,21 @@ class ReaderPage extends StatelessWidget {
   final AppNavigation navigation;
   final ValueChanged<BookSummary> onOpened;
   @override
-  Widget build(BuildContext context) => TaskView<ReadingPreview>(
+  Widget build(BuildContext context) => dependencies.txt == null
+      ? _sample(context)
+      : TaskView<bool>(
+          empty: const SizedBox(),
+          load: (job) async =>
+              JobResult(await dependencies.txt!.accepts(bookId)),
+          builder: (isTxt) => isTxt
+              ? TxtReaderView(
+                  bookId: bookId,
+                  deps: dependencies,
+                  onOpened: onOpened,
+                )
+              : _sample(context),
+        );
+  Widget _sample(BuildContext context) => TaskView<ReadingPreview>(
     load: (job) async {
       final result = await dependencies.library.preview(bookId, job);
       job.checkCancelled();
@@ -441,7 +460,7 @@ class ReaderPage extends StatelessWidget {
             const Divider(),
             const SizedBox(height: 20),
             Text(
-              '演示文本至此 · 实际 TXT/EPUB 引擎在后续步骤接入',
+              '演示文本至此 · 导入 TXT 可在书架打开阅读，EPUB 阅读待接入',
               style: TextStyle(
                 fontSize: 12,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,

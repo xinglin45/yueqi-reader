@@ -29,13 +29,17 @@ final class LocalLibrary
   BookSummary _book(Map<String, Object?> row) => BookSummary(
     id: row['id']! as String,
     title: row['title']! as String,
-    subtitle: row['parser_hint'] == 'import-v1'
-        ? '文件已导入 · 阅读解析待接入'
+    subtitle: row['import_kind'] != null || row['parser_hint'] == 'import-v1'
+        ? row['import_kind'] == 'txt'
+              ? '本地 TXT · 可解析阅读'
+              : 'EPUB已导入 · 阅读解析待接入'
         : row['parser_hint'] == 'classification-card-v1'
         ? '标签测试 · 不含成人正文'
         : '原创演示短篇 · 已保存在本机',
+    importedTxt: row['import_kind'] == 'txt',
     demo: row['parser_hint'] == parser,
-    previewAvailable: row['parser_hint'] != 'import-v1',
+    previewAvailable:
+        row['import_kind'] == null && row['parser_hint'] != 'import-v1',
     protected: _rating(row).protected,
     persistent: true,
   );
@@ -120,8 +124,11 @@ final class LocalLibrary
         : (_hasPolicy
               ? "b.rating='general' AND (p.level IS NULL OR p.level='general') AND (p.minimum_age IS NULL OR p.minimum_age<18)"
               : "b.rating='general'");
+    final importKind = (database.info['version']! as int) >= 5
+        ? '(SELECT kind FROM documents di JOIN imports ii ON ii.document_id=di.id WHERE di.book_id=b.id LIMIT 1)'
+        : 'NULL';
     final rows = await database.query(
-      'SELECT b.*,$_policyColumns,(SELECT parser_version FROM documents d WHERE d.book_id=b.id LIMIT 1) AS parser_hint FROM books b $_policyJoin WHERE b.deleted=0 AND $condition ORDER BY b.created_at,b.id LIMIT 200',
+      'SELECT b.*,$_policyColumns,$importKind AS import_kind,(SELECT parser_version FROM documents d WHERE d.book_id=b.id LIMIT 1) AS parser_hint FROM books b $_policyJoin WHERE b.deleted=0 AND $condition ORDER BY b.created_at,b.id LIMIT 200',
     );
     job.checkCancelled();
     if (adult &&
