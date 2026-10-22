@@ -201,6 +201,7 @@ class _AdultCollectionState extends State<AdultCollection> {
                   onTap: () {
                     if (!book.previewAvailable &&
                         !book.importedTxt &&
+                        !book.importedEpub &&
                         widget.dependencies != null) {
                       showImportedStatus(
                         context,

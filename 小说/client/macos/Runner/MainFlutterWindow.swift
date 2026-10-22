@@ -17,6 +17,8 @@ class MainFlutterWindow: NSWindow {
     RegisterGeneratedPlugins(registry: flutterViewController)
     _ = DocumentBridge(flutterViewController.engine.binaryMessenger)
     registerForDraggedTypes([.fileURL])
+    let epubRegistrar = flutterViewController.registrar(forPlugin: "EpubReader")
+    epubRegistrar.register(EpubFactory(epubRegistrar.messenger), withId: "local.yueqi.epub")
     #if DEBUG
     let probeRegistrar = flutterViewController.registrar(forPlugin: "Mac06Probe")
     probeRegistrar.register(Mac06Factory(probeRegistrar.messenger), withId: "local.yueqi.mac06.webview")

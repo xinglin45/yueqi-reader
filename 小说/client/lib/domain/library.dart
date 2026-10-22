@@ -10,6 +10,7 @@ final class BookSummary {
     this.protected = false,
     this.previewAvailable = true,
     this.importedTxt = false,
+    this.importedEpub = false,
   });
   final String id;
   final String title;
@@ -17,7 +18,7 @@ final class BookSummary {
   final bool demo;
   final bool persistent;
   final bool previewAvailable;
-  final bool importedTxt;
+  final bool importedTxt, importedEpub;
 
   /// Presentation hint only; authorization uses ContentRating, never this flag.
   final bool protected;

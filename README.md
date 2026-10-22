@@ -2,11 +2,11 @@
 
 “阅读软件”是两款独立阅读产品的开发项目：**小说阅读 App（暂定名：阅栖）** 与 **漫画阅读 App（名称待定）**。二者均面向 Android、iOS、Windows、macOS，采用 Flutter 客户端与可选的 Spring Boot 共享服务。项目显示名保持“阅读软件”，开发目录名为“阅栖”。
 
-当前阶段：**MAC-05 TXT解析、目录与基础分块阅读已完成，完整阅读器仍在后续步骤实施**。小说/client已有D1暖纸原生导航、响应布局、可取消任务与平台端口，主动加入的自产短篇、段落检查点与外观偏好可跨启动保存；macOS arm64 Debug/Release构建通过，Release已运行验证。其他三端未构建，漫画与服务端仍为说明目录。见[客户端说明](小说/client/README.md)及[MAC-05验收](docs/verifications/mac-05-2026-10-22.md)。[01A网页原型](docs/design/novel-macos/prototype/README.md)保留已确认设计版本，与原生实现分别验收。
+当前阶段：**MAC-07受控EPUB阅读已完成，TXT与EPUB均可本地阅读，完整排版仍待后续步骤**。小说/client已有D1暖纸原生导航、响应布局、可取消任务与平台端口，主动加入的自产短篇、段落检查点与外观偏好可跨启动保存；macOS arm64 Debug/Release构建通过，Release已运行验证。其他三端未构建，漫画与服务端仍为说明目录。见[客户端说明](小说/client/README.md)及[MAC-07验收](docs/verifications/mac-07-2026-10-22.md)。[01A网页原型](docs/design/novel-macos/prototype/README.md)保留已确认设计版本，与原生实现分别验收。
 
 2026-10-16最新规则：采用[特殊区域“地外文明”](docs/development-region-policy.md)，不指定现实地区、不做地区专项核验，不以地区待核阻塞继续开发。App自身成年确认仅一份“我确认已经成年”声明，本机记忆、不额外实名或定期重验；18+搜索仍默认关闭，与声明/隐私锁分开。来源实际登录/付费/年龄流程、技术结果与内置/分发许可分别记录，详见[来源策略](docs/novel-source-policy.md)。
 
-当前开发方向（2026-10-15）：先做 **macOS 小说 App，自用、通过安装包运行**；保留 Windows、Android、iOS 的同一 Flutter 工程与平台接口，漫画和云服务按后续里程碑实施。macOS应用壳已通过MAC-02，MAC-06已选定受控WebView路线并验证中文检索与系统TTS小样，见[验收](docs/verifications/mac-06-2026-10-19.md)；[MAC-03本地存储验收](docs/verifications/mac-03-2026-10-20.md)已完成；[MAC-16分级与隐私验收](docs/verifications/mac-16-2026-10-20.md)亦已完成；第06步文件导入已完成；第07步TXT基础阅读已完成；下一主任务为第08步MAC-07：EPUB集成与资源安全。
+当前开发方向（2026-10-15）：先做 **macOS 小说 App，自用、通过安装包运行**；保留 Windows、Android、iOS 的同一 Flutter 工程与平台接口，漫画和云服务按后续里程碑实施。macOS应用壳已通过MAC-02，MAC-06已选定受控WebView路线并验证中文检索与系统TTS小样，见[验收](docs/verifications/mac-06-2026-10-19.md)；[MAC-03本地存储验收](docs/verifications/mac-03-2026-10-20.md)已完成；[MAC-16分级与隐私验收](docs/verifications/mac-16-2026-10-20.md)亦已完成；第06步文件导入已完成；第07步TXT基础阅读与第08步受控EPUB已完成；下一主任务为第09步MAC-08：书架和书籍管理。
 
 小说内容范围已收敛为**中文资源（含简繁）**，优先免费书源，普通与18+来源都需设计接入。“搜索18+书源”默认关闭，关闭时不发出18+源搜索请求，开启后才加入这些来源；具体来源仍逐项核验。漫画语言范围保持原计划。
 
@@ -86,9 +86,9 @@ Local-first：未登录、断网或共享服务停机时，已有本地书籍、
 
 ## 从 Codex 开始
 
-将此目录作为开发工作目录。当前已完成 **01A / MAC-02-D** 设计确认与 **MAC-01** 工程初始化，[D1暖纸设计与原型](docs/design/novel-macos/design-spec-D1.md)已获用户明确确认，01A已完成，见[确认记录](docs/design/novel-macos/confirmation-D1.md)。此前第00步/MAC-18已交付[单源续验](docs/source-step00-2026-10-15.md)，来源任务仍进行中。**MAC-01 / 第01步已完成**，后续**MAC-02 / 第02步亦已完成**，见[应用壳验收](docs/verifications/mac-02-2026-10-16.md)；第03步MAC-06研究已完成，见[技术风险验收](docs/verifications/mac-06-2026-10-19.md)；第04步MAC-03已完成，见[本地存储验收](docs/verifications/mac-03-2026-10-20.md)；第05步MAC-16已完成，见[分级隐私验收](docs/verifications/mac-16-2026-10-20.md)；第06步文件导入已完成，见[验收](docs/verifications/mac-04-2026-10-21.md)；第07步TXT基础阅读亦已完成，见[验收](docs/verifications/mac-05-2026-10-22.md)；下一主任务为**第08步MAC-07：EPUB集成与资源安全**。macOS先验证本地内部检查点，再合入联网能力形成完整首版；漫画/云服务保持后续计划。
+将此目录作为开发工作目录。当前已完成 **01A / MAC-02-D** 设计确认与 **MAC-01** 工程初始化，[D1暖纸设计与原型](docs/design/novel-macos/design-spec-D1.md)已获用户明确确认，01A已完成，见[确认记录](docs/design/novel-macos/confirmation-D1.md)。此前第00步/MAC-18已交付[单源续验](docs/source-step00-2026-10-15.md)，来源任务仍进行中。**MAC-01 / 第01步已完成**，后续**MAC-02 / 第02步亦已完成**，见[应用壳验收](docs/verifications/mac-02-2026-10-16.md)；第03步MAC-06研究已完成，见[技术风险验收](docs/verifications/mac-06-2026-10-19.md)；第04步MAC-03已完成，见[本地存储验收](docs/verifications/mac-03-2026-10-20.md)；第05步MAC-16已完成，见[分级隐私验收](docs/verifications/mac-16-2026-10-20.md)；第06步文件导入已完成，见[验收](docs/verifications/mac-04-2026-10-21.md)；第07步TXT基础阅读亦已完成，见[验收](docs/verifications/mac-05-2026-10-22.md)；第08步受控EPUB已完成，见[验收](docs/verifications/mac-07-2026-10-22.md)；下一主任务为**第09步MAC-08：书架和书籍管理**。macOS先验证本地内部检查点，再合入联网能力形成完整首版；漫画/云服务保持后续计划。
 
-推荐任务提示：“执行第08步MAC-07，遵守AGENTS.md与资源/访问协议；接入已选EPUB引擎、目录和受控资源，保留D1、TXT与分级门禁；不提前接入真实来源。”
+推荐任务提示：“执行第09步MAC-08，遵守AGENTS.md与资料/删除协议；实现书架和书籍管理，保留D1、TXT/EPUB阅读、分级门禁与原件；不提前接入真实来源。”
 
 ## 数据、费用与发布
 

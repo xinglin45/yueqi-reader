@@ -1,3 +1,5 @@
+import '../domain/epub.dart';
+import '../infrastructure/epub/local_epub_reader.dart';
 import '../domain/importing.dart';
 import '../domain/txt.dart';
 import '../infrastructure/txt/local_txt_reader.dart';
@@ -32,6 +34,7 @@ final class AppDependencies {
     this.positions,
     this.importer,
     this.txt,
+    this.epub,
     this.access,
     this.discovery,
     this.storageReadOnly = false,
@@ -112,6 +115,8 @@ final class AppDependencies {
       await importer?.initialize();
       final txt = importer == null ? null : LocalTxtReader(importer);
       await txt?.initialize();
+      final epub = importer == null ? null : LocalEpubReader(importer);
+      await epub?.initialize();
       return AppDependencies(
         library: library,
         positions: library,
@@ -120,6 +125,7 @@ final class AppDependencies {
         files: documentFiles ?? platform,
         importer: importer,
         txt: txt,
+        epub: epub,
         secrets: platform,
         speech: platform,
         windows: platform,
@@ -128,6 +134,7 @@ final class AppDependencies {
         persistTheme: (value) =>
             library.saveSetting('theme', value ? 'dark' : 'light'),
         close: () async {
+          await epub?.dispose();
           await txt?.dispose();
           await importer?.dispose();
           await discovery.dispose();
@@ -147,6 +154,7 @@ final class AppDependencies {
 
   final DocumentImporter? importer;
   final TxtDocumentReader? txt;
+  final EpubDocumentReader? epub;
   final AccessController? access;
   final DiscoveryCoordinator? discovery;
   final PositionRepository? positions;

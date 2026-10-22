@@ -1,0 +1,22 @@
+{
+  "verified_date": "2026-10-22",
+  "entrypoint": "tool/mac07/probe_main.dart",
+  "scope": "Release production business/native code, only storage locations injected to mac07-probe; no production library import.",
+  "version": "0.0.8+8",
+  "dart_aot_sha256": "ae150e8ad14bd39c72b9eeda91aab1ecf729e28a7dc9aa28211e5810f1ec4b70",
+  "entitlements": {
+    "com.apple.security.app-sandbox": true,
+    "com.apple.security.files.bookmarks.app-scope": true,
+    "com.apple.security.files.user-selected.read-only": true,
+    "com.apple.security.get-task-allow": true,
+    "com.apple.security.network.client": true
+  },
+  "deep_strict_signature_verified": true,
+  "actual_gui": "Latest Release reopened native-reference EPUB, exact target quote restored in chapter 2 with dark theme; JPEG viewed; returning from image permits directory open and chapter-2 fragment navigation.",
+  "screenshot": "native-release-epub.png",
+  "source_sha256": {
+    "小说/client/lib/infrastructure/epub/loader.dart": "9f0630ff1cc7bc04c81b9d7418b11fb5275a1e6c600d28a49dc9b817f545830a",
+    "小说/client/macos/Runner/EpubWebView.swift": "e45e462e5f9c32d949ff716f2a4627ae948f7e89e3a6ffa54d3a53d81c396578",
+    "小说/client/lib/features/epub_reader.dart": "13d58da2bbdd652d56afb3c87ee417a7f5793fe718d842c8a6b86af8ae0a6f82"
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "verified_date": "2026-10-22",
+  "mode": "Standalone Dart AOT loader; excludes import, SQL and Flutter/WebKit layout",
+  "machine": {
+    "arch": "arm64",
+    "cpu": "Apple M5 Pro",
+    "memory_bytes": 68719476736,
+    "macos": "27.0.1"
+  },
+  "results": [
+    {
+      "spine": [
+        {
+          "ordinal": 0,
+          "href": "Book/text/one.xhtml",
+          "resource": "r0",
+          "title": "第一章　雨后山路",
+          "images": [
+            "r4",
+            "r5"
+          ]
+        },
+        {
+          "ordinal": 1,
+          "href": "Book/text/two.xhtml",
+          "resource": "r1",
+          "title": "第二章　微光",
+          "images": []
+        }
+      ],
+      "toc": [
+        {
+          "title": "第一章 雨后山路",
+          "spine": 0,
+          "fragment": "opening",
+          "depth": 0
+        },
+        {
+          "title": "窗边微光",
+          "spine": 0,
+          "fragment": "quote",
+          "depth": 1
+        },
+        {
+          "title": "第二章 微光",
+          "spine": 1,
+          "fragment": "target",
+          "depth": 0
+        }
+      ],
+      "warnings": [
+        "script_removed",
+        "active_attributes_removed",
+        "external_blocked"
+      ],
+      "resource_count": 6,
+      "load_ms": 8,
+      "peak_process_rss_bytes": 18284544,
+      "source_digest": "48b61f2808e90f875558203ddd7f1aa4ddac5306d479bbe810a39e9f65f138f8",
+      "fixture": "fixtures/novel/mac07/流式EPUB3.epub"
+    },
+    {
+      "spine": [
+        {
+          "ordinal": 0,
+          "href": "OEBPS/text/ch1.xhtml",
+          "resource": "r1",
+          "title": "第一章　雨后山路",
+          "images": [
+            "r4"
+          ]
+        },
+        {
+          "ordinal": 1,
+          "href": "OEBPS/text/ch2.xhtml",
+          "resource": "r2",
+          "title": "第二章　山間來信",
+          "images": []
+        }
+      ],
+      "toc": [
+        {
+          "title": "第一章 雨后山路",
+          "spine": 0,
+          "fragment": "title1",
+          "depth": 0
+        },
+        {
+          "title": "第二章 山間來信",
+          "spine": 1,
+          "fragment": "target",
+          "depth": 0
+        }
+      ],
+      "warnings": [
+        "script_removed"
+      ],
+      "resource_count": 7,
+      "load_ms": 16,
+      "peak_process_rss_bytes": 21659648,
+      "source_digest": "3d6d0a4ee10305897ef708f43e76375433998025b1417f0b655cb431090df701",
+      "fixture": "fixtures/novel/mac06/mountain-letter.epub"
+    }
+  ],
+  "source_sha256": {
+    "小说/client/lib/infrastructure/epub/loader.dart": "9f0630ff1cc7bc04c81b9d7418b11fb5275a1e6c600d28a49dc9b817f545830a",
+    "小说/client/lib/infrastructure/importing/epub_archive.dart": "85526af79cdaf8d5311755596de404080e52d57a7dca0e237682ac0466043dd4",
+    "小说/client/tool/mac07/loader_probe.dart": "b09d4cd89ee7dcca91af51eefe8939bb5f72accd2ad390fa66edc984efe425a6"
+  }
+}

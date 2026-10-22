@@ -50,7 +50,7 @@ void main() {
         await tester.ensureVisible(confirm);
         await tester.tap(confirm);
         await frames(tester);
-        await waitFor(tester, find.textContaining('文件已入库；TXT可'));
+        await waitFor(tester, find.textContaining('文件已入库；TXT/EPUB可'));
         expect(find.textContaining('文件结构或完整性检查失败'), findsOneWidget);
         await tester.tap(find.text('返回书架'));
         await frames(tester);

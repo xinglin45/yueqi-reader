@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-22",
+  "provenance": "Project-owned neutral Chinese text, generated geometric PNG/JPEG and package mutations; no third-party book or adult body.",
+  "jpeg_generator": "Pillow 12.2.0; project-owned procedural pixels",
+  "files": [
+    {
+      "name": "CSS导入.epub",
+      "bytes": 3705,
+      "sha256": "ad3c69ab15290e99dc322c9e31bb102dbae5d4e18409baed10fc4e95d91d3a89"
+    },
+    {
+      "name": "CSS转义.epub",
+      "bytes": 3709,
+      "sha256": "5cabf34066192bbb7d67010ccebb5912778f0be9cdf4d55adbe0816efc2766c7"
+    },
+    {
+      "name": "DTD实体.epub",
+      "bytes": 3559,
+      "sha256": "75b56df39661cff2eb3bc51b67614b602d33e3ccd4c6c966c02ee24284df489a"
+    },
+    {
+      "name": "不支持SVG.epub",
+      "bytes": 3792,
+      "sha256": "707d3d375e37edf7a109e24ad8940f46e4eca4b97342e832cb4877f296d60350"
+    },
+    {
+      "name": "加密.epub",
+      "bytes": 3927,
+      "sha256": "0e9d8078e051fc6e13272860e812af5316d41a7a0b61680a59d79ac8153a1865"
+    },
+    {
+      "name": "双重编码路径.epub",
+      "bytes": 3642,
+      "sha256": "2e6a8f444e941a8320386bb9ff4e06f7fdf3156fc303f98ab033130b6b1305c1"
+    },
+    {
+      "name": "固定版式.epub",
+      "bytes": 3819,
+      "sha256": "0390d708e62d07f2cb426d9c34c929c02df5e74545a47ca4562e4050f17d55b5"
+    },
+    {
+      "name": "流式EPUB2.epub",
+      "bytes": 4067,
+      "sha256": "570dafe25f48a54e21f1032b496a68e336706861d6fcb0d9187b58c1d3f0dda4"
+    },
+    {
+      "name": "流式EPUB3.epub",
+      "bytes": 3790,
+      "sha256": "48b61f2808e90f875558203ddd7f1aa4ddac5306d479bbe810a39e9f65f138f8"
+    },
+    {
+      "name": "片段缺失.epub",
+      "bytes": 3789,
+      "sha256": "3ce0d6d754c6fedd3fa331545208ba6f9f346c1d563b3e1c32ce6fd4c77daf8f"
+    },
+    {
+      "name": "符号链接.epub",
+      "bytes": 3790,
+      "sha256": "003ee394327f60f1872a432336eac9aedead8f320178c260a7a26fc850e01eb8"
+    },
+    {
+      "name": "缺失图片.epub",
+      "bytes": 3435,
+      "sha256": "766f92e4eac758b88f5b73cf8955d38eddd9c5a99b9d41000069f1e17c726b00"
+    },
+    {
+      "name": "规范文本.epub",
+      "bytes": 3790,
+      "sha256": "dcbcb90c9d7c50ee477b951387ef4b0bc36d3ee4b48379e7d4f11de67a8c76e3"
+    },
+    {
+      "name": "超大图片尺寸.epub",
+      "bytes": 3791,
+      "sha256": "f8f3e003d3c20171690c3878574c19ec16d23ba9a934884951b6ffcca322e199"
+    },
+    {
+      "name": "重复DOM标识.epub",
+      "bytes": 3651,
+      "sha256": "59c39cb5fff789cbd2b15ba423d43798b3fe9b3b09a77a66c6f1e57c111ee878"
+    }
+  ]
+}

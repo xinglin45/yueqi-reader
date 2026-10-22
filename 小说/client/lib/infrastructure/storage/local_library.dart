@@ -32,11 +32,12 @@ final class LocalLibrary
     subtitle: row['import_kind'] != null || row['parser_hint'] == 'import-v1'
         ? row['import_kind'] == 'txt'
               ? '本地 TXT · 可解析阅读'
-              : 'EPUB已导入 · 阅读解析待接入'
+              : '本地 EPUB · 可打开阅读'
         : row['parser_hint'] == 'classification-card-v1'
         ? '标签测试 · 不含成人正文'
         : '原创演示短篇 · 已保存在本机',
     importedTxt: row['import_kind'] == 'txt',
+    importedEpub: row['import_kind'] == 'epub',
     demo: row['parser_hint'] == parser,
     previewAvailable:
         row['import_kind'] == null && row['parser_hint'] != 'import-v1',

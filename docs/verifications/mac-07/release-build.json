@@ -1,0 +1,75 @@
+{
+  "verified_date": "2026-10-22",
+  "checkpoint": "MAC-07",
+  "entrypoint": "lib/main.dart",
+  "version": "0.0.8+8",
+  "bundle_id": "local.yueqi.novel",
+  "minimum_macos": "12.0",
+  "executable_architectures": "arm64",
+  "dart_aot_architectures": "arm64",
+  "schema_version": 6,
+  "table_count": 16,
+  "signature": "ad-hoc; finalized with tool/sign_macos_internal.py; deep strict verification passed",
+  "release_entitlements": {
+    "com.apple.security.app-sandbox": true,
+    "com.apple.security.files.bookmarks.app-scope": true,
+    "com.apple.security.files.user-selected.read-only": true,
+    "com.apple.security.get-task-allow": true,
+    "com.apple.security.network.client": true
+  },
+  "notarized": false,
+  "notices_uncompressed_bytes": 1345810,
+  "notices_sha256": "a83a26b2d140a544db5077dbc1f316b8ce017f7834acb30b7f419c695da7aee0",
+  "native_assets": [
+    {
+      "path": "Contents/Frameworks/objective_c.framework/Versions/A/objective_c",
+      "bytes": 184336,
+      "sha256": "f542f057c0e50f842d439f29603915e504e198f640806fb51e0536aa2c81ec44"
+    },
+    {
+      "path": "Contents/Frameworks/sqlite3.framework/Versions/A/sqlite3",
+      "bytes": 1669392,
+      "sha256": "e7301982a121e9e21c98ed948653f2310ab8c2ae47a967002c053f5d07e18d73"
+    }
+  ],
+  "application_executable": {
+    "path": "Contents/MacOS/阅栖",
+    "bytes": 306128,
+    "sha256": "104b29e69f2e2f3b760bc6102e1b04539b763aa222c620b40ac6b79555ecfc7d"
+  },
+  "dart_aot": {
+    "path": "Contents/Frameworks/App.framework/Versions/A/App",
+    "bytes": 6812992,
+    "sha256": "157e3221cd28387765e8abf9014a1e50fe08a45eace37f0ef6912c7f637bd7b7"
+  },
+  "build_output": "小说/client/build/macos/Build/Products/Release/阅栖.app",
+  "tool_reported_size_mb": 31.0,
+  "debug_build_passed": true,
+  "release_build_passed": true,
+  "flutter_dart_test_count": 78,
+  "python_test_count": 13,
+  "source_approvals": {
+    "normal": 0,
+    "adult": 0
+  },
+  "gui_verification": "Latest Release isolated storage entrypoint opened reference EPUB and restored exact target, JPEG viewer -> directory -> fragment navigation passed. Final default Release retained the original one-book library, dark theme and paragraph 2 position; no probe book or age declaration added to production.",
+  "manual_limits": [
+    "Only macOS arm64 verified; minimum deployment target is not a minimum-system test.",
+    "Not notarized, no DMG or installation-upgrade acceptance.",
+    "Full pagination, automatic progress and production search/notes/TTS remain later tasks; sources still 0/0."
+  ],
+  "gui_screenshots": [
+    "native-release-epub.png",
+    "native-image-viewer.png",
+    "release-preserved-library.png",
+    "release-preserved-position.png"
+  ],
+  "source_sha256": {
+    "小说/client/lib/main.dart": "a234da71cee1d64ff9a3aec33fb5ef7e94460f42824a7e283c1d63b7315c0d8e",
+    "小说/client/lib/infrastructure/epub/loader.dart": "9f0630ff1cc7bc04c81b9d7418b11fb5275a1e6c600d28a49dc9b817f545830a",
+    "小说/client/lib/infrastructure/epub/local_epub_reader.dart": "7e789ee27e0303177105d2842ff97804d7051eb2f914f74b0a82bf94e1538b7c",
+    "小说/client/lib/infrastructure/epub/mac_epub_surface.dart": "e6506f31128f2ca20e91c71adba770a005061e4e5fb47793b43ecb079ac233eb",
+    "小说/client/lib/features/epub_reader.dart": "13d58da2bbdd652d56afb3c87ee417a7f5793fe718d842c8a6b86af8ae0a6f82",
+    "小说/client/macos/Runner/EpubWebView.swift": "e45e462e5f9c32d949ff716f2a4627ae948f7e89e3a6ffa54d3a53d81c396578"
+  }
+}

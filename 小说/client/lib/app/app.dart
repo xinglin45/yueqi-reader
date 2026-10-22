@@ -336,7 +336,7 @@ class _ReaderShellState extends State<ReaderShell> {
               icon: const Icon(PhosphorIconsLight.info, size: 16),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text('阶段说明 · MAC-05', style: TextStyle(fontSize: 12)),
+                child: Text('阶段说明 · MAC-07', style: TextStyle(fontSize: 12)),
               ),
             ),
             TextButton.icon(
@@ -360,7 +360,7 @@ class _ReaderShellState extends State<ReaderShell> {
       content: const SizedBox(
         width: 420,
         child: Text(
-          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；TXT已可后台分章、目录跳转和分块阅读；EPUB正式阅读、系统听书和低存在感窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
+          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；TXT已可后台分章、目录跳转和分块阅读；EPUB已接入受控资源、目录/图片/字号主题与文本位置；完整分页、系统听书和低存在感窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
           style: TextStyle(height: 1.8),
         ),
       ),
@@ -457,7 +457,7 @@ class _ReaderShellState extends State<ReaderShell> {
             ),
           Expanded(
             child: Text(
-              reading ? '阅读预览' : widget.location.page.label,
+              reading ? '阅读' : widget.location.page.label,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 13,
@@ -470,7 +470,7 @@ class _ReaderShellState extends State<ReaderShell> {
               onPressed: () => stageNotice(
                 context,
                 '阅读排版',
-                '当前采用 D1 的宋体、24字号与1.9行高。可调排版和位置恢复将在 MAC-07/09 接入。',
+                '当前沿用 D1 宋体与暖纸风格。EPUB可在正文上方调整字号，主题随全局外观切换；TXT完整可调排版将在 MAC-09 接入。',
               ),
               tooltip: '阅读排版',
               icon: const Icon(PhosphorIconsLight.textAa),
@@ -555,6 +555,37 @@ class _ReaderShellState extends State<ReaderShell> {
       navigation: widget.navigation,
     ),
   };
+  Widget _contentViewport(bool narrow, BoxConstraints constraints) {
+    final reading = widget.location.page == AppPage.reader;
+    final padding = EdgeInsets.fromLTRB(
+      narrow
+          ? 24
+          : reading && constraints.maxWidth >= 1100
+          ? 92
+          : 54,
+      reading
+          ? 20
+          : narrow
+          ? 32
+          : 48,
+      narrow ? 24 : 54,
+      reading ? 16 : 48,
+    );
+    final page = KeyedSubtree(
+      key: ValueKey((widget.location.path, widget.libraryEpoch)),
+      child: _page(),
+    );
+    // A native reader owns its viewport and scroll. Nesting AppKitView in the
+    // shell's scroll viewport makes native hit testing/accessibility unreliable.
+    return reading
+        ? Padding(padding: padding, child: page)
+        : SingleChildScrollView(
+            key: ValueKey('scroll-${widget.location.path}'),
+            padding: padding,
+            child: page,
+          );
+  }
+
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
@@ -597,27 +628,7 @@ class _ReaderShellState extends State<ReaderShell> {
                           child: Focus(
                             focusNode: _contentFocus,
                             skipTraversal: true,
-                            child: SingleChildScrollView(
-                              key: ValueKey('scroll-${widget.location.path}'),
-                              padding: EdgeInsets.fromLTRB(
-                                narrow
-                                    ? 24
-                                    : widget.location.page == AppPage.reader &&
-                                          constraints.maxWidth >= 1100
-                                    ? 92
-                                    : 54,
-                                narrow ? 32 : 48,
-                                narrow ? 24 : 54,
-                                48,
-                              ),
-                              child: KeyedSubtree(
-                                key: ValueKey((
-                                  widget.location.path,
-                                  widget.libraryEpoch,
-                                )),
-                                child: _page(),
-                              ),
-                            ),
+                            child: _contentViewport(narrow, constraints),
                           ),
                         ),
                       ),

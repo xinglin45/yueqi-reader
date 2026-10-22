@@ -1,6 +1,6 @@
 # 产品需求
 
-状态：需求基线；MAC-01工程、MAC-02应用壳与[MAC-06风险研究](verifications/mac-06-2026-10-19.md)已完成；MAC-03本地存储/迁移/位置协议已完成，见[验收](verifications/mac-03-2026-10-20.md)；MAC-16已完成小说本机成年声明、分级/独立分组与隐私锁基础，见[验收](verifications/mac-16-2026-10-20.md)；MAC-04文件授权与TXT/EPUB入库已完成，见[验收](verifications/mac-04-2026-10-21.md)；MAC-05已完成TXT解析/目录/基础阅读，见[验收](verifications/mac-05-2026-10-22.md)；完整排版与EPUB阅读仍待后续任务。优先级 P0＝本地 MVP 核心与接入门禁；P1＝可选在线/同步及扩展；P2＝后续探索。对应任务见 [roadmap.md](roadmap.md)。
+状态：需求基线；MAC-01工程、MAC-02应用壳与[MAC-06风险研究](verifications/mac-06-2026-10-19.md)已完成；MAC-03本地存储/迁移/位置协议已完成，见[验收](verifications/mac-03-2026-10-20.md)；MAC-16已完成小说本机成年声明、分级/独立分组与隐私锁基础，见[验收](verifications/mac-16-2026-10-20.md)；MAC-04文件授权与TXT/EPUB入库已完成，见[验收](verifications/mac-04-2026-10-21.md)；MAC-05已完成TXT解析/目录/基础阅读，见[验收](verifications/mac-05-2026-10-22.md)；MAC-07受控EPUB阅读已完成，见[验收](verifications/mac-07-2026-10-22.md)，完整排版仍待后续任务。优先级 P0＝本地 MVP 核心与接入门禁；P1＝可选在线/同步及扩展；P2＝后续探索。对应任务见 [roadmap.md](roadmap.md)。
 
 2026-10-16开发策略更新：当前选择特殊区域[“地外文明”](development-region-policy.md)，不指定或逐项核验现实地区，地区待核不阻塞工程与技术测试。下文地区字段保留给来源原始资料和未来发布策略；不在本开发模式中追加地区判定。来源自身访问条件、分级、费用及内容/代码许可分开记录。
 

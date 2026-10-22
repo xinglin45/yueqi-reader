@@ -10,9 +10,9 @@
 |---|---|---|
 | books / BookSummary | 随机book_id；标题不唯一，中文语言与rating/evidence；row_revision和deleted墓碑 | 本机书架及自产样本 |
 | documents / DocumentRevision（Edition） | id、book_id、digest、kind、parser_version；(digest,kind,parser_version)唯一；原始大小/类型/时间 | 托管TXT样本修订；同文件换解析器可保留旧修订 |
-| chapters / ChapterRecord | (document_id,id)主键、ordinal唯一、spine_href | 自产样本章；TXT解析版本目录已接入，EPUB仍后续 |
+| chapters / ChapterRecord | (document_id,id)主键、ordinal唯一、spine_href | 样本、TXT解析目录与EPUB2/3 spine目录均已接入 |
 | resources / ResourceRecord | (document_id,href)、摘要、类型、大小、cache_permission三态 | 样本文本为已知自产allowed；其他默认unknown |
-| positions / StoredPosition | (book_id,channel)、document_id、anchor JSON、local_seq、更新时间；(book_id,document_id)复合外键 | 阅读/听书独立持久位置；UI仅样本手动段落检查点 |
+| positions / StoredPosition | (book_id,channel)、document_id、anchor JSON、local_seq、更新时间；(book_id,document_id)复合外键 | 阅读/听书独立持久位置；样本/TXT/EPUB主动位置；自动进度待MAC-09 |
 | annotations / AnnotationRecord | bookmark/highlight/note；关联书籍/修订；anchor、note、row_revision、deleted | schema/模型已定义；MAC-11产品用例待实现 |
 | content_policy / ContentRating | book_id外键；原始/内部评级、最低年龄/来源地区/证据/策略/来源资格 | MAC-16门禁，unknown/prohibited不自动归普通；地区skipped_by_user |
 | collections / CollectionRecord | collection/tag/adult；独立id、标签、revision/墓碑 | schema/模型已定义；MAC-16成人分组已实现；一般管理MAC-08待实现 |
@@ -37,7 +37,7 @@ SQLite事务涵盖书籍、修订、章节与资源引用；外部文件与SQL�
 字段固定为schema_version=1、document_kind(txt/epub)、content_revision、chapter_id、spine_href、block_id、offset_unit=utf16_code_unit、start/end（左闭右开）、exact、prefix/suffix与context_sha256。exact最多512 UTF-16单元，上下文各16 Unicode标量，不保存整段正文作为位置。位置和标注均绑定文档修订，不用标题或屏幕页号。
 
 - UTF-16 start/end允许空范围表示游标；拒绝半代理对。📖占2单元，e＋组合音标保持原序列。
-- EPUB spine使用manifest内路径；TXT的块ID及章节来自明确解析器版本。MAC-06受控WebView尚未接入默认入口，正式解析在MAC-05/07完成。
+- EPUB spine使用manifest内路径；TXT的块ID及章节来自明确解析器版本。MAC-05 TXT与MAC-07受控WebView已接入默认入口，完整排版/自动进度仍在MAC-09。
 - 精确偏移与上下文一致→exact；同修订/同块中唯一上下文→context候选；找不到/歧义/修订变化→chapterStart或unresolved。候选/回退不覆盖数据库旧记录，UI应说明旧位置保留。
 - SQLite instr返回1起的Unicode标量位置，转0起后通过scalarToUtf16；NSRange/JS直接按UTF-16，桥接数值先验证有限整数，不截断小数。
 
@@ -60,3 +60,7 @@ v5只新增imports，不重写旧书籍、样本段落位置与声明。`import-
 v6新增txt_indices（源导入外键、解析文档、规则、编码、块/单位/章节数与摘要）、txt_chapter_ranges（通用chapters对应块范围）、txt_active（每书活动解析版本），共16表。原始documents/imports及其awaiting_parser状态保留，是否已有可读TXT通过txt_active判断。解析版使用新的document_id与parser_version，原始摘要不变；旧锚点和旧解析版保留。
 
 txt-stage为候选/中断暂存，启动持有写入租约后清理；txt-indices/文档ID只存96字节定长块索引与目录manifest，不存规范化全文。原件仍从objects或设备引用读取。正文块ID/章节ID仅在解析版本内稳定；分章确认不更新positions，旧版本位置由UI提示复核，用户主动保存才替换。未来备份可重建索引，引用授权仍不可便携导出。格式、上限、提交边界及故障处理见[ADR-0009](../decisions/0009-mac05-txt-index.md)。历史schema5快照保留在[旧DDL](novel-schema-v5.sql)。
+
+## MAC-07 EPUB解析与临时资源
+
+无新迁移，schema仍为6、共16表。EPUB解析使用既有documents（epub-v1）、chapters与positions，原始imports记录不变；同原件/解析器复用稳定文档修订，新的解析器版本须新增修订而非改写旧位置。正文及有摘要的资源仅在epub-sessions/会话ID中临时展开，关闭/取消/锁定/启动清理；引用原件不变。此目录不得进入未来书库备份/同步，崩溃到下次启动之间可能残留。具体映射、资源安全与恢复见[ADR-0010](../decisions/0010-mac07-controlled-epub.md)。

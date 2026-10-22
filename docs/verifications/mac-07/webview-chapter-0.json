@@ -1,0 +1,479 @@
+{
+  "dom": {
+    "images": [
+      {
+        "width": 96.0,
+        "loaded": true,
+        "height": 56.0
+      }
+    ],
+    "blocks": {
+      "b2": "山间来信",
+      "b7": "图一 · 自产几何样本",
+      "b10": "山",
+      "b3": "放在窗边。山間來信仍保留繁體原文。",
+      "b8": "慢一点，读完这一段。",
+      "b13": "去第二章的目标段落",
+      "b4": "标点：100%_完成；📖 é 后面是",
+      "b11": "路，林舟向前走。",
+      "b0": "第一章　雨后山路",
+      "b9": "沿着",
+      "b5": "雨后山路",
+      "b1": "清晨，",
+      "b6": "。",
+      "b12": " 内嵌字体试验；装饰不进入朗读。"
+    },
+    "selection": {
+      "kind": "selection",
+      "session": "s0970183dc85ae85a88f9e08194644432",
+      "segments": [
+        {
+          "end": 4.0,
+          "exact": "山间来信",
+          "block": "b2",
+          "start": 0.0
+        },
+        {
+          "block": "b3",
+          "exact": "放在窗边",
+          "end": 4.0,
+          "start": 0.0
+        }
+      ],
+      "resource": "r1"
+    },
+    "denied": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "ruby": true,
+    "resource": "r1",
+    "strong_color": "rgb(159, 101, 75)",
+    "range_tests": [
+      {
+        "kind": "selection",
+        "session": "s0970183dc85ae85a88f9e08194644432",
+        "segments": [
+          {
+            "block": "b1",
+            "end": 3.0,
+            "exact": "清晨，",
+            "start": 0.0
+          },
+          {
+            "block": "b2",
+            "exact": "山间来信",
+            "end": 4.0,
+            "start": 0.0
+          },
+          {
+            "end": 17.0,
+            "exact": "放在窗边。山間來信仍保留繁體原文。",
+            "block": "b3",
+            "start": 0.0
+          }
+        ],
+        "resource": "r1"
+      },
+      {
+        "kind": "selection",
+        "session": "s0970183dc85ae85a88f9e08194644432",
+        "segments": [
+          {
+            "end": 20.0,
+            "exact": "标点：100%_完成；📖 é 后面是",
+            "block": "b4",
+            "start": 0.0
+          },
+          {
+            "block": "b5",
+            "exact": "雨后山路",
+            "end": 4.0,
+            "start": 0.0
+          },
+          {
+            "block": "b6",
+            "exact": "。",
+            "end": 1.0,
+            "start": 0.0
+          }
+        ],
+        "resource": "r1"
+      },
+      {
+        "kind": "selection",
+        "session": "s0970183dc85ae85a88f9e08194644432",
+        "segments": [
+          {
+            "end": 2.0,
+            "exact": "沿着",
+            "block": "b9",
+            "start": 0.0
+          },
+          {
+            "end": 1.0,
+            "exact": "山",
+            "block": "b10",
+            "start": 0.0
+          },
+          {
+            "block": "b11",
+            "end": 8.0,
+            "exact": "路，林舟向前走。",
+            "start": 0.0
+          }
+        ],
+        "resource": "r1"
+      },
+      {
+        "kind": "selection",
+        "session": "s0970183dc85ae85a88f9e08194644432",
+        "segments": [
+          {
+            "block": "b1",
+            "exact": "清晨，",
+            "end": 3.0,
+            "start": 0.0
+          },
+          {
+            "end": 4.0,
+            "exact": "山间来信",
+            "block": "b2",
+            "start": 0.0
+          },
+          {
+            "end": 17.0,
+            "exact": "放在窗边。山間來信仍保留繁體原文。",
+            "block": "b3",
+            "start": 0.0
+          },
+          {
+            "end": 20.0,
+            "exact": "标点：100%_完成；📖 é 后面是",
+            "block": "b4",
+            "start": 0.0
+          },
+          {
+            "block": "b5",
+            "exact": "雨后山路",
+            "end": 4.0,
+            "start": 0.0
+          },
+          {
+            "end": 1.0,
+            "exact": "。",
+            "block": "b6",
+            "start": 0.0
+          }
+        ],
+        "resource": "r1"
+      }
+    ],
+    "font_count": 1.0,
+    "session": "s0970183dc85ae85a88f9e08194644432",
+    "fonts_loaded": true
+  },
+  "page_script_or_host_visible": false,
+  "denied": 1,
+  "served": [
+    "r1",
+    "r3",
+    "r4",
+    "r5"
+  ],
+  "blocked_navigation": 0,
+  "canonical_mapping_equal": true,
+  "validated_selection": [
+    {
+      "schema_version": 1,
+      "document_kind": "epub",
+      "content_revision": "9367e096c234f11924b133a0437fa7b0",
+      "chapter_id": "c0",
+      "spine_href": "OEBPS/text/ch1.xhtml",
+      "block_id": "b2",
+      "offset_unit": "utf16_code_unit",
+      "start": 0,
+      "end": 4,
+      "exact": "山间来信",
+      "prefix": "",
+      "suffix": "",
+      "context_sha256": "75507c878569bbfaf8a71e383f7a185cc5f8456b20b8570478ee27264343bf65"
+    },
+    {
+      "schema_version": 1,
+      "document_kind": "epub",
+      "content_revision": "9367e096c234f11924b133a0437fa7b0",
+      "chapter_id": "c0",
+      "spine_href": "OEBPS/text/ch1.xhtml",
+      "block_id": "b3",
+      "offset_unit": "utf16_code_unit",
+      "start": 0,
+      "end": 4,
+      "exact": "放在窗边",
+      "prefix": "",
+      "suffix": "。山間來信仍保留繁體原文。",
+      "context_sha256": "388a3a60093aa50d02a0236286e4bd78b2b2ef053c90d1e4616dd065b4fe42f7"
+    }
+  ],
+  "range_tests_validated": [
+    [
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b1",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 3,
+        "exact": "清晨，",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "2adec106c19ba2b42b622a1f229d63ba4b864d2bd2e7da00dda625bbd94e407e"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b2",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 4,
+        "exact": "山间来信",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "75507c878569bbfaf8a71e383f7a185cc5f8456b20b8570478ee27264343bf65"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b3",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 17,
+        "exact": "放在窗边。山間來信仍保留繁體原文。",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "c8c6da9b682e18075bed21b5fb8f565ff0ce4eed14a2b589bb53169144aa7cc3"
+      }
+    ],
+    [
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b4",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 20,
+        "exact": "标点：100%_完成；📖 é 后面是",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "e5d38264713bc8c626e3199f074084d58de599db148e77b6ad0e8befb657eba8"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b5",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 4,
+        "exact": "雨后山路",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "bc41040fe01bc85c7ac3b01b2a0ef2cb7d39cf14975941f0765406ea118108de"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b6",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 1,
+        "exact": "。",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "505ccd2d792a88fc6eb5d6409ca44c9ca69d2f0a2468c00057a5309c3c3f54a2"
+      }
+    ],
+    [
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b9",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 2,
+        "exact": "沿着",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "696e2698642dd0ac9b70d3a799db4f33b4c557c0dab2361ee873f563ebbbffde"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b10",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 1,
+        "exact": "山",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "e477fd36c7302acd388c1c237bfb66b0ea05f20dcd0f7b294d96c34db2180da1"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b11",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 8,
+        "exact": "路，林舟向前走。",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "0209dace05b2696f40a8bbdff2e481064fde395c7cd5f8909641593d81bb0244"
+      }
+    ],
+    [
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b1",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 3,
+        "exact": "清晨，",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "2adec106c19ba2b42b622a1f229d63ba4b864d2bd2e7da00dda625bbd94e407e"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b2",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 4,
+        "exact": "山间来信",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "75507c878569bbfaf8a71e383f7a185cc5f8456b20b8570478ee27264343bf65"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b3",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 17,
+        "exact": "放在窗边。山間來信仍保留繁體原文。",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "c8c6da9b682e18075bed21b5fb8f565ff0ce4eed14a2b589bb53169144aa7cc3"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b4",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 20,
+        "exact": "标点：100%_完成；📖 é 后面是",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "e5d38264713bc8c626e3199f074084d58de599db148e77b6ad0e8befb657eba8"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b5",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 4,
+        "exact": "雨后山路",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "bc41040fe01bc85c7ac3b01b2a0ef2cb7d39cf14975941f0765406ea118108de"
+      },
+      {
+        "schema_version": 1,
+        "document_kind": "epub",
+        "content_revision": "9367e096c234f11924b133a0437fa7b0",
+        "chapter_id": "c0",
+        "spine_href": "OEBPS/text/ch1.xhtml",
+        "block_id": "b6",
+        "offset_unit": "utf16_code_unit",
+        "start": 0,
+        "end": 1,
+        "exact": "。",
+        "prefix": "",
+        "suffix": "",
+        "context_sha256": "505ccd2d792a88fc6eb5d6409ca44c9ca69d2f0a2468c00057a5309c3c3f54a2"
+      }
+    ]
+  ],
+  "layouts": [
+    {
+      "size": 18.0,
+      "exact": "山间来信放在窗边",
+      "restored_exact": "山间来信放在窗边",
+      "same_selection": true
+    },
+    {
+      "size": 30.0,
+      "exact": "山间来信放在窗边",
+      "restored_exact": "山间来信放在窗边",
+      "same_selection": true
+    },
+    {
+      "size": 24.0,
+      "exact": "山间来信放在窗边",
+      "restored_exact": "山间来信放在窗边",
+      "same_selection": true
+    }
+  ],
+  "saved_anchor_restore": true,
+  "source_fixture_sha256": "3d6d0a4ee10305897ef708f43e76375433998025b1417f0b655cb431090df701",
+  "chapter": 0,
+  "checks_passed": true
+}

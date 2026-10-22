@@ -1,3 +1,5 @@
+import '../domain/documents.dart';
+import 'epub_reader.dart';
 import 'import_flow.dart';
 import 'txt_reader.dart';
 import 'access_controls.dart';
@@ -182,7 +184,7 @@ class _LibraryPageState extends State<LibraryPage> {
   int _tab = 0;
   bool _grid = true;
   void _open(BookSummary book) {
-    if (!book.previewAvailable && !book.importedTxt) {
+    if (!book.previewAvailable && !book.importedTxt && !book.importedEpub) {
       showImportedStatus(context, widget.dependencies, book.id);
       return;
     }
@@ -335,6 +337,8 @@ class _LibraryPageState extends State<LibraryPage> {
                               child: Text(
                                 book.importedTxt
                                     ? '打开 TXT 阅读'
+                                    : book.importedEpub
+                                    ? '打开 EPUB 阅读'
                                     : book.previewAvailable
                                     ? '打开阅读预览'
                                     : '查看文件状态',
@@ -392,20 +396,50 @@ class ReaderPage extends StatelessWidget {
   final AppNavigation navigation;
   final ValueChanged<BookSummary> onOpened;
   @override
-  Widget build(BuildContext context) => dependencies.txt == null
-      ? _sample(context)
-      : TaskView<bool>(
-          empty: const SizedBox(),
-          load: (job) async =>
-              JobResult(await dependencies.txt!.accepts(bookId)),
-          builder: (isTxt) => isTxt
-              ? TxtReaderView(
-                  bookId: bookId,
-                  deps: dependencies,
-                  onOpened: onOpened,
-                )
-              : _sample(context),
-        );
+  Widget build(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final height = constraints.hasBoundedHeight
+          ? constraints.maxHeight
+          : 800.0;
+      Widget scroll(Widget child) => SizedBox(
+        height: height,
+        child: SingleChildScrollView(child: child),
+      );
+      if (dependencies.txt == null && dependencies.epub == null) {
+        return scroll(_sample(context));
+      }
+      return TaskView<DocumentKind?>(
+        empty: const SizedBox(),
+        load: (job) async {
+          if (await dependencies.txt?.accepts(bookId) == true) {
+            return const JobResult(DocumentKind.txt);
+          }
+          if (await dependencies.epub?.accepts(bookId) == true) {
+            return const JobResult(DocumentKind.epub);
+          }
+          return const JobResult(null);
+        },
+        builder: (kind) => switch (kind) {
+          DocumentKind.txt => scroll(
+            TxtReaderView(
+              bookId: bookId,
+              deps: dependencies,
+              onOpened: onOpened,
+            ),
+          ),
+          DocumentKind.epub => SizedBox(
+            height: height,
+            child: EpubReaderView(
+              bookId: bookId,
+              deps: dependencies,
+              onOpened: onOpened,
+            ),
+          ),
+          null => scroll(_sample(context)),
+        },
+      );
+    },
+  );
   Widget _sample(BuildContext context) => TaskView<ReadingPreview>(
     load: (job) async {
       final result = await dependencies.library.preview(bookId, job);
@@ -460,7 +494,7 @@ class ReaderPage extends StatelessWidget {
             const Divider(),
             const SizedBox(height: 20),
             Text(
-              '演示文本至此 · 导入 TXT 可在书架打开阅读，EPUB 阅读待接入',
+              '演示文本至此 · 导入 TXT/EPUB 可在书架打开阅读',
               style: TextStyle(
                 fontSize: 12,
                 color: Theme.of(context).colorScheme.onSurfaceVariant,

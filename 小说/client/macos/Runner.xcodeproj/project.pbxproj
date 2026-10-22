@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		A00700000000000000000001 /* EpubWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00700000000000000000002 /* EpubWebView.swift */; };
 		A00400000000000000000003 /* NativeTextCodec.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00400000000000000000004 /* NativeTextCodec.swift */; };
 		A00400000000000000000001 /* DocumentBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00400000000000000000002 /* DocumentBridge.swift */; };
 		A00600000000000000000001 /* Mac06WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00600000000000000000002 /* Mac06WebView.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A00700000000000000000002 /* EpubWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpubWebView.swift; sourceTree = "<group>"; };
 		A00400000000000000000004 /* NativeTextCodec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeTextCodec.swift; sourceTree = "<group>"; };
 		A00400000000000000000002 /* DocumentBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBridge.swift; sourceTree = "<group>"; };
 		A00600000000000000000002 /* Mac06WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mac06WebView.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				A00400000000000000000002 /* DocumentBridge.swift */,
 				A00400000000000000000004 /* NativeTextCodec.swift */,
 				A00600000000000000000002 /* Mac06WebView.swift */,
+				A00700000000000000000002 /* EpubWebView.swift */,
 				33E51913231747F40026EE4D /* DebugProfile.entitlements */,
 				33E51914231749380026EE4D /* Release.entitlements */,
 				33CC11242044D66E0003C045 /* Resources */,
@@ -367,6 +370,7 @@
 				A00400000000000000000001 /* DocumentBridge.swift in Sources */,
 				A00400000000000000000003 /* NativeTextCodec.swift in Sources */,
 				A00600000000000000000001 /* Mac06WebView.swift in Sources */,
+				A00700000000000000000001 /* EpubWebView.swift in Sources */,
 				33CC10F12044A3C60003C045 /* AppDelegate.swift in Sources */,
 				335BBD1B22A9A15E00E9071D /* GeneratedPluginRegistrant.swift in Sources */,
 			);

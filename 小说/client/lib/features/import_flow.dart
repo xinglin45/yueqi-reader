@@ -179,7 +179,7 @@ class _ImportDialogState extends State<_ImportDialog> {
               ? '已修复已有托管副本，原分级与位置保留。'
               : row.receipt!.duplicate
               ? '已有相同文件，已跳过；原有分级与位置保留。'
-              : '文件已入库；TXT可在书架解析阅读，EPUB阅读待接入。';
+              : '文件已入库；TXT/EPUB可在书架打开阅读。';
         } on ImportFailure catch (e) {
           row.message = importHelp(e.issue);
         }
@@ -406,7 +406,7 @@ Future<void> showImportedStatus(
     reference = info.mode == ImportMode.reference;
     await importer.verify(bookId, job());
     message =
-        '${info.mode == ImportMode.managed ? '托管副本完整，原文件移动或删除不影响此副本。' : '引用仍可访问；未创建永久托管副本。'}\n文件已入库；TXT可从书架预览分章后阅读，EPUB阅读待接入。';
+        '${info.mode == ImportMode.managed ? '托管副本完整，原文件移动或删除不影响此副本。' : '引用仍可访问；未创建永久托管副本。'}\n文件已入库；TXT可预览分章后阅读，EPUB可直接在书架打开。';
   } on ImportFailure catch (e) {
     message =
         '${importHelp(e.issue)}${reference ? '' : '\n可重新导入相同原件以修复托管副本，保留现有书籍记录。'}';
