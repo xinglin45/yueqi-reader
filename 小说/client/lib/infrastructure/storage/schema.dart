@@ -112,6 +112,7 @@ final List<SchemaStep> novelSchema = List.unmodifiable([
   contentPolicySchema,
   importSchema,
   txtSchema,
+  shelfSchema,
 ]);
 
 /// Device declaration/search/lock flags remain outside this library schema.
@@ -164,4 +165,34 @@ const txtSchema = SchemaStep(6, [
     document_id TEXT NOT NULL REFERENCES txt_indices(document_id),
     FOREIGN KEY(book_id,document_id) REFERENCES documents(book_id,id)
   ) STRICT""",
+]);
+
+/// MAC-08: book identity/revisions remain in books; bodies stay out of SQL.
+const shelfSchema = SchemaStep(7, [
+  "ALTER TABLE imports ADD COLUMN display_name TEXT NOT NULL DEFAULT ''",
+  """CREATE TABLE book_metadata (
+    book_id TEXT PRIMARY KEY REFERENCES books(id), author TEXT NOT NULL DEFAULT '',
+    synopsis TEXT NOT NULL DEFAULT '', state TEXT NOT NULL DEFAULT 'unread' CHECK(state IN ('unread','reading','finished')),
+    favorite INTEGER NOT NULL DEFAULT 0 CHECK(favorite IN (0,1)), manual_order INTEGER NOT NULL DEFAULT 0,
+    last_opened INTEGER NOT NULL DEFAULT 0, cover_digest TEXT,
+    file_health TEXT NOT NULL DEFAULT 'unknown'
+  ) STRICT""",
+  "ALTER TABLE collections ADD COLUMN scope TEXT NOT NULL DEFAULT 'normal' CHECK(scope IN ('normal','adult'))",
+  "UPDATE collections SET scope='adult' WHERE kind='adult'",
+  "CREATE UNIQUE INDEX collections_name_scope ON collections(scope,kind,label) WHERE deleted=0 AND kind!='adult'",
+  """CREATE TABLE shelf_preferences (
+    scope TEXT PRIMARY KEY CHECK(scope IN ('normal','adult','recent')),
+    value TEXT NOT NULL CHECK(json_valid(value))
+  ) STRICT""",
+  """CREATE TABLE shelf_actions (
+    id TEXT PRIMARY KEY, payload TEXT NOT NULL CHECK(json_valid(payload)), created_at INTEGER NOT NULL
+  ) STRICT""",
+  """CREATE TABLE file_recycle (
+    book_id TEXT PRIMARY KEY REFERENCES books(id), digest TEXT NOT NULL CHECK(length(digest)=64),
+    intent TEXT NOT NULL CHECK(intent IN ('recycle','restore'))
+  ) STRICT""",
+  """INSERT INTO book_metadata(book_id,state,last_opened)
+    SELECT b.id,CASE WHEN MAX(p.updated_at)>0 THEN 'reading' ELSE 'unread' END,COALESCE(MAX(p.updated_at),0)
+    FROM books b LEFT JOIN positions p ON p.book_id=b.id GROUP BY b.id""",
+  'CREATE INDEX book_metadata_recent ON book_metadata(last_opened)',
 ]);

@@ -18,6 +18,7 @@ enum ImportIssue {
   disk,
   cancelled,
   classification,
+  recovery,
 }
 
 final class ImportFailure implements Exception {

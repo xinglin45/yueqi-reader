@@ -61,7 +61,7 @@ flowchart TB
 
 每款 App 独立数据库：novel.sqlite、comic.sqlite（逻辑名称，实际目录由平台 API 获取）。元数据入 SQLite；TXT/EPUB、章节和图片作为文件，数据库记录 hash、大小、引用与状态。
 
-以下为全局完整目标表草案；当前小说实际16表及schema v6以[本地存储协议](storage/novel-schema.md)为准，未实现outbox/sync_state等后续功能：
+以下为全局完整目标表草案；当前小说实际20表及schema v7以[本地存储协议](storage/novel-schema.md)为准，未实现outbox/sync_state等后续功能：
 
 - library_items：app_kind、content_key、source_id、source_item_id、标题、语言、分级、许可记录引用。
 - progress：chapter_id、position_kind、position_payload、content_revision、device_seq、server_revision。

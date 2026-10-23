@@ -71,11 +71,11 @@ final class DocumentBridge {
       reply(nil)
       return
     }
-    if call.method == "choose" {
+    if call.method == "choose" || call.method == "chooseCover" {
       let panel = NSOpenPanel()
-      panel.allowsMultipleSelection = true
+      panel.allowsMultipleSelection = call.method != "chooseCover"
       panel.canChooseDirectories = false
-      panel.allowedContentTypes = [.plainText, UTType(filenameExtension: "epub") ?? .data]
+      panel.allowedContentTypes = call.method == "chooseCover" ? [.png, .jpeg] : [.plainText, UTType(filenameExtension: "epub") ?? .data]
       panel.prompt = "选择文件"
       panel.begin { response in
         var selected = response == .OK ? panel.urls : []

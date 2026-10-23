@@ -45,3 +45,8 @@ MAC-01原始清单由该提交的脚本生成；当前重建须显式提供`--ch
 ## MAC-07（2026-10-22）
 
 [本批清单](mac-07-dependencies.json)仍为77包，运行闭包49、研究19、开发9，无新依赖/升级/许可原文。生产EPUB使用本项目受限XML/ZIP处理与系统WKWebView；研究epub_view/html继续只用于历史探针。字体实测复用MAC-06的Phosphor MIT样本；本批新PNG/JPEG为自产几何像素，Pillow12.2.0仅用于离线生成已提交fixture，不进入App运行包。Release新增WebKit子进程所需network.client，内容外联仍由CSP/资源/导航规则拒绝。重建：`python3 tool/record_dependency_licenses.py --checkpoint mac-07`。源码许可证仍未选定。
+
+
+## MAC-08（2026-10-23）
+
+[本批清单](mac-08-dependencies.json)仍77包，运行闭包49、研究19、开发9，无新包/升级/新增许可原文。封面选择用系统NSOpenPanel，尺寸与单帧检查/缩放用固定Flutter SDK图片编解码；本地封面检查只复用项目自产的D1封面，未下载真实书封。无新平台权限或网络来源。重建：`python3 tool/record_dependency_licenses.py --checkpoint mac-08`；项目源码许可证仍未选定。

@@ -1,0 +1,84 @@
+{
+  "verified_date": "2026-10-23",
+  "checkpoint": "MAC-08",
+  "entrypoint": "lib/main.dart",
+  "version": "0.0.9+9",
+  "bundle_id": "local.yueqi.novel",
+  "minimum_macos": "12.0",
+  "executable_architectures": "arm64",
+  "dart_aot_architectures": "arm64",
+  "schema_version": 7,
+  "table_count": 20,
+  "signature": "Internal ad-hoc; tool/sign_macos_internal.py deep strict verification passed",
+  "release_entitlements": {
+    "com.apple.security.app-sandbox": true,
+    "com.apple.security.files.bookmarks.app-scope": true,
+    "com.apple.security.files.user-selected.read-only": true,
+    "com.apple.security.get-task-allow": true,
+    "com.apple.security.network.client": true
+  },
+  "notarized": false,
+  "notices_uncompressed_bytes": 1345810,
+  "notices_sha256": "a83a26b2d140a544db5077dbc1f316b8ce017f7834acb30b7f419c695da7aee0",
+  "native_assets": [
+    {
+      "path": "Contents/Frameworks/objective_c.framework/Versions/A/objective_c",
+      "bytes": 184336,
+      "sha256": "9d8b47be86b36d0e3f745fdd4807452fea6be9fc0c3e68563508e15bebe547a9"
+    },
+    {
+      "path": "Contents/Frameworks/sqlite3.framework/Versions/A/sqlite3",
+      "bytes": 1669392,
+      "sha256": "e7301982a121e9e21c98ed948653f2310ab8c2ae47a967002c053f5d07e18d73"
+    }
+  ],
+  "application_executable": {
+    "path": "Contents/MacOS/阅栖",
+    "bytes": 306368,
+    "sha256": "134a6e3a9d57720f9f553af676354d1e00c804ca13a5b43a8c6827fa91b878ab"
+  },
+  "dart_aot": {
+    "path": "Contents/Frameworks/App.framework/Versions/A/App",
+    "bytes": 7026400,
+    "sha256": "e1fb758bd97244b184154fdd925b81711b4ec221dd1637af6d82bbe5e5decfb5"
+  },
+  "build_output": "小说/client/build/macos/Build/Products/Release/阅栖.app",
+  "tool_reported_size_mb": 31.2,
+  "debug_build_passed": true,
+  "release_build_passed": true,
+  "flutter_dart_test_count": 91,
+  "python_test_count": 13,
+  "source_approvals": {
+    "normal": 0,
+    "adult": 0
+  },
+  "gui_verification": "Final default Release retained original one-book library, dark theme and exact paragraph 2 marker after schema7 migration. Isolated native-managed EPUB metadata, PNG cover, collections, shelf undo, file recycle/restore and recent/list restart separately verified. No production test-book import or adult declaration submitted.",
+  "gui_screenshots": [
+    "native-cover-metadata.png",
+    "native-removed-shelf.png",
+    "native-release-restart-list.png",
+    "native-recent-reading.png",
+    "native-recycled-file.png",
+    "release-preserved-library.png",
+    "release-preserved-position.png"
+  ],
+  "manual_limits": [
+    "macOS arm64 only; deployment target is not a minimum-system runtime acceptance.",
+    "No notarization, DMG or installation-upgrade acceptance.",
+    "No full large-library/startup or long-session memory performance claim; bounded 61-item query test is functional evidence.",
+    "Native keyboard editing used plain keys; Chinese/emoji metadata covered by widget/database tests, full IME matrix remains later.",
+    "Final reserved adult-default scope compatibility fix covered by 91-test regression; final default Debug/Release rebuilt after it."
+  ],
+  "source_sha256": {
+    "小说/client/lib/infrastructure/shelf/local_shelf.dart": "871f53ec5be911c5d9137d21395a19cf8ec634479c0dd37d4e40f299e6a2033e",
+    "小说/client/lib/infrastructure/shelf/cover_image.dart": "f6cb4c40b4c65cacf8134a0a42ebe5227fb086474bff32718b03214c4e18052f",
+    "小说/client/lib/features/shelf_view.dart": "1f7506d34aec561f8a1c175f7336f1159d02399c7b7e9f41a333ea483bc06a25",
+    "小说/client/lib/infrastructure/storage/schema.dart": "aed30cc129c2beb46b46c91f26f189a8842157abb6bf5a4854bfa3f217884c85",
+    "小说/client/lib/infrastructure/storage/local_library.dart": "770154ceb803eabcd5e8e04d50173cb54a3746de34e37a83c8972dba44ed873b",
+    "小说/client/lib/infrastructure/importing/local_importer.dart": "f1e1157edfece6875f793fe3640bdb2716d33b81502a70d68962a7c8b66f6edc",
+    "小说/client/macos/Runner/DocumentBridge.swift": "ef46c736f8a861a98bdee92454f6dba8799ca7a818a193e6a648f3af3d6fd920",
+    "packages/platform_services/lib/platform_services.dart": "9359f1a4797a4910cf36f9499723cbadee163e5b40bc42a5ff4357ce45f921d3",
+    "小说/client/lib/domain/shelf.dart": "2e08ada5b20189c5da298f92853164817ce338f62628174b5d0ab858ec5085d1",
+    "小说/client/lib/app/dependencies.dart": "80488fbc695c9180ffb0113baf9e918df461032e62c3f6cd5efa0f716b40152a"
+  }
+}

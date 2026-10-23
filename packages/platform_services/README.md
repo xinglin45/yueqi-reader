@@ -9,3 +9,5 @@ UnavailablePlatform对所有动作返回unsupported，语音能力为无暂停/�
 测试替身放在消费App的test/fakes.dart，禁止将其作为生产安全存储。签名与生命周期草案见[接口](../../docs/interfaces.md)，验收见[MAC-02](../../docs/verifications/mac-02-2026-10-16.md)。
 
 MAC-06新增`experiments/macos/SpeechProbe.swift`独立研究源，由小说`tool/mac06/run_speech_probe.py`编译运行；不作为Dart包导出，也没有接入生产SpeechService。当前机器暂停/继续、UTF-16回调及十分钟试验通过，整机离线/休眠等仍待MAC-12，见[研究决策](../../docs/decisions/0005-mac06-system-tts.md)。
+
+MAC-08另提供CoverAccess单选PNG/JPEG端口；macOS复用DocumentAccess只读流和临时grant，其他平台未接入时明确提示不支持。封面不被当作TXT/EPUB导入，不返回系统路径。

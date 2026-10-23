@@ -12,12 +12,12 @@ MAC-01已实现的最小共享标识为[ReaderProduct](../packages/reader_core/l
 | StorageDatabase | reader_storage后台isolate串行拥有连接；query只读，transaction批次/expectedChanges原子前置条件；StorageFailure仅安全错误码 | SQL仅应用源码；后续大批次/取消/多窗口需按任务补充 |
 | SchemaStep/恢复 | 连续版本；迁移前完整快照及核验，DDL事务回滚，失败/新版本库只读；不可读/初始化失败明确错误且保留原文件 | 无自动覆盖旧库或用户恢复选择器，见[恢复说明](storage/recovery.md) |
 | ContentFiles | 有界摘要对象写入、校验、rename后元数据提交；read核验，audit报告缺失/孤儿 | 默认8MiB小样预算；外部文件由MAC-04的DocumentImporter流式导入，独立64 MiB上限，不自动删除孤儿 |
-| LibraryRepository | 原load/addDemonstration/preview签名保持；生产LocalLibrary使用真实库，持久随机book_id/修订/托管样本；SessionLibrary只为组件测试 | 正文样本预览保留；MAC-05/07的独立Reader负责导入TXT/EPUB；load单批200条，管理/分页待MAC-08 |
+| LibraryRepository | 原load/addDemonstration/preview签名保持；生产LocalLibrary使用真实库，持久随机book_id/修订/托管样本；SessionLibrary只为组件测试 | 正文样本预览保留；MAC-05/07的独立Reader负责导入TXT/EPUB；load仍为兼容单批200条；生产书架由MAC-08的ShelfRepository分页管理 |
 | DocumentAnchor | domain/documents.dart：wire v1、TXT/EPUB结构锚点、UTF-16范围、exact/上下文指纹与边界校验；返回exact/context候选/chapterStart/unresolved | 仅exact自动使用，候选/回退不覆盖旧记录；正式解析器/阅读器在MAC-05/07/09 |
 | PositionRepository | loadPosition/savePosition按book_id＋reading/listening分离；保存带expectedSequence，0仅首次创建；修订外键和CAS避免串书/过期覆盖 | 当前UI支持样本/TXT/EPUB主动保存位置，未自动记录滚动或接通听书 |
 | 设置与元数据基础 | theme实际跨启动保留；schema v3含11表与领域类型，权限/核验unknown保留；元数据revision/墓碑为未来同步边界 | 本行保留MAC-03交付范围；成年声明/隐私锁后由MAC-16覆盖；笔记、下载调度、在线接入或网络outbox未实现 |
 
-身份、表约束与偏移转换见[存储协议](storage/novel-schema.md)，取舍见[ADR-0006](decisions/0006-mac03-local-storage-and-anchors.md)，实测见[验收](verifications/mac-03-2026-10-20.md)。下方MAC-02表保留该批次的原有端口边界；生产LibraryRepository已由本节覆盖，文件选择/凭据/语音/窗口端口仍unsupported。
+身份、表约束与偏移转换见[存储协议](storage/novel-schema.md)，取舍见[ADR-0006](decisions/0006-mac03-local-storage-and-anchors.md)，实测见[验收](verifications/mac-03-2026-10-20.md)。下方MAC-02表保留该批次的原有端口边界；生产LibraryRepository已由本节覆盖，文件选择后由MAC-04/08覆盖，凭据/语音/窗口生产端口仍unsupported。
 
 ## MAC-06研究结论对后续契约的约束（2026-10-19）
 
@@ -176,3 +176,14 @@ MAC-05未提供自动滚动位置、检索/笔记/TTS或完整排版；取消可
 `epubSelection`将隔离主机桥接的有序选区片段与规范原文逐项核对，支持跨行内元素/段落，拒绝假会话、非整数、乱序、半代理对和伪造exact。DocumentAnchor仍用wire v1；新解析器采用epub-v1的documents/chapters，schema6不变。手动保存选区起点，重启仅exact自动恢复；后续检索/笔记/TTS可复用文本与映射，本步未实现这些产品用例。
 
 MacEpubSurface独立承载WK滚动视口，固定方法仅有start/capture/layout/restore/dispose和受控诊断；正文page world没有消息处理器或任意JS桥接。资源请求/返回与目录、位置均经过MAC-16门禁；锁定使会话及标题/正文/图片弹窗失效。原生阶段失败/超时可重新加载本章，旧位置保留。实际支持子集、资源预算、临时副本和权限变化见[ADR-0010](decisions/0010-mac07-controlled-epub.md)及[验收](verifications/mac-07-2026-10-22.md)。
+
+
+## MAC-08已实现的管理端口
+
+`ShelfRepository`独立于正文端口：`preferences/savePreferences`按普通/成人/普通最近阅读持久保存；`list`每页50本，按实际book_id返回格式、托管/书签引用、文件状态、元信息/分组/修订与总数。搜索只查书名/作者/分组，全文检索仍留MAC-10。管理页不再使用LibraryRepository的200本兼容列表作为全部书库。
+
+`edit(revisions, BookEdit)`可批量更新状态/收藏、手动序号、普通元信息、自定义归属或移出标志；`undo/latestAction`仅返回当前范围中修订匹配的候选，数据与快照同事务。`createGroup/renameGroup/removeGroup(removed)`提供创建、重命名、停用与恢复，跨分级归属拒绝。`markOpened`只在实际正文打开后记录最近阅读，读完不被重置。
+
+`cover/setCover`返回校验/缩放后PNG字节，不给UI系统路径；`CoverAccess.chooseCover`是现有DocumentBridge的独立单选PNG/JPEG能力，沿用DocumentAccess只读流和释放临时grant。用户书籍、来源凭据与设备声明不进入封面文件。
+
+`recycleFile/restoreFile`只移动应用管理的导入副本，并持久化移动意图；从不删除或移动外部引用原件。`checkFile`复用MAC-04核验，授权/文件错误分别保留，列表的存在性检查不能替代摘要核验。移除个人记录通过`BookEdit.clearRecords`明确选择；笔记编辑/永久清空/缓存配额/完整备份不在本步实现。详见[ADR-0011](decisions/0011-mac08-library-management.md)和[验收](verifications/mac-08-2026-10-23.md)。

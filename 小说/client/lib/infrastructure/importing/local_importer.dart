@@ -219,6 +219,20 @@ final class LocalImporter implements DocumentImporter {
       _admitRating(rating);
       if (existing.isNotEmpty) {
         final bookId = existing.single['book_id']! as String;
+        final hidden = await library.database.query(
+          'SELECT deleted FROM books WHERE id=?',
+          [bookId],
+        );
+        if (hidden.single['deleted'] == 1) {
+          throw const ImportFailure(ImportIssue.recovery);
+        }
+        if ((library.database.info['version']! as int) >= 7 &&
+            (await library.database.query(
+              'SELECT 1 FROM file_recycle WHERE book_id=?',
+              [bookId],
+            )).isNotEmpty) {
+          throw const ImportFailure(ImportIssue.recovery);
+        }
         await library.checkAccess(bookId);
         var repaired = false;
         final rows = await library.database.query(
@@ -352,9 +366,16 @@ final class LocalImporter implements DocumentImporter {
               'unknown',
             ],
           ),
+          if ((library.database.info['version']! as int) >= 7)
+            SqlCommand(
+              'UPDATE imports SET display_name=? WHERE document_id=?',
+              [preview.grant.displayName, revision],
+            ),
           if (rating == RatingLevel.restricted) ...[
-            const SqlCommand(
-              "INSERT OR IGNORE INTO collections(id,label,kind) VALUES('adult-default','成人收藏','adult')",
+            SqlCommand(
+              (library.database.info['version']! as int) >= 7
+                  ? "INSERT OR IGNORE INTO collections(id,label,kind,scope) VALUES('adult-default','成人收藏','adult','adult')"
+                  : "INSERT OR IGNORE INTO collections(id,label,kind) VALUES('adult-default','成人收藏','adult')",
             ),
             SqlCommand(
               "INSERT INTO collection_books VALUES('adult-default',?)",

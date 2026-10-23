@@ -1,7 +1,7 @@
 name: novel_app
 description: "阅读软件：阅栖小说客户端，D1应用壳、本地存储与独立技术探针。"
 publish_to: 'none'
-version: 0.0.8+8
+version: 0.0.9+9
 
 environment:
   sdk: ^3.13.5

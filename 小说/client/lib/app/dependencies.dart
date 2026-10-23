@@ -1,3 +1,5 @@
+import '../domain/shelf.dart';
+import '../infrastructure/shelf/local_shelf.dart';
 import '../domain/epub.dart';
 import '../infrastructure/epub/local_epub_reader.dart';
 import '../domain/importing.dart';
@@ -31,6 +33,7 @@ final class AppDependencies {
     required this.secrets,
     required this.speech,
     required this.windows,
+    this.shelf,
     this.positions,
     this.importer,
     this.txt,
@@ -117,8 +120,11 @@ final class AppDependencies {
       await txt?.initialize();
       final epub = importer == null ? null : LocalEpubReader(importer);
       await epub?.initialize();
+      final shelf = database.readOnly ? null : LocalShelf(library, importer);
+      await shelf?.initialize();
       return AppDependencies(
         library: library,
+        shelf: shelf,
         positions: library,
         access: access,
         discovery: discovery,
@@ -134,6 +140,7 @@ final class AppDependencies {
         persistTheme: (value) =>
             library.saveSetting('theme', value ? 'dark' : 'light'),
         close: () async {
+          await shelf?.dispose();
           await epub?.dispose();
           await txt?.dispose();
           await importer?.dispose();
@@ -152,6 +159,7 @@ final class AppDependencies {
     }
   }
 
+  final ShelfRepository? shelf;
   final DocumentImporter? importer;
   final TxtDocumentReader? txt;
   final EpubDocumentReader? epub;

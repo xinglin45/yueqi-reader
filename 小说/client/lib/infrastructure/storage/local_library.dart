@@ -84,11 +84,24 @@ final class LocalLibrary
       _hasPolicy ? 'LEFT JOIN content_policy p ON p.book_id=b.id' : '';
   Future<void> checkAccess(String bookId) async {
     await _admit(bookId);
+    if ((database.info['version']! as int) >= 7 &&
+        (await database.query('SELECT 1 FROM file_recycle WHERE book_id=?', [
+          bookId,
+        ])).isNotEmpty) {
+      throw const AppFailure(FailureCode.missing);
+    }
   }
 
-  Future<ContentRating> _admit(String bookId) async {
+  Future<void> managementAccess(String bookId) async {
+    await _admit(bookId, includeDeleted: true);
+  }
+
+  Future<ContentRating> _admit(
+    String bookId, {
+    bool includeDeleted = false,
+  }) async {
     final rows = await database.query(
-      'SELECT b.id,b.rating,b.rating_evidence,$_policyColumns FROM books b $_policyJoin WHERE b.id=? AND b.deleted=0',
+      'SELECT b.id,b.rating,b.rating_evidence,$_policyColumns FROM books b $_policyJoin WHERE b.id=? ${includeDeleted ? '' : 'AND b.deleted=0'}',
       [bookId],
     );
     if (rows.isEmpty) throw const AppFailure(FailureCode.missing);
@@ -223,7 +236,9 @@ final class LocalLibrary
           [revision, 'card.txt', digest, 'text/plain', bytes.length, 'allowed'],
         ),
         SqlCommand(
-          "INSERT OR IGNORE INTO collections(id,label,kind) VALUES('adult-default','成人收藏','adult')",
+          (database.info['version']! as int) >= 7
+              ? "INSERT OR IGNORE INTO collections(id,label,kind,scope) VALUES('adult-default','成人收藏','adult','adult')"
+              : "INSERT OR IGNORE INTO collections(id,label,kind) VALUES('adult-default','成人收藏','adult')",
         ),
         SqlCommand("INSERT INTO collection_books VALUES('adult-default',?)", [
           book,

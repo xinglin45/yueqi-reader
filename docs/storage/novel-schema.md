@@ -1,6 +1,6 @@
 # 小说本地数据与位置协议 v1
 
-日期：2026-10-22。数据库schema **v6**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v6.sql)供审阅，不代替源码迁移。
+日期：2026-10-23。数据库schema **v7**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v7.sql)供审阅，不代替源码迁移。
 
 ## 存放与表职责
 
@@ -15,14 +15,14 @@
 | positions / StoredPosition | (book_id,channel)、document_id、anchor JSON、local_seq、更新时间；(book_id,document_id)复合外键 | 阅读/听书独立持久位置；样本/TXT/EPUB主动位置；自动进度待MAC-09 |
 | annotations / AnnotationRecord | bookmark/highlight/note；关联书籍/修订；anchor、note、row_revision、deleted | schema/模型已定义；MAC-11产品用例待实现 |
 | content_policy / ContentRating | book_id外键；原始/内部评级、最低年龄/来源地区/证据/策略/来源资格 | MAC-16门禁，unknown/prohibited不自动归普通；地区skipped_by_user |
-| collections / CollectionRecord | collection/tag/adult；独立id、标签、revision/墓碑 | schema/模型已定义；MAC-16成人分组已实现；一般管理MAC-08待实现 |
-| collection_books | 书籍与分组复合主键/外键 | MAC-16中性分级卡片与独立成人分组关系 |
+| collections / CollectionRecord | collection/tag/adult；独立id、标签、revision/墓碑 | MAC-08合集/标签管理与固定normal/adult范围；MAC-16成人默认分组保留 |
+| collection_books | 书籍与分组复合主键/外键 | MAC-08普通/成人各自的合集标签关系，批量替换不移除成人默认组 |
 | source_bindings / SourceBinding | source_id＋source_item_id唯一；对应本地book_id、核验/缓存unknown、仅credential_ref、revision/墓碑 | 未来显式来源绑定，尚无真实接入 |
 | jobs / StoredJob | 持久job_id、import/download、状态/进度/安全错误码/时间 | 任务模型基础；调度/恢复产品用例待MAC-04/21 |
 | imports | document_id主外键；mode、仅本机grant_id、encoding、awaiting_parser | MAC-04导入索引，托管正文在objects；引用无永久副本 |
 | settings | key白名单theme/text_scale；JSON值、row_revision | 深浅色实际持久；其余设置后续 |
 
-row_revision仅本机元数据代际；updated_at是UTC epoch毫秒，不能作为未来跨设备唯一冲突顺序。后续MAC-25补服务修订/设备序号与协议，不创建空转outbox。删除有墓碑，当前UI尚未开放清库/删书。
+row_revision仅本机元数据代际；updated_at是UTC epoch毫秒，不能作为未来跨设备唯一冲突顺序。后续MAC-25补服务修订/设备序号与协议，不创建空转outbox。删除有墓碑，MAC-08已开放可恢复的移出/托管副本回收及个人记录移除；没有永久清库入口。
 
 ## 原子边界与故障状态
 
@@ -64,3 +64,10 @@ txt-stage为候选/中断暂存，启动持有写入租约后清理；txt-indice
 ## MAC-07 EPUB解析与临时资源
 
 无新迁移，schema仍为6、共16表。EPUB解析使用既有documents（epub-v1）、chapters与positions，原始imports记录不变；同原件/解析器复用稳定文档修订，新的解析器版本须新增修订而非改写旧位置。正文及有摘要的资源仅在epub-sessions/会话ID中临时展开，关闭/取消/锁定/启动清理；引用原件不变。此目录不得进入未来书库备份/同步，崩溃到下次启动之间可能残留。具体映射、资源安全与恢复见[ADR-0010](../decisions/0010-mac07-controlled-epub.md)。
+
+
+## MAC-08 schema7管理与回收
+
+实际20表。新增book_metadata（作者/简介/状态/收藏/手动序号/最后打开/封面摘要/最后文件检查）、shelf_preferences（普通/成人/最近阅读分开）、shelf_actions（有界版本化逆向快照）、file_recycle（可恢复文件移动意图）。imports新增原始display_name；旧记录留空。collections新增scope与范围内有效名称唯一约束。现有位置用于回填在读/最近阅读，不改锚点或原件。
+
+封面字节在covers/objects，回收的托管原件在recycle；二者均在本机小说资料区，不属于可随意清理的Web会话目录。软移出、文件回收和个人记录移除相互独立；逆向快照包含可能敏感的元数据与摘录，未来备份/同步必须沿用分级过滤，不自动外发。最近20候选撤销验证books.row_revision，不覆盖新位置或编辑；回收/恢复也推进book修订。完整约束见[ADR-0011](../decisions/0011-mac08-library-management.md)。

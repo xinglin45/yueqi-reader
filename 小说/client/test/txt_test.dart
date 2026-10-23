@@ -104,7 +104,10 @@ void main() {
       ]);
       await db.close();
       deps = await AppDependencies.open(Locations(dir.path), documents: files);
-      expect((deps.library as LocalLibrary).database.info['version'], 6);
+      expect(
+        (deps.library as LocalLibrary).database.info['version'],
+        novelSchema.last.version,
+      );
       expect((await deps.library.load(job())).value.single.title, '旧导入');
       expect(await deps.txt!.open('legacy', job()), isNull);
       final candidate = await deps.txt!.preview(

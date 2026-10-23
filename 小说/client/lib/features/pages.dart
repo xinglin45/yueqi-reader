@@ -1,3 +1,4 @@
+import 'shelf_view.dart';
 import '../domain/documents.dart';
 import 'epub_reader.dart';
 import 'import_flow.dart';
@@ -192,195 +193,210 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      PageHeading(
-        widget.recent ? '最近阅读' : '我的书架',
-        eyebrow: '留一点时间，给阅读',
-        action: FilledButton.icon(
-          key: const ValueKey('import-book'),
-          onPressed:
-              widget.onImport ??
-              () => showImport(context, widget.dependencies.files),
-          icon: const Icon(PhosphorIconsLight.plus, size: 18),
-          label: const Text('导入书籍'),
-        ),
-      ),
-      Wrap(
-        spacing: 8,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          for (final (index, title) in ['全部书籍', '在读', '成人收藏'].indexed)
-            TextButton(
-              onPressed: () => setState(() => _tab = index),
-              style: TextButton.styleFrom(
-                foregroundColor: _tab == index
-                    ? Theme.of(context).colorScheme.onSurface
-                    : Theme.of(context).colorScheme.onSurfaceVariant,
-                side: _tab == index
-                    ? BorderSide(color: Theme.of(context).colorScheme.primary)
-                    : BorderSide.none,
-              ),
-              child: Text(title),
-            ),
-          IconButton(
-            onPressed: () => setState(() => _grid = !_grid),
-            tooltip: _grid ? '切换列表' : '切换网格',
-            icon: Icon(
-              _grid ? PhosphorIconsLight.list : PhosphorIconsLight.squaresFour,
-            ),
-          ),
-        ],
-      ),
-      const SizedBox(height: 12),
-      const Divider(),
-      const SizedBox(height: 24),
-      if (widget.recent || _tab == 1)
-        const EmptyState(
-          icon: PhosphorIconsLight.clock,
-          title: '从书架继续阅读',
-          message: '最近阅读列表尚未接入；已保存的样本可在书架打开并恢复记住的段落。',
-        )
-      else if (_tab == 2 &&
-          widget.dependencies.access != null &&
-          widget.dependencies.library is AdultLibrary)
-        AdultCollection(
-          dependencies: widget.dependencies,
-          access: widget.dependencies.access!,
-          library: widget.dependencies.library as AdultLibrary,
+  Widget build(BuildContext context) => widget.dependencies.shelf != null
+      ? ManagedShelf(
+          deps: widget.dependencies,
           navigation: widget.navigation,
+          recent: widget.recent,
+          onImport: widget.onImport,
         )
-      else if (_tab == 2)
-        const EmptyState(
-          icon: PhosphorIconsLight.lockSimple,
-          title: '成人收藏独立保存',
-          message: '当前尚无收藏。成年声明、隐私锁与搜索开关将在 MAC-16 分别接入；关闭搜索不会删除已有收藏。',
-        )
-      else
-        TaskView<List<BookSummary>>(
-          key: _task,
-          load: widget.dependencies.library.load,
-          empty: EmptyState(
-            icon: PhosphorIconsLight.bookOpenText,
-            title: '把喜欢的故事，放进书架',
-            message: '这里会保存你的本地书籍。先体验一段自产样本，或查看导入进度。无需登录。',
-            actions: [
-              FilledButton(
-                onPressed: () => _task.currentState?.run(
-                  widget.dependencies.library.addDemonstration,
-                ),
-                child: const Text('体验演示样本'),
+      : Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            PageHeading(
+              widget.recent ? '最近阅读' : '我的书架',
+              eyebrow: '留一点时间，给阅读',
+              action: FilledButton.icon(
+                key: const ValueKey('import-book'),
+                onPressed:
+                    widget.onImport ??
+                    () => showImport(context, widget.dependencies.files),
+                icon: const Icon(PhosphorIconsLight.plus, size: 18),
+                label: const Text('导入书籍'),
               ),
-            ],
-          ),
-          builder: (books) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${books.every((book) => book.persistent) ? '本机书架' : '本次会话'} · ${books.length} 本',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontSize: 12,
-                ),
-              ),
-              const SizedBox(height: 24),
-              if (_grid)
-                Wrap(
-                  spacing: 32,
-                  runSpacing: 32,
-                  children: [
-                    for (final book in books)
-                      SizedBox(
-                        width: 148,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              onTap: () => _open(book),
-                              borderRadius: BorderRadius.circular(4),
-                              child: book.demo
-                                  ? const Cover(width: 148)
-                                  : const SizedBox(
-                                      width: 148,
-                                      height: 222,
-                                      child: Center(
-                                        child: Icon(
-                                          PhosphorIconsLight.fileText,
-                                          size: 48,
-                                        ),
-                                      ),
-                                    ),
-                            ),
-                            const SizedBox(height: 12),
-                            Text(
-                              book.title,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              book.subtitle,
-                              style: TextStyle(
-                                fontSize: 11,
-                                height: 1.6,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .onSurfaceVariant,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            TextButton(
-                              onPressed: () => _open(book),
-                              child: Text(
-                                book.importedTxt
-                                    ? '打开 TXT 阅读'
-                                    : book.importedEpub
-                                    ? '打开 EPUB 阅读'
-                                    : book.previewAvailable
-                                    ? '打开阅读预览'
-                                    : '查看文件状态',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                )
-              else
-                for (final book in books)
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: book.demo
-                        ? const Cover(width: 40)
-                        : const Icon(PhosphorIconsLight.fileText),
-                    title: Text(book.title),
-                    subtitle: Text(book.subtitle),
-                    trailing: const Icon(PhosphorIconsLight.caretRight),
-                    onTap: () => _open(book),
-                  ),
-            ],
-          ),
-        ),
-      const SizedBox(height: 40),
-      const Divider(),
-      const SizedBox(height: 12),
-      Wrap(
-        spacing: 12,
-        runSpacing: 8,
-        children: [
-          for (final page in [AppPage.notes, AppPage.tasks, AppPage.statistics])
-            TextButton.icon(
-              onPressed: () => widget.navigation.go(AppLocation(page)),
-              icon: Icon(page.icon, size: 17),
-              label: Text(page.label),
             ),
-        ],
-      ),
-    ],
-  );
+            Wrap(
+              spacing: 8,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                for (final (index, title) in ['全部书籍', '在读', '成人收藏'].indexed)
+                  TextButton(
+                    onPressed: () => setState(() => _tab = index),
+                    style: TextButton.styleFrom(
+                      foregroundColor: _tab == index
+                          ? Theme.of(context).colorScheme.onSurface
+                          : Theme.of(context).colorScheme.onSurfaceVariant,
+                      side: _tab == index
+                          ? BorderSide(
+                              color: Theme.of(context).colorScheme.primary,
+                            )
+                          : BorderSide.none,
+                    ),
+                    child: Text(title),
+                  ),
+                IconButton(
+                  onPressed: () => setState(() => _grid = !_grid),
+                  tooltip: _grid ? '切换列表' : '切换网格',
+                  icon: Icon(
+                    _grid
+                        ? PhosphorIconsLight.list
+                        : PhosphorIconsLight.squaresFour,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const Divider(),
+            const SizedBox(height: 24),
+            if (widget.recent || _tab == 1)
+              const EmptyState(
+                icon: PhosphorIconsLight.clock,
+                title: '从书架继续阅读',
+                message: '最近阅读列表尚未接入；已保存的样本可在书架打开并恢复记住的段落。',
+              )
+            else if (_tab == 2 &&
+                widget.dependencies.access != null &&
+                widget.dependencies.library is AdultLibrary)
+              AdultCollection(
+                dependencies: widget.dependencies,
+                access: widget.dependencies.access!,
+                library: widget.dependencies.library as AdultLibrary,
+                navigation: widget.navigation,
+              )
+            else if (_tab == 2)
+              const EmptyState(
+                icon: PhosphorIconsLight.lockSimple,
+                title: '成人收藏独立保存',
+                message: '当前尚无收藏。成年声明、隐私锁与搜索开关将在 MAC-16 分别接入；关闭搜索不会删除已有收藏。',
+              )
+            else
+              TaskView<List<BookSummary>>(
+                key: _task,
+                load: widget.dependencies.library.load,
+                empty: EmptyState(
+                  icon: PhosphorIconsLight.bookOpenText,
+                  title: '把喜欢的故事，放进书架',
+                  message: '这里会保存你的本地书籍。先体验一段自产样本，或查看导入进度。无需登录。',
+                  actions: [
+                    FilledButton(
+                      onPressed: () => _task.currentState?.run(
+                        widget.dependencies.library.addDemonstration,
+                      ),
+                      child: const Text('体验演示样本'),
+                    ),
+                  ],
+                ),
+                builder: (books) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${books.every((book) => book.persistent) ? '本机书架' : '本次会话'} · ${books.length} 本',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    if (_grid)
+                      Wrap(
+                        spacing: 32,
+                        runSpacing: 32,
+                        children: [
+                          for (final book in books)
+                            SizedBox(
+                              width: 148,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: () => _open(book),
+                                    borderRadius: BorderRadius.circular(4),
+                                    child: book.demo
+                                        ? const Cover(width: 148)
+                                        : const SizedBox(
+                                            width: 148,
+                                            height: 222,
+                                            child: Center(
+                                              child: Icon(
+                                                PhosphorIconsLight.fileText,
+                                                size: 48,
+                                              ),
+                                            ),
+                                          ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    book.title,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    book.subtitle,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      height: 1.6,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  TextButton(
+                                    onPressed: () => _open(book),
+                                    child: Text(
+                                      book.importedTxt
+                                          ? '打开 TXT 阅读'
+                                          : book.importedEpub
+                                          ? '打开 EPUB 阅读'
+                                          : book.previewAvailable
+                                          ? '打开阅读预览'
+                                          : '查看文件状态',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ],
+                      )
+                    else
+                      for (final book in books)
+                        ListTile(
+                          contentPadding: EdgeInsets.zero,
+                          leading: book.demo
+                              ? const Cover(width: 40)
+                              : const Icon(PhosphorIconsLight.fileText),
+                          title: Text(book.title),
+                          subtitle: Text(book.subtitle),
+                          trailing: const Icon(PhosphorIconsLight.caretRight),
+                          onTap: () => _open(book),
+                        ),
+                  ],
+                ),
+              ),
+            const SizedBox(height: 40),
+            const Divider(),
+            const SizedBox(height: 12),
+            Wrap(
+              spacing: 12,
+              runSpacing: 8,
+              children: [
+                for (final page in [
+                  AppPage.notes,
+                  AppPage.tasks,
+                  AppPage.statistics,
+                ])
+                  TextButton.icon(
+                    onPressed: () => widget.navigation.go(AppLocation(page)),
+                    icon: Icon(page.icon, size: 17),
+                    label: Text(page.label),
+                  ),
+              ],
+            ),
+          ],
+        );
 }
 
 class ReaderPage extends StatelessWidget {

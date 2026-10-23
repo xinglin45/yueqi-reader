@@ -18,6 +18,7 @@ String importHelp(ImportIssue issue) => switch (issue) {
   ImportIssue.missing => '文件已丢失，请重新选择。',
   ImportIssue.changed => '内容已改变，未覆盖旧修订或位置。请作为新文件导入，或关联内容相同的原件。',
   ImportIssue.disk => '未能完成本地保存，请检查资料目录或剩余空间后重试。',
+  ImportIssue.recovery => '同一文件已在本机回收范围中。请在书架的“已移出书架”或书籍详情恢复，不会新建重复书籍。',
   ImportIssue.cancelled => '未提交的文件已取消；此前已完成的文件会保留。',
   ImportIssue.classification => '请先选择普通或成人分级；未知分级不会自动归入普通书架。',
 };

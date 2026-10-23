@@ -5,7 +5,7 @@ import 'package:platform_services/platform_services.dart';
 
 import '../domain/importing.dart';
 
-final class MacDocumentAccess implements DocumentAccess {
+final class MacDocumentAccess implements DocumentAccess, CoverAccess {
   MacDocumentAccess({MethodChannel? channel})
     : channel = channel ?? const MethodChannel('local.yueqi.documents') {
     this.channel.setMethodCallHandler((call) async {
@@ -32,6 +32,16 @@ final class MacDocumentAccess implements DocumentAccess {
       );
     } on MissingPluginException {
       return const PlatformUnavailable(PlatformFailure.unsupported);
+    } on PlatformException {
+      return const PlatformUnavailable(PlatformFailure.permissionDenied);
+    }
+  }
+
+  @override
+  Future<PlatformResult<FileGrant?>> chooseCover() async {
+    try {
+      final rows = _grants(await channel.invokeMethod<dynamic>('chooseCover'));
+      return PlatformSuccess(rows.firstOrNull);
     } on PlatformException {
       return const PlatformUnavailable(PlatformFailure.permissionDenied);
     }

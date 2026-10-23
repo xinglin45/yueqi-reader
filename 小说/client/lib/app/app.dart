@@ -1,3 +1,5 @@
+import '../features/shelf_view.dart';
+
 import 'dart:async';
 
 import 'package:platform_services/platform_services.dart';
@@ -173,6 +175,11 @@ class _ReaderShellState extends State<ReaderShell> {
   void _opened(BookSummary book) {
     if (mounted && _currentPreview?.id != book.id) {
       setState(() => _currentPreview = book);
+      unawaited(
+        widget.dependencies.shelf
+            ?.markOpened(book.id)
+            .catchError((Object _) {}),
+      );
     }
   }
 
@@ -298,7 +305,15 @@ class _ReaderShellState extends State<ReaderShell> {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (_currentPreview!.demo) const Cover(width: 58),
+                            if (widget.dependencies.shelf != null)
+                              BookArtwork(
+                                key: ValueKey('sidebar-${_currentPreview!.id}'),
+                                book: _currentPreview!,
+                                deps: widget.dependencies,
+                                width: 58,
+                              )
+                            else if (_currentPreview!.demo)
+                              const Cover(width: 58),
                             const SizedBox(width: 14),
                             Expanded(
                               child: Column(
@@ -336,7 +351,7 @@ class _ReaderShellState extends State<ReaderShell> {
               icon: const Icon(PhosphorIconsLight.info, size: 16),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text('阶段说明 · MAC-07', style: TextStyle(fontSize: 12)),
+                child: Text('阶段说明 · MAC-08', style: TextStyle(fontSize: 12)),
               ),
             ),
             TextButton.icon(
@@ -360,7 +375,7 @@ class _ReaderShellState extends State<ReaderShell> {
       content: const SizedBox(
         width: 420,
         child: Text(
-          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；TXT已可后台分章、目录跳转和分块阅读；EPUB已接入受控资源、目录/图片/字号主题与文本位置；完整分页、系统听书和低存在感窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
+          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；TXT已可后台分章、目录跳转和分块阅读；EPUB已接入受控资源、目录/图片/字号主题与文本位置；书架已支持最近阅读、状态/收藏、合集标签、排序筛选、元信息与封面、可恢复的移出和文件回收；完整分页、系统听书和低存在感窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
           style: TextStyle(height: 1.8),
         ),
       ),

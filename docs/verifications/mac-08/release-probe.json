@@ -1,0 +1,38 @@
+{
+  "verified_date": "2026-10-23",
+  "entrypoint": "tool/mac08/probe_main.dart",
+  "version": "0.0.9+9",
+  "scope": "Same production code; only mac08-probe storage injection.",
+  "dart_aot_sha256": "d868967ea666f3fe1a392680ed8302f29441fd5771b81ba085448e51ec909f63",
+  "deep_strict_signature_verified": true,
+  "gui_checks": [
+    "Native NSOpenPanel EPUB managed import with ordinary classification",
+    "Keyboard-entered qa author/title suffix saved",
+    "Native PNG picker, normalized cover shown",
+    "Collection created and assigned through actual controls",
+    "Shelf remove and undo restored same book",
+    "Managed file recycle and restore in Debug and latest Release",
+    "Normal list view, metadata, cover and membership persisted into Release restart",
+    "Actually opened EPUB appeared in recent with reading status; recent default sort matches query"
+  ],
+  "qa_data": {
+    "book_count": 1,
+    "schema": 7,
+    "restored_original_sha256": "48b61f2808e90f875558203ddd7f1aa4ddac5306d479bbe810a39e9f65f138f8",
+    "normalized_cover_bytes": 409643,
+    "normalized_cover_sha256": "15af21b1deadb5bd473d0368cf4012257faeb2f7e775a4a458c80225e67cd38f",
+    "recycle_intents_remaining": 0,
+    "custom_memberships": 1
+  },
+  "source_sha256": {
+    "小说/client/lib/infrastructure/shelf/local_shelf.dart": "871f53ec5be911c5d9137d21395a19cf8ec634479c0dd37d4e40f299e6a2033e",
+    "小说/client/lib/infrastructure/shelf/cover_image.dart": "f6cb4c40b4c65cacf8134a0a42ebe5227fb086474bff32718b03214c4e18052f",
+    "小说/client/lib/features/shelf_view.dart": "1f7506d34aec561f8a1c175f7336f1159d02399c7b7e9f41a333ea483bc06a25",
+    "小说/client/macos/Runner/DocumentBridge.swift": "ef46c736f8a861a98bdee92454f6dba8799ca7a818a193e6a648f3af3d6fd920"
+  },
+  "limits": [
+    "Native editing used plain keyboard events; Chinese/emoji metadata covered by widget/database tests, not an IME acceptance claim.",
+    "No production adult declaration or test-book import.",
+    "Native probe predates final reserved adult-default scope compatibility write; final default builds and 91-test regression cover that fix. Rendering, management and native-source hashes listed here remain unchanged."
+  ]
+}

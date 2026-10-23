@@ -158,3 +158,8 @@ abstract interface class DocumentAccess implements FileAccess {
   Future<void> releaseGrant(FileGrant grant);
   Future<void> forgetGrant(FileGrant grant);
 }
+
+/// Separate picker capability: never treats an image as a book import.
+abstract interface class CoverAccess {
+  Future<PlatformResult<FileGrant?>> chooseCover();
+}
