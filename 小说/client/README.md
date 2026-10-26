@@ -1,6 +1,6 @@
 # novel_app · 阅栖
 
-2026-10-26更新：**MAC-09代码与自动化已完成，默认入口已复核，剩余原生跳转/退出重启验收待无前台干扰方案；本步暂不标记完整验收，下一步先补齐尾项**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09阶段验证](../../docs/verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
+2026-10-26更新：**MAC-09阅读器、排版与位置恢复已完成，代码、自动化及原生验收通过；下一主任务为第11步MAC-10：中文全文搜索**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09验收](../../docs/verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
 
 小说/client是一套Flutter工程，保留Android、iOS、Windows、macOS四个宿主，共用lib。MAC-01/02、MAC-06研究、MAC-03本地存储与MAC-16分级隐私及MAC-04文件导入与MAC-05 TXT与MAC-07 EPUB与MAC-08书架管理已完成，仅验证macOS Apple Silicon。显示名阅栖，开发标识local.yueqi.novel，版本0.0.10+10。
 
@@ -33,7 +33,7 @@ python3 tool/sdk.py install
 
 [MAC-03验收](../../docs/verifications/mac-03-2026-10-20.md) · [存储决策](../../docs/decisions/0006-mac03-local-storage-and-anchors.md) · [schema/位置协议](../../docs/storage/novel-schema.md) · [依赖许可](../../docs/licenses/README.md)
 
-MAC-06独立Debug对照入口仍在[tool/mac06](tool/mac06/README.md)，仅为历史对照，生产阅读使用独立MAC-07端口。MAC-03跨进程复验见[tool/mac03](tool/mac03/README.md)。第06步文件导入已完成；当前主任务第10步MAC-09：补齐原生验收尾项。其他三端、漫画与后端保留后续范围，普通/18+内置批准仍0/0。
+MAC-06独立Debug对照入口仍在[tool/mac06](tool/mac06/README.md)，仅为历史对照，生产阅读使用独立MAC-07端口。MAC-03跨进程复验见[tool/mac03](tool/mac03/README.md)。第06步文件导入已完成；当前主任务第11步MAC-10：中文全文搜索。其他三端、漫画与后端保留后续范围，普通/18+内置批准仍0/0。
 
 MAC-04导入范围、64 MiB限制、编码与EPUB子集、原生隔离检查入口见[验收](../../docs/verifications/mac-04-2026-10-21.md)及[工具说明](tool/mac04/README.md)。导入卡片使用通用文件图标，TXT/EPUB均进入各自真实阅读器，不会套用演示正文。
 

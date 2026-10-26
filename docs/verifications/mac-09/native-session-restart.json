@@ -1,0 +1,129 @@
+{
+  "date": "2026-10-26",
+  "build_mode": "Release",
+  "isolated_directory": "mac09-probe",
+  "before_directory_jump": {
+    "sequence": 6,
+    "anchor": {
+      "schema_version": 1,
+      "document_kind": "epub",
+      "content_revision": "75ec2354641104ee9600983fa06e86cf",
+      "chapter_id": "c1",
+      "spine_href": "two.xhtml",
+      "block_id": "b1",
+      "offset_unit": "utf16_code_unit",
+      "start": 38,
+      "end": 38,
+      "exact": "",
+      "prefix": "文字一起前行，📖与🌿仍保留原来的",
+      "suffix": "位置。溪水沿着石阶流向远处，读到",
+      "context_sha256": "a8611c4ed17c96acbfaf9e8118be7ac576743c522d75076299c845e2e50b9b15"
+    }
+  },
+  "after_history_return": {
+    "sequence": 8,
+    "anchor": {
+      "schema_version": 1,
+      "document_kind": "epub",
+      "content_revision": "75ec2354641104ee9600983fa06e86cf",
+      "chapter_id": "c1",
+      "spine_href": "two.xhtml",
+      "block_id": "b1",
+      "offset_unit": "utf16_code_unit",
+      "start": 38,
+      "end": 38,
+      "exact": "",
+      "prefix": "文字一起前行，📖与🌿仍保留原来的",
+      "suffix": "位置。溪水沿着石阶流向远处，读到",
+      "context_sha256": "a8611c4ed17c96acbfaf9e8118be7ac576743c522d75076299c845e2e50b9b15"
+    }
+  },
+  "history_return_same_anchor": true,
+  "before_final_page_and_exit": {
+    "sequence": 8,
+    "anchor": {
+      "schema_version": 1,
+      "document_kind": "epub",
+      "content_revision": "75ec2354641104ee9600983fa06e86cf",
+      "chapter_id": "c1",
+      "spine_href": "two.xhtml",
+      "block_id": "b1",
+      "offset_unit": "utf16_code_unit",
+      "start": 38,
+      "end": 38,
+      "exact": "",
+      "prefix": "文字一起前行，📖与🌿仍保留原来的",
+      "suffix": "位置。溪水沿着石阶流向远处，读到",
+      "context_sha256": "a8611c4ed17c96acbfaf9e8118be7ac576743c522d75076299c845e2e50b9b15"
+    }
+  },
+  "before_exit_preferences": {
+    "cc91f4f21ef661a26b8855bfc3c8ea41": {
+      "version": 1,
+      "layout": "columns",
+      "font": "sans",
+      "theme": "system",
+      "size": 25.935064935064936,
+      "line_height": 1.9,
+      "paragraph_spacing": 18.0,
+      "margin": 24.0,
+      "width": 900.0
+    }
+  },
+  "preference_reflow_same_anchor": true,
+  "after_normal_exit": {
+    "sequence": 9,
+    "anchor": {
+      "schema_version": 1,
+      "document_kind": "epub",
+      "content_revision": "75ec2354641104ee9600983fa06e86cf",
+      "chapter_id": "c1",
+      "spine_href": "two.xhtml",
+      "block_id": "b1",
+      "offset_unit": "utf16_code_unit",
+      "start": 114,
+      "end": 114,
+      "exact": "",
+      "prefix": "这里也可以停一停。溪水沿着石阶流",
+      "suffix": "向远处，读到这里也可以停一停。",
+      "context_sha256": "98cecd2b406494150a02bfa96454095be8cab9c6266fb7db10997ad4ccdda1f2"
+    }
+  },
+  "exit_persisted_new_page": true,
+  "normal_exit_method": "native window close button; applicationShouldTerminateAfterLastWindowClosed=true",
+  "process_stopped_after_close": true,
+  "after_restart": {
+    "sequence": 9,
+    "anchor": {
+      "schema_version": 1,
+      "document_kind": "epub",
+      "content_revision": "75ec2354641104ee9600983fa06e86cf",
+      "chapter_id": "c1",
+      "spine_href": "two.xhtml",
+      "block_id": "b1",
+      "offset_unit": "utf16_code_unit",
+      "start": 114,
+      "end": 114,
+      "exact": "",
+      "prefix": "这里也可以停一停。溪水沿着石阶流",
+      "suffix": "向远处，读到这里也可以停一停。",
+      "context_sha256": "98cecd2b406494150a02bfa96454095be8cab9c6266fb7db10997ad4ccdda1f2"
+    }
+  },
+  "after_restart_preferences": {
+    "cc91f4f21ef661a26b8855bfc3c8ea41": {
+      "version": 1,
+      "layout": "columns",
+      "font": "sans",
+      "theme": "system",
+      "size": 25.935064935064936,
+      "line_height": 1.9,
+      "paragraph_spacing": 18.0,
+      "margin": 24.0,
+      "width": 900.0
+    }
+  },
+  "restart_same_anchor": true,
+  "restart_same_preferences": true,
+  "checks_passed": true
+}

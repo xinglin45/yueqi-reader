@@ -1,8 +1,8 @@
 # 架构设计
 
-2026-10-26更新：**MAC-09代码与自动化已完成，默认入口已复核，剩余原生跳转/退出重启验收待无前台干扰方案；本步暂不标记完整验收，下一步先补齐尾项**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09阶段验证](verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
+2026-10-26更新：**MAC-09阅读器、排版与位置恢复已完成，代码、自动化及原生验收通过；下一主任务为第11步MAC-10：中文全文搜索**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09验收](verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
 
-状态：目标架构；MAC-01已初始化小说四端宿主和reader_core最小标识；MAC-02已实现D1应用壳、纯Dart平台端口与任务生命周期。MAC-06已验证受控WKWebView、中文精确检索及原生TTS小样，见[三项研究验收](verifications/mac-06-2026-10-19.md)；MAC-03已接入后台SQLite、系统资料目录、托管样本与稳定位置，见[存储决策](decisions/0006-mac03-local-storage-and-anchors.md)；MAC-16将内容分级存入schema4，本机声明与搜索/隐私状态隔离于设备目录，策略与会话作废见[ADR-0007](decisions/0007-mac16-local-access-and-privacy.md)；MAC-04将导入索引存入schema5，文件端口与只读授权隔离于macOS适配，见[ADR-0008](decisions/0008-mac04-document-import.md)；MAC-05在schema6增加版本化TXT块/目录索引，原件按范围读取、不另存正文，见[ADR-0009](decisions/0009-mac05-txt-index.md)；MAC-07在macOS接入受控EPUB会话/资源/原文映射，见[ADR-0010](decisions/0010-mac07-controlled-epub.md)；MAC-09排版已编码，其他原生适配/后端仍待实现，见[应用壳验收](verifications/mac-02-2026-10-16.md)。外部源/第三方项目都是候选，不代表已接入。
+状态：目标架构；MAC-01已初始化小说四端宿主和reader_core最小标识；MAC-02已实现D1应用壳、纯Dart平台端口与任务生命周期。MAC-06已验证受控WKWebView、中文精确检索及原生TTS小样，见[三项研究验收](verifications/mac-06-2026-10-19.md)；MAC-03已接入后台SQLite、系统资料目录、托管样本与稳定位置，见[存储决策](decisions/0006-mac03-local-storage-and-anchors.md)；MAC-16将内容分级存入schema4，本机声明与搜索/隐私状态隔离于设备目录，策略与会话作废见[ADR-0007](decisions/0007-mac16-local-access-and-privacy.md)；MAC-04将导入索引存入schema5，文件端口与只读授权隔离于macOS适配，见[ADR-0008](decisions/0008-mac04-document-import.md)；MAC-05在schema6增加版本化TXT块/目录索引，原件按范围读取、不另存正文，见[ADR-0009](decisions/0009-mac05-txt-index.md)；MAC-07在macOS接入受控EPUB会话/资源/原文映射，见[ADR-0010](decisions/0010-mac07-controlled-epub.md)；MAC-09阅读器与自动位置恢复已完成，其他原生适配/后端仍待实现，见[应用壳验收](verifications/mac-02-2026-10-16.md)。外部源/第三方项目都是候选，不代表已接入。
 
 2026-10-16：自用开发采用[“地外文明”特殊区域策略](development-region-policy.md)，不指定现实地区、跳过地区专项核验，不以地区未知阻塞开发。来源自身访问资格与项目地区策略分开，后文现实地区/渠道字段供原始信息保存及将来发布使用，当前不增加地区门槛。
 
@@ -63,7 +63,7 @@ flowchart TB
 
 每款 App 独立数据库：novel.sqlite、comic.sqlite（逻辑名称，实际目录由平台 API 获取）。元数据入 SQLite；TXT/EPUB、章节和图片作为文件，数据库记录 hash、大小、引用与状态。
 
-以下为全局完整目标表草案；当前小说实际20表及schema v7以[本地存储协议](storage/novel-schema.md)为准，未实现outbox/sync_state等后续功能：
+以下为全局完整目标表草案；当前小说实际21表及schema v8以[本地存储协议](storage/novel-schema.md)为准，未实现outbox/sync_state等后续功能：
 
 - library_items：app_kind、content_key、source_id、source_item_id、标题、语言、分级、许可记录引用。
 - progress：chapter_id、position_kind、position_payload、content_revision、device_seq、server_revision。

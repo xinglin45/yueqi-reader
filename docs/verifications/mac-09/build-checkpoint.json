@@ -1,6 +1,6 @@
 {
   "date": "2026-10-26",
-  "stage": "MAC-09 implementation checkpoint; default entry verified; native jump/normal-exit/restart end-to-end QA pending non-disruptive background workflow",
+  "stage": "MAC-09 accepted: implementation, automated checks, native layout/history/normal-exit/restart and default-entry verification passed",
   "test_results": {
     "flutter_dart": 102,
     "python": 13,
@@ -42,6 +42,22 @@
       "app_framework_sha256": "010d950a9cfdd70e8a16a8674053bec980b8f125c5aa56a4033f4260b17a15d6"
     }
   },
-  "native_default_entry_evidence": "native-default-release-original.png",
-  "native_ui_testing_policy": "No foreground activation, maximize or fullscreen; no more reader UI-tool calls that may summon its window. Prefer terminal builds and windowless tests."
+  "native_default_entry_evidence": "native-default-release-final.png",
+  "native_ui_testing_policy": "User explicitly reauthorized opening the app; prefer background/ordinary small windows and avoid unnecessary maximization or fullscreen. Close QA instances after testing.",
+  "source_unchanged_since_full_checks": true,
+  "native_session_evidence": "native-session-restart.json",
+  "temporary_window_diagnostics_removed": true,
+  "production_legacy_sample_check": {
+    "book_count": 1,
+    "reading_positions": [
+      {
+        "sequence": 1,
+        "chapter_id": "preview-chapter-3",
+        "block_id": "p1",
+        "utf16_start": 0
+      }
+    ]
+  },
+  "native_legacy_preview_evidence": "native-default-release-original.png",
+  "qa_instances_closed_after_acceptance": true
 }
