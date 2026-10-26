@@ -4,6 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../app/dependencies.dart';
+import '../application/reading.dart';
+import '../domain/reading.dart';
+import 'reading_controls.dart';
 import '../domain/documents.dart';
 import '../domain/epub.dart';
 import '../domain/importing.dart';
@@ -30,6 +33,7 @@ class EpubReaderView extends StatefulWidget {
 class _EpubReaderViewState extends State<EpubReaderView> {
   EpubDocumentReader get reader => widget.deps.epub!;
   EpubSession? session;
+  ReadingSession? reading;
   EpubChapter? chapter;
   DocumentAnchor? restore;
   MacEpubController? renderer;
@@ -58,6 +62,7 @@ class _EpubReaderViewState extends State<EpubReaderView> {
   @override
   void dispose() {
     generation++;
+    unawaited(reading?.finish());
     unregister?.call();
     concealed.value = true;
     unawaited(renderer?.dispose());
@@ -157,11 +162,33 @@ class _EpubReaderViewState extends State<EpubReaderView> {
     try {
       job.checkCancelled();
       session = next;
-      final saved = await widget.deps.positions?.loadPosition(
-        widget.bookId,
-        PositionChannel.reading,
+      reading = await widget.deps.reading?.open(
+        ReadingIdentity(widget.bookId, next.revision, DocumentKind.epub),
+        isCurrent: () => !job.isCancelled,
       );
+      job.checkCancelled();
+      final saved = reading?.anchor == null
+          ? null
+          : StoredPosition(
+              widget.bookId,
+              PositionChannel.reading,
+              reading!.anchor!,
+              reading!.sequence,
+            );
       sequence = saved?.sequence ?? 0;
+      reading?.navigate = (a) async {
+        if (!mounted) return false;
+        var restored = false;
+        final ordinal = next.spine.indexWhere(
+          (s) => s.id == a.chapterId && s.href == a.spineHref,
+        );
+        if (ordinal < 0) return false;
+        await _run((job) async {
+          await _navigate(ordinal, '', job, anchor: a, remember: false);
+          restored = true;
+        });
+        return restored;
+      };
       var ordinal = 0;
       if (saved != null &&
           saved.anchor.revision == next.revision &&
@@ -186,8 +213,12 @@ class _EpubReaderViewState extends State<EpubReaderView> {
           restore = saved.anchor;
           notice = '已恢复到上次记住的 EPUB 文本位置。';
         } else {
+          reading?.needsReview = true;
           notice = '旧位置暂未精确匹配，已保留原记录；请确认阅读位置后再保存。';
         }
+      }
+      if (restore == null && content.blocks.isNotEmpty) {
+        reading?.observe(content.anchor(content.blocks.keys.first, 0, 0));
       }
       setState(() {
         chapter = content;
@@ -210,16 +241,47 @@ class _EpubReaderViewState extends State<EpubReaderView> {
     }
   }
 
-  Future<void> _navigate(int ordinal, String target, JobContext job) async {
+  Future<void> _navigate(
+    int ordinal,
+    String target,
+    JobContext job, {
+    DocumentAnchor? anchor,
+    bool remember = true,
+    bool atEnd = false,
+  }) async {
+    if (remember) reading?.rememberJump();
+    await reading?.flush();
     final next = await reader.chapter(session!, ordinal, job);
     if (target.isNotEmpty && !next.fragments.containsKey(target)) {
       throw const EpubFailure(EpubIssue.missingResource);
     }
     job.checkCancelled();
+    if (atEnd && anchor == null && next.blocks.isNotEmpty) {
+      final last = next.blocks.entries.last;
+      var offset = (last.value.length - 1).clamp(0, last.value.length);
+      if (!utf16Boundary(last.value, offset)) offset--;
+      anchor = next.anchor(last.key, offset, offset);
+    }
+    if (anchor != null &&
+        anchor
+                .resolve(
+                  currentRevision: session!.revision,
+                  currentChapter: next.spine.id,
+                  currentSpine: next.spine.href,
+                  blocks: next.blocks,
+                )
+                .match !=
+            AnchorMatch.exact) {
+      throw const FormatException('epub_anchor_context');
+    }
+    if (next.blocks.isNotEmpty) {
+      reading?.observe(anchor ?? next.anchor(next.blocks.keys.first, 0, 0));
+    }
     setState(() {
       chapter = next;
-      restore = null;
+      restore = anchor;
       fragment = target;
+      notice = null;
       selection = [];
       renderer = null;
       renderReady = false;
@@ -269,14 +331,23 @@ class _EpubReaderViewState extends State<EpubReaderView> {
     final anchors = epubSelection(current, await renderer!.capture());
     job.checkCancelled();
     if (save) {
-      final saved = await widget.deps.positions!.savePosition(
-        widget.bookId,
-        PositionChannel.reading,
-        anchors.first,
-        expectedSequence: sequence,
-      );
+      if (reading case final r?) {
+        r.observe(anchors.first, explicit: true);
+        await r.flush();
+        if (r.needsReview || r.error != null) {
+          throw const AppFailure(FailureCode.unexpected);
+        }
+        sequence = r.sequence;
+      } else {
+        final saved = await widget.deps.positions!.savePosition(
+          widget.bookId,
+          PositionChannel.reading,
+          anchors.first,
+          expectedSequence: sequence,
+        );
+        sequence = saved.sequence;
+      }
       job.checkCancelled();
-      sequence = saved.sequence;
       notice = anchors.length > 1
           ? '已记住选区起点；共识别 ${anchors.length} 个原文片段。'
           : '已记住当前 EPUB 文本位置。';
@@ -385,32 +456,72 @@ class _EpubReaderViewState extends State<EpubReaderView> {
         ),
       );
     }
-    return MacEpubSurface(
-      key: ValueKey('${session!.id}:${active.spine.ordinal}:$reload'),
-      reader: reader,
-      chapter: active,
-      size: size,
-      dark: Theme.of(context).brightness == Brightness.dark,
-      anchor: restore,
-      fragment: fragment,
-      onCreated: (value) => renderer = value,
-      onReady: () {
-        if (mounted) setState(() => renderReady = true);
-      },
-      onError: (kind) {
-        if (mounted) {
-          setState(() {
-            renderFailed = true;
-            renderReady = false;
-          });
-        }
-      },
-      onNavigate: (rid, target) {
-        if (busy || !mounted) return;
-        final ordinal = session!.spine.indexWhere((s) => s.resource == rid);
-        if (ordinal >= 0) _run((job) => _navigate(ordinal, target, job));
-      },
+    return StreamBuilder<void>(
+      stream: reading?.changes,
+      builder: (context, _) => MacEpubSurface(
+        key: ValueKey('${session!.id}:${active.spine.ordinal}:$reload'),
+        reader: reader,
+        chapter: active,
+        size: size,
+        dark:
+            (reading?.preferences.theme == ReadingTheme.system
+                ? MediaQuery.platformBrightnessOf(context)
+                : Theme.of(context).brightness) ==
+            Brightness.dark,
+        preferences: reading?.preferences,
+        onPosition: (a) => reading?.observe(a),
+        anchor:
+            restore ??
+            (reading?.anchor?.chapterId == active.spine.id
+                ? reading?.anchor
+                : null),
+        fragment: fragment,
+        onCreated: (value) {
+          renderer = value;
+          reading?.capture = () async {
+            if (!renderReady || renderer != value) return null;
+            return epubSelection(active, await value.viewport()).first;
+          };
+        },
+        onReady: () {
+          if (mounted) setState(() => renderReady = true);
+        },
+        onError: (kind) {
+          if (mounted) {
+            setState(() {
+              renderFailed = true;
+              renderReady = false;
+            });
+          }
+        },
+        onNavigate: (rid, target) {
+          if (busy || !mounted) return;
+          final ordinal = session!.spine.indexWhere((s) => s.resource == rid);
+          if (ordinal >= 0) _run((job) => _navigate(ordinal, target, job));
+        },
+      ),
     );
+  }
+
+  Future<void> _turn(int delta, JobContext job) async {
+    final current = chapter!;
+    if (renderer != null && renderReady) {
+      final result = await renderer!.page(delta);
+      job.checkCancelled();
+      if (result is! Map) {
+        throw const FormatException('epub_page');
+      }
+      final edge = bridgeInteger(result['edge']);
+      reading?.observe(epubSelection(current, result['position']).first);
+      if (edge == 0) return;
+      if (edge != delta) {
+        throw const FormatException('epub_page_edge');
+      }
+    }
+    final ordinal = current.spine.ordinal + delta;
+    if (ordinal >= 0 && ordinal < session!.spine.length) {
+      await _navigate(ordinal, '', job, remember: false, atEnd: delta < 0);
+    }
   }
 
   Widget _content(BuildContext context) => LayoutBuilder(
@@ -500,24 +611,6 @@ class _EpubReaderViewState extends State<EpubReaderView> {
               active.spine.title,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            Row(
-              children: [
-                const Text('字号'),
-                Expanded(
-                  child: Slider(
-                    value: size,
-                    min: 16,
-                    max: 36,
-                    divisions: 10,
-                    label: '${size.round()}',
-                    onChanged: renderReady && !busy
-                        ? (v) => setState(() => size = v)
-                        : null,
-                  ),
-                ),
-                Text('${size.round()}'),
-              ],
-            ),
           ],
           if (selection.any((a) => a.exact.isNotEmpty))
             Text(
@@ -538,6 +631,34 @@ class _EpubReaderViewState extends State<EpubReaderView> {
               child: SingleChildScrollView(child: controls),
             ),
             if (active != null) ...[
+              if (reading case final r?)
+                ReadingTools(
+                  session: r,
+                  onBack: r.history.isEmpty
+                      ? null
+                      : () => _run((job) async {
+                          final a = r.popHistory()!;
+                          final ordinal = session!.spine.indexWhere(
+                            (s) => s.id == a.chapterId && s.href == a.spineHref,
+                          );
+                          if (ordinal >= 0) {
+                            await _navigate(
+                              ordinal,
+                              '',
+                              job,
+                              anchor: a,
+                              remember: false,
+                            );
+                          }
+                        }),
+                  onProgress: (v) => _run(
+                    (job) => _navigate(
+                      (v * (session!.spine.length - 1)).round(),
+                      '',
+                      job,
+                    ),
+                  ),
+                ),
               Expanded(child: _surface(active)),
               const SizedBox(height: 8),
               Wrap(
@@ -545,22 +666,16 @@ class _EpubReaderViewState extends State<EpubReaderView> {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   TextButton(
-                    onPressed: busy || active.spine.ordinal == 0
+                    onPressed: busy || !renderReady
                         ? null
-                        : () => _run(
-                            (j) => _navigate(active.spine.ordinal - 1, '', j),
-                          ),
-                    child: const Text('上一节'),
+                        : () => _run((j) => _turn(-1, j)),
+                    child: const Text('上一页'),
                   ),
                   FilledButton(
-                    onPressed:
-                        busy ||
-                            active.spine.ordinal + 1 >= session!.spine.length
+                    onPressed: busy || !renderReady
                         ? null
-                        : () => _run(
-                            (j) => _navigate(active.spine.ordinal + 1, '', j),
-                          ),
-                    child: const Text('下一节'),
+                        : () => _run((j) => _turn(1, j)),
+                    child: const Text('下一页'),
                   ),
                   Text(
                     '${active.spine.ordinal + 1} / ${session!.spine.length}',
@@ -568,7 +683,7 @@ class _EpubReaderViewState extends State<EpubReaderView> {
                 ],
               ),
               const Text(
-                'EPUB 滚动阅读 · 主动保存文本位置；完整分页、自动进度、笔记与听书待后续步骤。',
+                '正文进度自动保存 · 笔记与听书待后续步骤。',
                 style: TextStyle(fontSize: 11),
               ),
             ] else ...[

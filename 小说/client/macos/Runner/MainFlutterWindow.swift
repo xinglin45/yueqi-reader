@@ -8,6 +8,7 @@ class MainFlutterWindow: NSWindow {
     DocumentBridge.shared?.receive(urls)
     return true
   }
+  private var readingWindowChannel: FlutterMethodChannel?
   override func awakeFromNib() {
     let flutterViewController = FlutterViewController()
     let windowFrame = self.frame
@@ -16,6 +17,11 @@ class MainFlutterWindow: NSWindow {
 
     RegisterGeneratedPlugins(registry: flutterViewController)
     _ = DocumentBridge(flutterViewController.engine.binaryMessenger)
+    readingWindowChannel = FlutterMethodChannel(name: "reader/window", binaryMessenger: flutterViewController.engine.binaryMessenger)
+    readingWindowChannel?.setMethodCallHandler { [weak self] call, reply in
+      if call.method == "fullscreen" { self?.toggleFullScreen(nil); reply(nil) }
+      else { reply(FlutterMethodNotImplemented) }
+    }
     registerForDraggedTypes([.fileURL])
     let epubRegistrar = flutterViewController.registrar(forPlugin: "EpubReader")
     epubRegistrar.register(EpubFactory(epubRegistrar.messenger), withId: "local.yueqi.epub")

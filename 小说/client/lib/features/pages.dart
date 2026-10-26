@@ -436,8 +436,9 @@ class ReaderPage extends StatelessWidget {
           return const JobResult(null);
         },
         builder: (kind) => switch (kind) {
-          DocumentKind.txt => scroll(
-            TxtReaderView(
+          DocumentKind.txt => SizedBox(
+            height: height,
+            child: TxtReaderView(
               bookId: bookId,
               deps: dependencies,
               onOpened: onOpened,
@@ -676,7 +677,7 @@ class _SettingsPageState extends State<SettingsPage> {
         const ListTile(
           contentPadding: EdgeInsets.zero,
           title: Text('宋体 · 24 · 1.9 倍行高'),
-          subtitle: Text('沿用 D1 阅读预览默认值；排版与位置恢复在 MAC-07/09 接入'),
+          subtitle: Text('TXT / EPUB 正文中可设置排版、全局默认或本书覆盖；位置使用内容锚点保存'),
         ),
       if (_section == 2) ...[
         const Text(
@@ -691,7 +692,7 @@ class _SettingsPageState extends State<SettingsPage> {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(PhosphorIconsLight.rectangle),
             title: Text(label),
-            subtitle: const Text('系统表面与同一会话接续在 MAC-09/13 接入'),
+            subtitle: const Text('已建立共享会话；原生窗口表面在 MAC-13 接入'),
             enabled: false,
           ),
       ],

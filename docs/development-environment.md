@@ -1,6 +1,8 @@
 # 开发环境与依赖核验
 
-最新核验：2026-10-23，MAC-01/02、MAC-06研究、MAC-03存储与MAC-16分级隐私及MAC-04文件导入及MAC-05 TXT与MAC-07 EPUB与MAC-08书架管理已完成。以下当前结果优先于文末2026-10-15只读历史；完整证据见[基础工程验收](verifications/mac-01-2026-10-16.md)。
+2026-10-26更新：**MAC-09代码与自动化已完成，最终原生退出/重启及默认入口复核待解锁；本步暂不标记完整验收，下一步先补齐尾项**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09阶段验证](verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
+
+最新核验：2026-10-26，MAC-01/02、MAC-06研究、MAC-03存储与MAC-16分级隐私及MAC-04文件导入及MAC-05 TXT与MAC-07 EPUB与MAC-08书架管理已完成。以下当前结果优先于文末2026-10-15只读历史；完整证据见[基础工程验收](verifications/mac-01-2026-10-16.md)。
 
 ## 当前实际基线
 
@@ -14,8 +16,8 @@
 | doctor | Flutter、可用设备与网络检查通过；Android许可未接受完整、CocoaPods缺失两项警告，未把这些写成已解决 |
 | 工程 | 小说/client四端宿主已生成；macOS arm64 Debug构建、Release构建/实际窗口通过；本批Debug隔离入口与生产入口均已运行，其他三端未构建 |
 | 当前依赖 | Flutter、纯Dart reader_core/platform_services、精确phosphor_icons3.0.1以及flutter_test/flutter_lints；MAC-03增加精确sqlite3 3.7.1、path_provider2.1.6、crypto3.0.7/path1.9.1和reader_storage；MAC-04将xml6.6.1转为直接运行依赖，原生文件/GB18030/Big5使用系统API；研究dev依赖锁定epub_view3.3.0/html0.15.6（旧HTML仅已知样本对照，不是生产解析选型）；完整应用锁文件与[许可清单](licenses/README.md)留存 |
-| 中文目录检查 | 格式、严格Dart分析及91项Flutter/Dart测试、13项Python样本测试通过；Flutter CLI LSP入口有中文字节长度错误，采用同SDKDart分析，见[ADR-0001](decisions/0001-mac01-flutter-toolchain.md) |
-| 产物 | 本机Release内部检查包0.0.9+9、31.2MB工具报告、最低目标12.0、arm64、ad-hoc校验通过；含D1壳、真实本地库与自产样本/位置持久化、本机声明/独立成人分组/隐私锁、系统只读文件授权与TXT/EPUB托管/引用导入、TXT分章/分块及受控EPUB滚动/目录/资源/选区位置、真实书架管理/有界查询/可撤销操作/托管回收，不含完整分页排版/来源能力，未正式公证分发 |
+| 中文目录检查 | 格式、严格Dart分析及102项Flutter/Dart测试、13项Python样本测试通过；Flutter CLI LSP入口有中文字节长度错误，采用同SDKDart分析，见[ADR-0001](decisions/0001-mac01-flutter-toolchain.md) |
+| 产物 | 本机Release内部检查包0.0.10+10、31.5MB工具报告、最低目标12.0、arm64、ad-hoc校验通过；含D1壳、真实本地库与自产样本/位置持久化、本机声明/独立成人分组/隐私锁、系统只读文件授权与TXT/EPUB托管/引用导入、TXT分章/分块及受控EPUB滚动/目录/资源/选区位置、真实书架管理/有界查询/可撤销操作/托管回收，含本地排版、自动位置；不含来源能力，未正式公证分发 |
 
 SDK归档端点本轮返回404，改从官方仓库固定标签，未修改SDK源码；不声称核验未获取归档的SHA-256。MAC-02装配/导航采用SDK接口，Riverpod/go_router候选本批未引入，见[ADR-0002](decisions/0002-mac02-shell-and-jobs.md)；MAC-06使用系统WKWebView/AVSpeechSynthesizer研究并冻结对照依赖，见[验收](verifications/mac-06-2026-10-19.md)；MAC-03实际SQLite为绑定库3.54.0，见[验收](verifications/mac-03-2026-10-20.md)；Drift尚未引入，正式EPUB/TTS绑定与后端版本仍在对应任务实际使用时核验锁定，不被本批SDK决定自动批准。
 

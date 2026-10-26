@@ -320,6 +320,9 @@ final class LocalShelf implements ShelfRepository {
     if (revisions.isEmpty || revisions.length > 100) {
       throw const FormatException('selection');
     }
+    if (edit.clearRecords || edit.removed == true) {
+      library.access?.invalidateProtected();
+    }
     final ticket = _visibility, action = newLocalId();
     final snapshots = <Map<String, Object?>>[], commands = <SqlCommand>[];
     for (final entry in revisions.entries) {

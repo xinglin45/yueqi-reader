@@ -1,6 +1,8 @@
 import '../features/shelf_view.dart';
+import '../features/reading_controls.dart';
 
 import 'dart:async';
+import 'dart:ui' show AppExitResponse;
 
 import 'package:platform_services/platform_services.dart';
 
@@ -29,6 +31,7 @@ class NovelApp extends StatefulWidget {
 class _NovelAppState extends State<NovelApp> {
   late final AppNavigation _navigation;
   late final ShellRouter _router;
+  AppLifecycleListener? _lifecycle;
   bool _dark = false;
   int _libraryEpoch = 0;
   bool _importing = false;
@@ -86,6 +89,18 @@ class _NovelAppState extends State<NovelApp> {
   void initState() {
     super.initState();
     _dark = widget.dependencies.initialDark;
+    _lifecycle = AppLifecycleListener(
+      onInactive: () {
+        unawaited(widget.dependencies.reading?.flush());
+      },
+      onHide: () {
+        unawaited(widget.dependencies.reading?.flush());
+      },
+      onExitRequested: () async {
+        await widget.dependencies.reading?.flush();
+        return AppExitResponse.exit;
+      },
+    );
     _navigation = widget.navigation ?? AppNavigation();
     _router = ShellRouter(
       navigation: _navigation,
@@ -115,6 +130,8 @@ class _NovelAppState extends State<NovelApp> {
 
   @override
   void dispose() {
+    _lifecycle?.dispose();
+    unawaited(widget.dependencies.reading?.flush());
     _incoming?.cancel();
     _router.dispose();
     if (widget.navigation == null) _navigation.dispose();
@@ -351,7 +368,7 @@ class _ReaderShellState extends State<ReaderShell> {
               icon: const Icon(PhosphorIconsLight.info, size: 16),
               label: const Align(
                 alignment: Alignment.centerLeft,
-                child: Text('阶段说明 · MAC-08', style: TextStyle(fontSize: 12)),
+                child: Text('阶段说明 · MAC-09', style: TextStyle(fontSize: 12)),
               ),
             ),
             TextButton.icon(
@@ -375,7 +392,7 @@ class _ReaderShellState extends State<ReaderShell> {
       content: const SizedBox(
         width: 420,
         child: Text(
-          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；TXT已可后台分章、目录跳转和分块阅读；EPUB已接入受控资源、目录/图片/字号主题与文本位置；书架已支持最近阅读、状态/收藏、合集标签、排序筛选、元信息与封面、可恢复的移出和文件回收；完整分页、系统听书和低存在感窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
+          '沿用已确认的 D1 暖纸设计。当前提供导航、响应布局、平台端口和可取消任务。\n\n本地书架、样本文本与段落位置已可保存，退出后继续使用。演示内容为自产文本。TXT/EPUB文件已可批量导入托管副本或系统书签引用；TXT已可后台分章、目录跳转和分块阅读；EPUB已接入受控资源、目录/图片/字号主题与文本位置；书架已支持最近阅读、状态/收藏、合集标签、排序筛选、元信息与封面、可恢复的移出和文件回收；TXT/EPUB已具备滚动、单页和宽窗双栏、排版偏好、专注/全屏、自动进度及跳转返回；系统听书和低存在感原生窗口仍待后续任务。\n\n获准普通/18+在线来源仍为 0/0。',
           style: TextStyle(height: 1.8),
         ),
       ),
@@ -426,7 +443,7 @@ class _ReaderShellState extends State<ReaderShell> {
             ),
             SizedBox(height: 16),
             Text(
-              '同一阅读会话与系统窗口将在 MAC-09/13 接入，本阶段尚不能切换。',
+              '共享阅读会话已接入；菜单栏、阅读条和极简窗的原生表面在 MAC-13 接入，目前尚不能切换。',
               style: TextStyle(fontSize: 12, height: 1.8),
             ),
           ],
@@ -482,11 +499,18 @@ class _ReaderShellState extends State<ReaderShell> {
           ),
           if (reading) ...[
             IconButton(
-              onPressed: () => stageNotice(
-                context,
-                '阅读排版',
-                '当前沿用 D1 宋体与暖纸风格。EPUB可在正文上方调整字号，主题随全局外观切换；TXT完整可调排版将在 MAC-09 接入。',
-              ),
+              onPressed: () {
+                final session = widget.dependencies.reading?.current;
+                if (session != null) {
+                  showReadingPreferences(context, session);
+                } else {
+                  stageNotice(
+                    context,
+                    '阅读排版',
+                    '导入 TXT / EPUB 后可设置完整排版；自产短篇保留原段落检查方式。',
+                  );
+                }
+              },
               tooltip: '阅读排版',
               icon: const Icon(PhosphorIconsLight.textAa),
             ),
@@ -602,59 +626,66 @@ class _ReaderShellState extends State<ReaderShell> {
   }
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, constraints) {
-      final narrow = constraints.maxWidth < 760;
-      final sidebarWidth = constraints.maxWidth < 1100 ? 220.0 : 276.0;
-      return Shortcuts(
-        shortcuts: const {
-          SingleActivator(LogicalKeyboardKey.escape): DismissIntent(),
-        },
-        child: Actions(
-          actions: {
-            DismissIntent: CallbackAction<DismissIntent>(
-              onInvoke: (_) {
-                _scaffold.currentState?.closeDrawer();
-                return null;
-              },
-            ),
+  Widget build(BuildContext context) => StreamBuilder<void>(
+    stream: widget.dependencies.reading?.changes,
+    builder: (context, _) => LayoutBuilder(
+      builder: (context, constraints) {
+        final focus =
+            widget.location.page == AppPage.reader &&
+            (widget.dependencies.reading?.current?.focus ?? false);
+        final narrow = constraints.maxWidth < 760;
+        final sidebarWidth = constraints.maxWidth < 1100 ? 220.0 : 276.0;
+        return Shortcuts(
+          shortcuts: const {
+            SingleActivator(LogicalKeyboardKey.escape): DismissIntent(),
           },
-          child: Scaffold(
-            key: _scaffold,
-            drawer: narrow
-                ? Drawer(
-                    width: 276,
-                    shape: const RoundedRectangleBorder(),
-                    child: _sidebar(276),
-                  )
-                : null,
-            body: Row(
-              children: [
-                if (!narrow) ...[
-                  _sidebar(sidebarWidth),
-                  const VerticalDivider(width: 1),
-                ],
-                Expanded(
-                  child: Column(
-                    children: [
-                      _toolbar(narrow),
-                      Expanded(
-                        child: FocusTraversalGroup(
-                          child: Focus(
-                            focusNode: _contentFocus,
-                            skipTraversal: true,
-                            child: _contentViewport(narrow, constraints),
+          child: Actions(
+            actions: {
+              DismissIntent: CallbackAction<DismissIntent>(
+                onInvoke: (_) {
+                  _scaffold.currentState?.closeDrawer();
+                  widget.dependencies.reading?.current?.setFocus(false);
+                  return null;
+                },
+              ),
+            },
+            child: Scaffold(
+              key: _scaffold,
+              drawer: narrow
+                  ? Drawer(
+                      width: 276,
+                      shape: const RoundedRectangleBorder(),
+                      child: _sidebar(276),
+                    )
+                  : null,
+              body: Row(
+                children: [
+                  if (!narrow && !focus) ...[
+                    _sidebar(sidebarWidth),
+                    const VerticalDivider(width: 1),
+                  ],
+                  Expanded(
+                    child: Column(
+                      children: [
+                        if (!focus) _toolbar(narrow),
+                        Expanded(
+                          child: FocusTraversalGroup(
+                            child: Focus(
+                              focusNode: _contentFocus,
+                              skipTraversal: true,
+                              child: _contentViewport(narrow, constraints),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    },
+        );
+      },
+    ),
   );
 }

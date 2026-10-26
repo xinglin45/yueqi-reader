@@ -91,7 +91,7 @@ void main() {
       Locations('${dir.path}/legacy'),
       documents: files,
     );
-    expect(getLibrary().database.info['version'], 7);
+    expect(getLibrary().database.info['version'], novelSchema.last.version);
     expect((await list()).books.single.state, ReadingState.reading);
     expect(
       (await getLibrary().loadPosition(
@@ -108,7 +108,7 @@ void main() {
       await getLibrary().database.query(
         "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'",
       ),
-      hasLength(20),
+      hasLength(21),
     );
   });
   test('metadata, tags, favorites, manual order, filters and preferences survive reopen; digest is unchanged', () async {

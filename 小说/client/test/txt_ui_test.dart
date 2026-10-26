@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:novel_app/features/txt_reader.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:novel_app/app/app.dart';
@@ -112,6 +114,16 @@ void main() {
         await tester.tap(find.text('打开 TXT 阅读'));
         await frames(tester);
         await waitFor(tester, find.textContaining('分章版本已变更，旧位置已保留'));
+        await waitFor(
+          tester,
+          find.byWidgetPredicate(
+            (w) =>
+                w is TextButton &&
+                w.child is Text &&
+                (w.child as Text).data == '文件状态' &&
+                w.onPressed != null,
+          ),
+        );
         await tester.ensureVisible(find.text('文件状态'));
         await tester.tap(find.text('文件状态'));
         await frames(tester);
@@ -129,4 +141,72 @@ void main() {
       }
     },
   );
+  testWidgets('TXT directory and body conceal immediately on privacy lock', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1400, 1800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    final dir = (await tester.runAsync(
+      () => Directory.systemTemp.createTemp('mac09-txt-privacy-'),
+    ))!;
+    final files = ImportFiles();
+    AppDependencies? deps;
+    try {
+      deps = (await tester.runAsync(
+        () => AppDependencies.open(Locations(dir.path), documents: files),
+      ))!;
+      await tester.runAsync(() => deps!.access!.acknowledge());
+      final grant = files.add(
+        '中性分级检查.txt',
+        '../../fixtures/novel/mac09/山路排版.txt',
+      );
+      final prepared = (await tester.runAsync(
+        () => deps!.importer!.prepare(grant, job()),
+      ))!;
+      final book = (await tester.runAsync(
+        () => deps!.importer!.commit(
+          prepared.id,
+          mode: ImportMode.managed,
+          rating: RatingLevel.restricted,
+          job: job(),
+        ),
+      ))!;
+      final preview = (await tester.runAsync(
+        () => deps!.txt!.preview(book.bookId, const TxtRules(), job()),
+      ))!;
+      await tester.runAsync(() => deps!.txt!.apply(preview.id, job()));
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: TxtReaderView(
+              bookId: book.bookId,
+              deps: deps,
+              onOpened: (_) {},
+            ),
+          ),
+        ),
+      );
+      await frames(tester);
+      await waitFor(tester, find.text('记住这一段'));
+      await tester.tap(find.text('章节目录'));
+      await frames(tester);
+      await waitFor(tester, find.text('2. 第二章 溪畔来信'));
+      await tester.runAsync(() => deps!.access!.lock());
+      await frames(tester);
+      expect(find.text('2. 第二章 溪畔来信'), findsNothing);
+      expect(find.textContaining('第001段'), findsNothing);
+      expect(find.text('内容已隐藏'), findsWidgets);
+      await tester.tap(find.text('返回'));
+      await frames(tester);
+      expect(tester.takeException(), isNull);
+    } finally {
+      await tester.pumpWidget(const SizedBox());
+      await frames(tester);
+      await closeDependencies(tester, deps);
+      await files.incoming.close();
+      await tester.runAsync(() => dir.delete(recursive: true));
+    }
+  });
 }

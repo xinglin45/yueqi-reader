@@ -1,6 +1,6 @@
 # 小说本地数据与位置协议 v1
 
-日期：2026-10-23。数据库schema **v7**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v7.sql)供审阅，不代替源码迁移。
+日期：2026-10-26。数据库schema **v8**；DocumentAnchor wire schema **v1**，两者独立升级。代码源为[小说schema](../../小说/client/lib/infrastructure/storage/schema.dart)、[领域类型](../../小说/client/lib/domain/catalog.dart)、[锚点](../../小说/client/lib/domain/documents.dart)。实际SQLite导出的[DDL快照](novel-schema-v8.sql)供审阅，不代替源码迁移。
 
 ## 存放与表职责
 
@@ -71,3 +71,10 @@ txt-stage为候选/中断暂存，启动持有写入租约后清理；txt-indice
 实际20表。新增book_metadata（作者/简介/状态/收藏/手动序号/最后打开/封面摘要/最后文件检查）、shelf_preferences（普通/成人/最近阅读分开）、shelf_actions（有界版本化逆向快照）、file_recycle（可恢复文件移动意图）。imports新增原始display_name；旧记录留空。collections新增scope与范围内有效名称唯一约束。现有位置用于回填在读/最近阅读，不改锚点或原件。
 
 封面字节在covers/objects，回收的托管原件在recycle；二者均在本机小说资料区，不属于可随意清理的Web会话目录。软移出、文件回收和个人记录移除相互独立；逆向快照包含可能敏感的元数据与摘录，未来备份/同步必须沿用分级过滤，不自动外发。最近20候选撤销验证books.row_revision，不覆盖新位置或编辑；回收/恢复也推进book修订。完整约束见[ADR-0011](../decisions/0011-mac08-library-management.md)。
+
+
+## MAC-09 schema8排版偏好
+
+v8仅新增reading_preferences，共21表；scope='*'为全局默认，其他scope为本地book_id，value存version=1有界排版JSON，updated_at为修改时间。每书读写检查内容访问资格；恢复默认删除覆盖而非复制全局值。损坏JSON结构/值回退安全默认并提示，不改写旧值；无正文、凭据或成年资格。未来永久删除/备份需包含或清理此表，当前只有可恢复书架操作。
+
+位置表与DocumentAnchor wire v1保持；共享ReadingSession按序合并保存reading通道，听书独立。重排/resize/主题切换保留原字符，不保存临时页数。修订/上下文不匹配暂停自动覆盖，复核后才主动替换。schema7历史快照保持在[旧DDL](novel-schema-v7.sql)，决策见[ADR-0012](../decisions/0012-mac09-reading-session-layout.md)。

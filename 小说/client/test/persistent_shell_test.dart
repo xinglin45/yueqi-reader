@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'access_ui_test.dart' show closeDependencies;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:novel_app/app/app.dart';
@@ -67,7 +69,7 @@ void main() {
         );
         await tester.pumpWidget(const SizedBox());
         nav.dispose();
-        await tester.runAsync(dependencies.close!);
+        await closeDependencies(tester, dependencies);
         dependencies = (await tester.runAsync(
           () => AppDependencies.open(locations),
         ))!;
@@ -86,9 +88,7 @@ void main() {
         await tester.pumpWidget(const SizedBox());
         restarted.dispose();
       } finally {
-        await tester.runAsync(
-          () => dependencies?.close?.call() ?? Future<void>.value(),
-        );
+        if (dependencies != null) await closeDependencies(tester, dependencies);
         await tester.runAsync(() => dir.delete(recursive: true));
       }
     },

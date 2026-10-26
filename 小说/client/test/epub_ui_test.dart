@@ -70,7 +70,10 @@ void main() {
             MethodChannel('reader/epub/$currentId'),
             (call) async {
               if (call.method == 'start') started.add(id);
-              if (call.method == 'capture' || call.method == 'layout') {
+              if (call.method == 'capture' ||
+                  call.method == 'layout' ||
+                  call.method == 'configure' ||
+                  call.method == 'viewport') {
                 return selection();
               }
               if (call.method == 'restore') return true;
@@ -146,6 +149,15 @@ void main() {
         await ready(0);
         expect(find.textContaining('清晨，山间的雾'), findsNothing);
         await tester.ensureVisible(find.text('章节目录'));
+        await tester.tap(find.text('章节目录'));
+        await frames(tester);
+        await waitFor(tester, find.text('第二章 微光'));
+        await tester.tap(find.text('第二章 微光'));
+        await frames(tester);
+        await ready(1);
+        await tester.tap(find.text('返回跳转前'));
+        await frames(tester);
+        await ready(0);
         await tester.tap(find.text('章节目录'));
         await frames(tester);
         await waitFor(tester, find.text('第二章 微光'));

@@ -73,7 +73,7 @@ AdultAcknowledgement（待实现）：仅保存本机`age_acknowledged`及声明
 - SpeechService：voices、capabilities、session_id、speak/pause/resume/stop与事件；进度含本次片段的偏移单位及原文映射，旧session事件不可覆盖新队列。不能因插件有macOS标记就假定暂停/逐字回调全部存在。
 - FileAccess：用户授权选择、托管副本/引用、持久授权恢复、授权失效与重新关联；SecureStore只返回本机受控凭据引用，导出不含密钥。
 - ReadingPosition与ListeningPosition分别持久化；用户明确切换后才用听书位置打开阅读，不能互相静默覆盖。
-- ReadingSession（01A设计约定，待Flutter实现）：独立保存content_key、content_revision、DocumentAnchor、推进状态与session_id，四种显示表面订阅同一会话，不复制游标。ReaderWindowState另存surface(normal/menubar/strip/mini)、可见性、屏幕/归一化位置、尺寸、文字与背景透明度、置顶/穿透和焦点策略。hide暂停推进并隐藏所有内容表面；restore重用原锚点且保持暂停；presentation必须显式结束后再主动restore。原生菜单栏/窗口/快捷键通过platform_services端口，解析器不直接控制窗口。详见[D1设计规范](design/novel-macos/design-spec-D1.md)。
+- ReadingSession（MAC-09已实现共享模型；原生低存在感表面待MAC-13）：独立保存content_key、content_revision、DocumentAnchor、推进状态与session_id，四种显示表面订阅同一会话，不复制游标。ReaderWindowState另存surface(normal/menubar/strip/mini)、可见性、屏幕/归一化位置、尺寸、文字与背景透明度、置顶/穿透和焦点策略。hide暂停推进并隐藏所有内容表面；restore重用原锚点且保持暂停；presentation必须显式结束后再主动restore。原生菜单栏/窗口/快捷键通过platform_services端口，解析器不直接控制窗口。详见[D1设计规范](design/novel-macos/design-spec-D1.md)。
 
 代码落点、依赖和逐步验收见 [详细开发步骤](novel-macos-implementation-steps.md)。以上为完整目标设计；本批实际签名以MAC-05文本端口、MAC-04文件端口、MAC-16访问边界、MAC-03契约与MAC-02端口表为准，后续任务可按验证结果扩展。
 
@@ -187,3 +187,12 @@ MacEpubSurface独立承载WK滚动视口，固定方法仅有start/capture/layou
 `cover/setCover`返回校验/缩放后PNG字节，不给UI系统路径；`CoverAccess.chooseCover`是现有DocumentBridge的独立单选PNG/JPEG能力，沿用DocumentAccess只读流和释放临时grant。用户书籍、来源凭据与设备声明不进入封面文件。
 
 `recycleFile/restoreFile`只移动应用管理的导入副本，并持久化移动意图；从不删除或移动外部引用原件。`checkFile`复用MAC-04核验，授权/文件错误分别保留，列表的存在性检查不能替代摘要核验。移除个人记录通过`BookEdit.clearRecords`明确选择；笔记编辑/永久清空/缓存配额/完整备份不在本步实现。详见[ADR-0011](decisions/0011-mac08-library-management.md)和[验收](verifications/mac-08-2026-10-23.md)。
+
+
+## MAC-09 当前阅读契约
+
+ReadingCoordinator.open(ReadingIdentity,isCurrent)先排空旧会话并载入reading位置和有效排版，只有最新代际可成为current。ReadingSession.observe接受同修订/格式的UTF-16内容锚点；flush、finish、revoke分别表示排空候选、结束会话、撤销候选。自动写入CAS失败暂停，explicit观察由用户核对后才可重新保存；listening独立。进入后台/正常退出主动flush，强杀没有排空保证。
+
+ReadingSession.jumpTo(anchor)调用绑定的TXT/EPUB导航回调，核对原文并保留最多20条原位置，可返回跳转前。搜索入口尚未实现；跨书结果需先打开对应书籍再请求会话跳转。ReadingPreferences(version=1)全局默认与每书覆盖分离，恢复默认删除覆盖；读取损坏偏好使用安全默认并保留原值。仅持久化DocumentAnchor v1，不存屏幕页码/滚动像素。
+
+macOS EPUB受控桥接新增configure(preferences,dark)、viewport()、page(delta=±1)。viewport/翻页位置仍必须通过epubSelection的身份、块序、UTF-16边界、摘录与长度核对；page.edge按桥接有限整数解析。主机游标在重排时保持原字符，真实滚动或翻页才推进；不暴露任意JavaScript。TXT当前8块分页亦保留同一锚点，窄窗双栏回退单栏。详细预算和退出边界见[ADR-0012](decisions/0012-mac09-reading-session-layout.md)。

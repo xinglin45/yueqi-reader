@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../domain/documents.dart';
+import '../../domain/reading.dart';
 import '../../domain/epub.dart';
 import '../../domain/jobs.dart';
 
@@ -13,6 +14,10 @@ final class MacEpubController {
   final MethodChannel channel;
   bool _closed = false;
   Future<Object?> capture() => _invoke('capture');
+  Future<Object?> viewport() => _invoke('viewport');
+  Future<Object?> configure(ReadingPreferences preferences, bool dark) =>
+      _invoke('configure', {'preferences': preferences.toJson(), 'dark': dark});
+  Future<Object?> page(int delta) => _invoke('page', {'delta': delta});
   Future<Object?> checks() => _invoke('checks');
   Future<Object?> layout(double size, bool dark) =>
       _invoke('layout', {'size': size, 'dark': dark});
@@ -53,6 +58,8 @@ class MacEpubSurface extends StatefulWidget {
     required this.onError,
     this.anchor,
     this.fragment = '',
+    this.preferences,
+    this.onPosition,
   });
   final EpubDocumentReader reader;
   final EpubChapter chapter;
@@ -60,6 +67,8 @@ class MacEpubSurface extends StatefulWidget {
   final bool dark;
   final DocumentAnchor? anchor;
   final String fragment;
+  final ReadingPreferences? preferences;
+  final ValueChanged<DocumentAnchor>? onPosition;
   final ValueChanged<MacEpubController> onCreated;
   final VoidCallback onReady;
   final void Function(String, String) onNavigate;
@@ -70,11 +79,29 @@ class MacEpubSurface extends StatefulWidget {
 
 class _MacEpubSurfaceState extends State<MacEpubSurface> {
   MacEpubController? controller;
-  Timer? timeout;
+  Timer? timeout, polling;
+  bool sampling = false;
+  Future<void> _sample() async {
+    if (!ready || sampling || widget.onPosition == null) return;
+    sampling = true;
+    try {
+      final value = await controller!.viewport();
+      if (mounted) {
+        final anchors = epubSelection(widget.chapter, value);
+        widget.onPosition!(anchors.first);
+      }
+    } catch (_) {
+      /* Last validated anchor remains usable on renderer failure. */
+    } finally {
+      sampling = false;
+    }
+  }
+
   bool ready = false;
   @override
   void dispose() {
     timeout?.cancel();
+    polling?.cancel();
     unawaited(controller?.dispose());
     super.dispose();
   }
@@ -83,14 +110,18 @@ class _MacEpubSurfaceState extends State<MacEpubSurface> {
   void didUpdateWidget(covariant MacEpubSurface oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (ready &&
-        (oldWidget.size != widget.size || oldWidget.dark != widget.dark)) {
+        (oldWidget.size != widget.size ||
+            oldWidget.dark != widget.dark ||
+            oldWidget.preferences != widget.preferences)) {
       _layout();
     }
   }
 
   Future<void> _layout() async {
     try {
-      final result = await controller!.layout(widget.size, widget.dark);
+      final result = widget.preferences == null
+          ? await controller!.layout(widget.size, widget.dark)
+          : await controller!.configure(widget.preferences!, widget.dark);
       if (!mounted) return;
       epubSelection(widget.chapter, result);
     } catch (_) {
@@ -136,6 +167,13 @@ class _MacEpubSurfaceState extends State<MacEpubSurface> {
         ready = true;
         widget.onReady();
         if (mounted) await _layout();
+        if (mounted && widget.onPosition != null) {
+          polling?.cancel();
+          polling = Timer.periodic(
+            const Duration(milliseconds: 700),
+            (_) => unawaited(_sample()),
+          );
+        }
       } else if (call.method == 'navigate') {
         if (args is Map &&
             args['session'] == widget.chapter.session.id &&

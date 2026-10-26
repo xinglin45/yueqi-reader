@@ -113,6 +113,7 @@ final List<SchemaStep> novelSchema = List.unmodifiable([
   importSchema,
   txtSchema,
   shelfSchema,
+  readingSchema,
 ]);
 
 /// Device declaration/search/lock flags remain outside this library schema.
@@ -195,4 +196,11 @@ const shelfSchema = SchemaStep(7, [
     SELECT b.id,CASE WHEN MAX(p.updated_at)>0 THEN 'reading' ELSE 'unread' END,COALESCE(MAX(p.updated_at),0)
     FROM books b LEFT JOIN positions p ON p.book_id=b.id GROUP BY b.id""",
   'CREATE INDEX book_metadata_recent ON book_metadata(last_opened)',
+]);
+
+const readingSchema = SchemaStep(8, [
+  """CREATE TABLE reading_preferences (
+    scope TEXT PRIMARY KEY, value TEXT NOT NULL CHECK(json_valid(value)),
+    updated_at INTEGER NOT NULL
+  ) STRICT""",
 ]);

@@ -122,6 +122,12 @@ final class EpubWebView: NSView, WKNavigationDelegate, WKUIDelegate {
                 self.run("return await globalThis.readerHost.layout(size,dark);", args: ["size": size, "dark": dark], result: result)
             } else if call.method == "restore", let anchor = params["anchor"] as? [String: Any] {
                 self.run("return globalThis.readerHost.restore(anchor);", args: ["anchor": anchor], result: result)
+            } else if call.method == "viewport" {
+                self.run("return globalThis.readerHost.viewport();", args: [:], result: result)
+            } else if call.method == "configure", let prefs = params["preferences"] as? [String: Any], let dark = params["dark"] as? Bool {
+                self.run("return await globalThis.readerHost.configure(prefs,dark);", args: ["prefs": prefs, "dark": dark], result: result)
+            } else if call.method == "page", let delta = params["delta"] as? Int, abs(delta) == 1 {
+                self.run("return globalThis.readerHost.turn(delta);", args: ["delta": delta], result: result)
             } else if call.method == "checks" {
                 self.run(Self.checks, args: [:]) { [weak self] value in
                     guard let self = self, self.alive else { result(FlutterError(code: "disposed", message: nil, details: nil)); return }
@@ -184,7 +190,14 @@ final class EpubWebView: NSView, WKNavigationDelegate, WKUIDelegate {
             "size": initial["size"] as? Double ?? 24.0, "dark": initial["dark"] as? Bool ?? false,
             "anchor": initial["anchor"] ?? NSNull()]) { [weak self] value in
             guard let self = self, self.alive else { return }
-            if value is FlutterError { self.notifyError("text_mapping"); return }
+            if value is FlutterError {
+                self.web.callAsyncJavaScript("return globalThis.readerPhase || 0;", arguments: [:], in: nil, in: .defaultClient) { outcome in
+                    var phase = 0
+                    if case .success(let result) = outcome { phase = (result as? NSNumber)?.intValue ?? 0 }
+                    self.notifyError("text_mapping", code: (0...8).contains(phase) ? phase : 0)
+                }
+                return
+            }
             self.ready = true; self.channel.invokeMethod("ready", arguments: value)
         }
     }
@@ -207,6 +220,7 @@ final class EpubWebView: NSView, WKNavigationDelegate, WKUIDelegate {
     // Host-owned code: no EPUB scripts, dynamic source strings or page-world
     // message handler. Offsets are UTF-16 and checked again against Dart text.
     static let bootstrap = #"""
+    globalThis.readerPhase=1;
     const spans=[...document.body.querySelectorAll('[data-rk]')];
     const blocks=Object.fromEntries(spans.map(e=>[e.getAttribute('data-rk'),e.textContent]));
     const nodes=spans.map(e=>[e,e.firstChild]);
@@ -227,36 +241,75 @@ final class EpubWebView: NSView, WKNavigationDelegate, WKUIDelegate {
         if(segments.length)last={session,resource,kind:'selection',segments};
       }
       if(last)return last;
-      const visible=spans.find(e=>e.getBoundingClientRect().bottom>0&&e.getBoundingClientRect().height>0)||spans[0];
-      if(!visible)throw Error('no_text');
-      return {session,resource,kind:'visible',segments:[{block:visible.getAttribute('data-rk'),start:0,end:0,exact:''}]};
+      return viewport();
     };
     document.addEventListener('selectionchange',()=>{try{const s=getSelection();if(s&&!s.isCollapsed)capture();}catch{last=null;}});
+    let mode='scroll',prefs=null,systemDark=false,layoutTicket=0,reflow=false,cursor=null,retained=null,suppressScrollUntil=0,waitingForFonts=false;
+    const visible=()=>{
+      for(const [el,n] of nodes){
+        if(!n||n.nodeType!==3||!n.length)continue;
+        const rects=[...el.getClientRects()];
+        if(!rects.some(r=>r.bottom>1&&r.top<innerHeight&&r.right>0&&r.left<innerWidth))continue;
+        for(let at=0;at<n.length;){
+          const next=at+(n.data.codePointAt(at)>65535?2:1),r=document.createRange();r.setStart(n,at);r.setEnd(n,next);
+          if([...r.getClientRects()].some(b=>b.bottom>1&&b.top<innerHeight&&b.left>=0&&b.left<innerWidth)){
+            return {session,resource,segments:[{block:el.getAttribute('data-rk'),start:at,end:at,exact:''}]};
+          }at=next;
+        }
+      }return cursor||{session,resource,segments:[{block:spans[0].getAttribute('data-rk'),start:0,end:0,exact:''}]};
+    };
+    const viewport=()=>{if(!cursor)cursor=visible();return cursor;};
     const restore=a=>{
       if(!a)return false;
       const el=spans.find(e=>e.getAttribute('data-rk')===a.block_id),n=el?.firstChild;
       if(!n||n.nodeType!==3||!Number.isInteger(a.start)||!Number.isInteger(a.end)||a.start<0||a.end<a.start||a.end>n.length||n.data.slice(a.start,a.end)!==a.exact)throw Error('anchor');
-      const r=document.createRange();r.setStart(n,a.start);r.setEnd(n,a.end);
-      el.scrollIntoView({block:'center'});
-      if(a.end>a.start){const s=getSelection();s.removeAllRanges();s.addRange(r);}return true;
+      const r=document.createRange();r.setStart(n,a.start);r.setEnd(n,Math.min(n.length,Math.max(a.end,a.start+(n.data.codePointAt(a.start)>65535?2:1))));
+      const rect=r.getClientRects()[0]||el.getBoundingClientRect();
+      suppressScrollUntil=performance.now()+250;
+      if(mode==='scroll')scrollTo(0,Math.max(0,scrollY+rect.top-4));
+      else scrollTo(Math.floor(Math.max(0,scrollX+rect.left)/innerWidth)*innerWidth,0);
+      if(a.end>a.start){r.setEnd(n,a.end);const s=getSelection();s.removeAllRanges();s.addRange(r);}
+      cursor={session,resource,segments:[{block:a.block_id,start:a.start,end:a.start,exact:''}]};return true;
     };
-    const style=document.createElementNS('http://www.w3.org/1999/xhtml','style');
-    document.head.append(style);
-    const layout=async(size,dark)=>{
-      const before=capture();
-      style.textContent=`html,body{background:${dark?'#252421':'#fbf9f5'}!important;color:${dark?'#e9e5dc':'#2d2925'}!important}body{font-size:${size}px!important;line-height:1.9!important;font-family:'Songti SC',serif!important;margin:0!important;padding:24px!important;max-width:100%!important;box-sizing:border-box!important}p,li,div,span,td,th,blockquote,figcaption{font-size:inherit!important}h1{font-size:1.5em!important}h2{font-size:1.25em!important}img{max-width:100%!important;height:auto!important}a{color:${dark?'#d4a083':'#9f654b'}!important}`;
-      await document.fonts.ready;await new Promise(requestAnimationFrame);
-      const a=before.segments[0];restore({block_id:a.block,start:a.start,end:a.end,exact:a.exact});
-      if(before.kind==='selection'&&before.segments.length>1){
-        const z=before.segments[before.segments.length-1];
-        const first=spans.find(e=>e.getAttribute('data-rk')===a.block).firstChild;
-        const final=spans.find(e=>e.getAttribute('data-rk')===z.block).firstChild;
-        const r=document.createRange();r.setStart(first,a.start);r.setEnd(final,z.end);
-        const s=getSelection();s.removeAllRanges();s.addRange(r);
-      }
-      last=before.kind==='selection'?before:null;
+    const style=document.createElementNS('http://www.w3.org/1999/xhtml','style');document.head.append(style);
+    const configure=async(p,dark)=>{
+      for(const [key,min,max] of [['size',16,36],['line_height',1.2,2.4],['paragraph_spacing',0,40],['margin',8,64],['width',360,1400]])
+        if(!Number.isFinite(p[key])||p[key]<min||p[key]>max)throw Error('layout_limit');
+      if(!['scroll','paged','columns'].includes(p.layout)||!['song','sans','mono'].includes(p.font)||!['app','system','paper','dark','green'].includes(p.theme))throw Error('layout_enum');
+      globalThis.readerPhase=3;
+      const before=cursor||visible(),ticket=++layoutTicket;reflow=true;prefs=p;systemDark=dark;mode=p.layout;
+      const dim=p.theme==='dark'||(['app','system'].includes(p.theme)&&dark),green=p.theme==='green',bg=green?'#dae5d4':dim?'#252421':'#fbf9f5',fg=green?'#263329':dim?'#e9e5dc':'#2d2925';
+      const columns=mode==='columns'&&innerWidth>=720?2:1,font={song:"'Songti SC',serif",sans:"'PingFang SC',sans-serif",mono:"Menlo,monospace"}[p.font];
+      style.textContent=`html{background:${bg}!important;color:${fg}!important;scroll-behavior:auto!important;overflow:${mode==='scroll'?'auto':'auto hidden'}!important}body{background:${bg}!important;color:${fg}!important;font-size:${p.size}px!important;line-height:${p.line_height}!important;font-family:${font}!important;margin:0 auto!important;padding:${p.margin}px!important;box-sizing:border-box!important;width:100%!important;max-width:${mode==='scroll'?p.width+'px':'none'}!important;height:${mode==='scroll'?'auto':innerHeight+'px'}!important;column-count:${mode==='scroll'?'auto':columns}!important;column-gap:${2*p.margin}px!important;column-fill:auto!important}p,li,div,span,td,th,blockquote,figcaption{font-size:inherit!important}p{max-width:${p.width/columns}px!important;margin-inline:auto!important;margin-top:0!important;margin-bottom:${p.paragraph_spacing}px!important}h1{font-size:1.5em!important}h2{font-size:1.25em!important}img{max-width:100%!important;max-height:${Math.max(80,innerHeight-2*p.margin)}px!important;height:auto!important;object-fit:contain!important;break-inside:avoid!important}a{color:${dim?'#d4a083':'#9f654b'}!important}`;
+      globalThis.readerPhase=4;
+      const fonts=await Promise.race([document.fonts.ready.then(()=>true),new Promise(r=>setTimeout(()=>r(false),1500))]);
+      await new Promise(r=>{requestAnimationFrame(r);setTimeout(r,120);});globalThis.readerPhase=5;
+      if(ticket!==layoutTicket)return before;
+      if(!fonts&&!waitingForFonts){waitingForFonts=true;document.fonts.ready.then(()=>{waitingForFonts=false;if(prefs)configure(prefs,systemDark);});}
+      const a=before.segments[0];restore({block_id:a.block,start:a.start,end:a.end,exact:a.exact});reflow=false;retained=a;globalThis.readerPhase=6;
       return before;
     };
+    const layout=async(size,dark)=>{
+      const selected=capture();await configure({version:1,layout:mode,font:'song',theme:'app',size,line_height:1.9,paragraph_spacing:18,margin:24,width:900},dark);
+      if(selected.kind==='selection'){
+        const a=selected.segments[0],z=selected.segments[selected.segments.length-1];
+        const r=document.createRange();r.setStart(spans.find(e=>e.getAttribute('data-rk')===a.block).firstChild,a.start);r.setEnd(spans.find(e=>e.getAttribute('data-rk')===z.block).firstChild,z.end);
+        const s=getSelection();s.removeAllRanges();s.addRange(r);last=selected;
+      }return selected;
+    };
+    const turn=delta=>{
+      const before=mode==='scroll'?scrollY:scrollX,limit=mode==='scroll'?document.documentElement.scrollHeight-innerHeight:document.documentElement.scrollWidth-innerWidth;
+      const target=mode==='scroll'?before+delta*innerHeight*.85:before+delta*innerWidth;
+      if((delta<0&&before<=1)||(delta>0&&before>=limit-1))return {edge:delta,position:viewport()};
+      if(mode==='scroll')scrollTo(0,Math.max(0,Math.min(limit,target)));else scrollTo(Math.max(0,Math.min(limit,target)),0);
+      last=null;cursor=visible();return {edge:0,position:cursor};
+    };
+    let resizeTimer;
+    addEventListener('scroll',()=>{if(!reflow&&performance.now()>suppressScrollUntil){cursor=visible();last=null;}},{passive:true});
+    addEventListener('wheel',()=>{suppressScrollUntil=0;},{passive:true});
+    addEventListener('pointerdown',()=>{suppressScrollUntil=0;},{passive:true});
+    addEventListener('keydown',()=>{suppressScrollUntil=0;});
+    addEventListener('resize',()=>{reflow=true;clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(prefs)configure(prefs,systemDark);},100);});
     const checkRanges=()=>{
       const sel=getSelection(),old=[];for(let i=0;i<sel.rangeCount;i++)old.push(sel.getRangeAt(i).cloneRange());
       const saved=last,tests=[];
@@ -270,17 +323,22 @@ final class EpubWebView: NSView, WKNavigationDelegate, WKUIDelegate {
       }finally{sel.removeAllRanges();for(const r of old)sel.addRange(r);last=saved;}
       return tests;
     };
-    globalThis.readerHost={capture,restore,layout,blocks,checkRanges};
-    await layout(size,dark);
+    const anchorVisible=()=>{
+      const a=retained,n=spans.find(e=>e.getAttribute('data-rk')===a?.block)?.firstChild;if(!n)return false;
+      const r=document.createRange();r.setStart(n,a.start);r.setEnd(n,Math.min(n.length,a.start+(n.data.codePointAt(a.start)>65535?2:1)));
+      return [...r.getClientRects()].some(b=>b.bottom>0&&b.top<innerHeight&&b.left>=-1&&b.right<=innerWidth+1);
+    };
+    globalThis.readerHost={capture,restore,layout,configure,viewport,turn,blocks,checkRanges,anchorVisible};
+    globalThis.readerPhase=2;await layout(size,dark);globalThis.readerPhase=7;
     if(anchor)restore(anchor);
-    return {session,resource,blocks};
+    globalThis.readerPhase=8;return {session,resource,blocks};
     """#
 
     static let checks = #"""
-    await document.fonts.ready;
+    await Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,1500))]);
     const images=[...document.images].map(i=>({loaded:i.complete&&i.naturalWidth>0,width:i.naturalWidth,height:i.naturalHeight}));
     const denied=await Promise.all(['https://example.invalid/reader-check','file:///etc/passwd','reader-book://other/r1','reader-book://'+location.host+'/r9999'].map(async url=>{try{await fetch(url);return false;}catch{return true;}}));
     return {session:location.host,resource:location.pathname.slice(1),blocks:readerHost.blocks,images,denied,
-      selection:readerHost.capture(),range_tests:readerHost.checkRanges(),ruby:!!document.querySelector('ruby rt'),font_count:document.fonts.size,fonts_loaded:[...document.fonts].every(f=>f.status==='loaded'),strong_color:document.querySelector('strong')?getComputedStyle(document.querySelector('strong')).color:null};
+      retained_anchor_visible:readerHost.anchorVisible(),viewport:readerHost.viewport(),selection:readerHost.capture(),range_tests:readerHost.checkRanges(),ruby:!!document.querySelector('ruby rt'),font_count:document.fonts.size,fonts_loaded:[...document.fonts].every(f=>f.status==='loaded'),strong_color:document.querySelector('strong')?getComputedStyle(document.querySelector('strong')).color:null};
     """#
 }

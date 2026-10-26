@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../../domain/reading.dart';
+
 import 'package:reader_storage/reader_storage.dart';
 
 import '../../domain/documents.dart';
@@ -11,7 +13,11 @@ import '../session_library.dart';
 
 /// Real local storage; only the owned preview is admitted before MAC-04 import.
 final class LocalLibrary
-    implements LibraryRepository, PositionRepository, AdultLibrary {
+    implements
+        LibraryRepository,
+        PositionRepository,
+        AdultLibrary,
+        ReadingPreferenceRepository {
   LocalLibrary(this.database, this.files, {this.access});
   final AccessController? access;
   AccessState get _access => access?.state ?? const AccessState();
@@ -431,8 +437,12 @@ final class LocalLibrary
     required int expectedSequence,
   }) async {
     final ticket = _access.visibilityRevision;
+    await checkAccess(bookId);
     final classification = await _admit(bookId);
     if (expectedSequence < 0) throw const FormatException('sequence');
+    if (ticket != _access.visibilityRevision) {
+      throw const AppFailure(FailureCode.permissionDenied);
+    }
     // Parsing our own encoding also enforces wire limits before persistence.
     DocumentAnchor.fromJson(anchor.toJson());
     await database.transaction([
@@ -459,6 +469,49 @@ final class LocalLibrary
     ]);
     await _recheck(bookId, classification, ticket);
     return StoredPosition(bookId, channel, anchor, expectedSequence + 1);
+  }
+
+  @override
+  Future<ReadingPreferences?> loadReadingPreferences(String? bookId) async {
+    if (bookId != null) await checkAccess(bookId);
+    final rows = await database.query(
+      'SELECT value FROM reading_preferences WHERE scope=?',
+      [bookId ?? '*'],
+    );
+    if (bookId != null) await checkAccess(bookId);
+    if (rows.isEmpty) return null;
+    final value = jsonDecode(rows.single['value'] as String);
+    if (value is! Map<String, dynamic>) {
+      throw const FormatException('reader_preferences_shape');
+    }
+    return ReadingPreferences.fromJson(value);
+  }
+
+  @override
+  Future<void> saveReadingPreferences(
+    String? bookId,
+    ReadingPreferences? value,
+  ) async {
+    if (bookId != null) await checkAccess(bookId);
+    final scope = bookId ?? '*';
+    if (value == null) {
+      await database.transaction([
+        SqlCommand('DELETE FROM reading_preferences WHERE scope=?', [scope]),
+      ]);
+      return;
+    }
+    ReadingPreferences.fromJson(value.toJson());
+    await database.transaction([
+      SqlCommand(
+        'INSERT INTO reading_preferences(scope,value,updated_at) VALUES(?,?,?) ON CONFLICT(scope) DO UPDATE SET value=excluded.value,updated_at=excluded.updated_at',
+        [
+          scope,
+          jsonEncode(value.toJson()),
+          DateTime.now().millisecondsSinceEpoch,
+        ],
+      ),
+    ]);
+    if (bookId != null) await checkAccess(bookId);
   }
 
   Future<void> saveSetting(String key, Object value) async {

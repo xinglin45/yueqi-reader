@@ -1,4 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+
+import '../application/reading.dart';
+import '../domain/reading.dart';
+import 'reading_controls.dart';
+import 'text_surface.dart';
 
 import '../app/dependencies.dart';
 import '../domain/documents.dart';
@@ -26,6 +33,8 @@ class TxtReaderView extends StatefulWidget {
 class _TxtReaderViewState extends State<TxtReaderView> {
   TxtDocumentReader get reader => widget.deps.txt!;
   TxtIndex? index, candidate;
+  ReadingSession? reading;
+  DocumentAnchor? target;
   TxtPage? page;
   bool busy = false, cancelled = false, rulesVisible = false;
   double? progress;
@@ -35,15 +44,32 @@ class _TxtReaderViewState extends State<TxtReaderView> {
   int maxTitle = 80;
   final prefix = TextEditingController();
   final top = GlobalKey();
+  final concealed = ValueNotifier(false);
+  final dialogs = <DialogRoute<int>>[];
+  void Function()? unregister;
   @override
   void initState() {
     super.initState();
+    unregister = widget.deps.access?.registerProtectedStop(
+      () => concealed.value = true,
+    );
     _run(_open);
   }
 
   @override
   void dispose() {
     generation++;
+    unregister?.call();
+    concealed.value = true;
+    if (dialogs.isEmpty) {
+      concealed.dispose();
+    } else {
+      unawaited(
+        Future.wait(dialogs.map((r) => r.completed))
+            .whenComplete(concealed.dispose),
+      );
+    }
+    unawaited(reading?.finish());
     prefix.dispose();
     final id = candidate?.id;
     if (id != null) reader.discard(id);
@@ -60,7 +86,8 @@ class _TxtReaderViewState extends State<TxtReaderView> {
     });
     final job = JobContext(
       id: ticket,
-      isCurrent: () => mounted && generation == ticket && !cancelled,
+      isCurrent: () =>
+          mounted && generation == ticket && !cancelled && !concealed.value,
       report: (p) {
         if (mounted && generation == ticket) setState(() => progress = p);
       },
@@ -96,6 +123,7 @@ class _TxtReaderViewState extends State<TxtReaderView> {
     setState(() {
       page = null;
       index = null;
+      target = null;
       remembered = null;
       notice = null;
     });
@@ -109,10 +137,19 @@ class _TxtReaderViewState extends State<TxtReaderView> {
     headings = active.rules.headings;
     maxTitle = active.rules.maxTitle;
     prefix.text = active.rules.prefix;
-    final saved = await widget.deps.positions?.loadPosition(
-      widget.bookId,
-      PositionChannel.reading,
+    reading = await widget.deps.reading?.open(
+      ReadingIdentity(widget.bookId, active.id, DocumentKind.txt),
+      isCurrent: () => !job.isCancelled,
     );
+    job.checkCancelled();
+    final saved = reading?.anchor == null
+        ? null
+        : StoredPosition(
+            widget.bookId,
+            PositionChannel.reading,
+            reading!.anchor!,
+            reading!.sequence,
+          );
     sequence = saved?.sequence ?? 0;
     var first = 0;
     if (saved != null) {
@@ -133,8 +170,10 @@ class _TxtReaderViewState extends State<TxtReaderView> {
       );
       if (result.match == AnchorMatch.exact) {
         remembered = saved.anchor.blockId;
+        target = saved.anchor;
         notice = '已恢复到上次记住的文本块。';
       } else {
+        reading?.needsReview = true;
         notice = '旧位置未精确匹配，已保留原记录，请重新选择。';
       }
     }
@@ -142,10 +181,49 @@ class _TxtReaderViewState extends State<TxtReaderView> {
     setState(() {});
   }
 
-  Future<void> _read(int first, JobContext job) async {
+  Future<void> _read(int first, JobContext job, {bool atEnd = false}) async {
+    reading?.navigate = (a) async {
+      if (!mounted) return false;
+      var restored = false;
+      await _run((job) async {
+        final ordinal = int.tryParse(a.blockId.replaceFirst('b', ''));
+        if (ordinal == null) throw const FormatException('txt_anchor_block');
+        await _read(ordinal, job);
+        final resolved = a.resolve(
+          currentRevision: index!.id,
+          currentChapter: page!.chapter.id,
+          currentSpine: 'text.txt',
+          blocks: {for (final b in page!.blocks) b.id: b.text},
+        );
+        if (resolved.match != AnchorMatch.exact) {
+          throw const FormatException('txt_anchor_context');
+        }
+        setState(() => target = a);
+        restored = true;
+      });
+      return restored;
+    };
     final next = await reader.read(index!, first, job);
     job.checkCancelled();
-    setState(() => page = next);
+    setState(() {
+      page = next;
+      target = next.anchor(next.blocks.first);
+      if (atEnd) {
+        final block = next.blocks.last;
+        var offset = (block.text.length - 1).clamp(0, block.text.length);
+        if (!utf16Boundary(block.text, offset)) offset--;
+        target = DocumentAnchor.capture(
+          kind: DocumentKind.txt,
+          revision: next.index.id,
+          chapterId: next.chapter.id,
+          spineHref: 'text.txt',
+          blockId: block.id,
+          text: block.text,
+          start: offset,
+          end: offset,
+        );
+      }
+    });
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted && !job.isCancelled && top.currentContext != null) {
         Scrollable.ensureVisible(top.currentContext!, alignment: 0);
@@ -187,6 +265,11 @@ class _TxtReaderViewState extends State<TxtReaderView> {
       remembered = null;
       notice = '已切换分章版本，原位置仍保留；阅读后可主动记住新位置。';
     });
+    await reading?.finish();
+    reading = await widget.deps.reading?.open(
+      ReadingIdentity(widget.bookId, next.id, DocumentKind.txt),
+      isCurrent: () => !job.isCancelled,
+    );
     await _read(0, job);
   }
 
@@ -200,86 +283,115 @@ class _TxtReaderViewState extends State<TxtReaderView> {
     );
     final route = DialogRoute<int>(
       context: context,
-      builder: (dialog) => StatefulBuilder(
-        builder: (dialog, update) => AlertDialog(
-          title: Text('章节目录 · ${active.chapterCount} 章'),
-          content: SizedBox(
-            width: 440,
-            height: 420,
-            child: FutureBuilder<List<TxtChapter>>(
-              future: result,
-              builder: (context, snapshot) {
-                if (snapshot.hasError) return const Text('目录暂不可用，请返回检查原件与权限。');
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return ListView(
-                  children: [
-                    for (final c in snapshot.data!.take(20))
-                      ListTile(
-                        title: Text('${c.ordinal + 1}. ${c.title}'),
-                        onTap: () => Navigator.pop(dialog, c.first),
-                      ),
+      builder: (dialog) => ValueListenableBuilder<bool>(
+        valueListenable: concealed,
+        builder: (_, hidden, _) => hidden
+            ? AlertDialog(
+                title: const Text('内容已隐藏'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(dialog),
+                    child: const Text('返回'),
+                  ),
+                ],
+              )
+            : StatefulBuilder(
+                builder: (dialog, update) => AlertDialog(
+                  title: Text('章节目录 · ${active.chapterCount} 章'),
+                  content: SizedBox(
+                    width: 440,
+                    height: 420,
+                    child: FutureBuilder<List<TxtChapter>>(
+                      future: result,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('目录暂不可用，请返回检查原件与权限。');
+                        }
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return ListView(
+                          children: [
+                            for (final c in snapshot.data!.take(20))
+                              ListTile(
+                                title: Text('${c.ordinal + 1}. ${c.title}'),
+                                onTap: () => Navigator.pop(dialog, c.first),
+                              ),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: offset == 0
+                          ? null
+                          : () => update(() {
+                              offset = (offset - 20).clamp(
+                                0,
+                                active.chapterCount,
+                              );
+                              result = reader.chapters(
+                                active,
+                                offset,
+                                JobContext(
+                                  id: 0,
+                                  isCurrent: () => mounted && dialog.mounted,
+                                  report: (_) {},
+                                ),
+                              );
+                            }),
+                      child: const Text('上一组'),
+                    ),
+                    TextButton(
+                      onPressed: offset + 20 >= active.chapterCount
+                          ? null
+                          : () => update(() {
+                              offset += 20;
+                              result = reader.chapters(
+                                active,
+                                offset,
+                                JobContext(
+                                  id: 0,
+                                  isCurrent: () => mounted && dialog.mounted,
+                                  report: (_) {},
+                                ),
+                              );
+                            }),
+                      child: const Text('下一组'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(dialog),
+                      child: const Text('返回'),
+                    ),
                   ],
-                );
-              },
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: offset == 0
-                  ? null
-                  : () => update(() {
-                      offset = (offset - 20).clamp(0, active.chapterCount);
-                      result = reader.chapters(
-                        active,
-                        offset,
-                        JobContext(
-                          id: 0,
-                          isCurrent: () => mounted && dialog.mounted,
-                          report: (_) {},
-                        ),
-                      );
-                    }),
-              child: const Text('上一组'),
-            ),
-            TextButton(
-              onPressed: offset + 20 >= active.chapterCount
-                  ? null
-                  : () => update(() {
-                      offset += 20;
-                      result = reader.chapters(
-                        active,
-                        offset,
-                        JobContext(
-                          id: 0,
-                          isCurrent: () => mounted && dialog.mounted,
-                          report: (_) {},
-                        ),
-                      );
-                    }),
-              child: const Text('下一组'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(dialog),
-              child: const Text('返回'),
-            ),
-          ],
-        ),
+                ),
+              ),
       ),
     );
+    dialogs.add(route);
     final block = await Navigator.of(context).push(route);
     await route.completed;
-    if (block != null && mounted) await _run((job) => _read(block, job));
+    dialogs.remove(route);
+    if (block != null && mounted && !concealed.value) {
+      reading?.rememberJump();
+      await _run((job) => _read(block, job));
+    }
   }
 
   @override
-  Widget build(BuildContext context) => Align(
-    alignment: Alignment.topLeft,
-    child: ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 680),
-      child: Column(
+  Widget build(BuildContext context) => ValueListenableBuilder<bool>(
+    valueListenable: concealed,
+    builder: (context, hidden, _) =>
+        hidden ? const Text('内容已隐藏') : _content(context),
+  );
+  Widget _content(BuildContext context) => LayoutBuilder(
+    builder: (context, constraints) {
+      final controls = Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             index?.title ?? '本地 TXT',
@@ -386,107 +498,86 @@ class _TxtReaderViewState extends State<TxtReaderView> {
               child: const Text('确认使用此目录'),
             ),
           ],
+        ],
+      );
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          ConstrainedBox(
+            constraints: BoxConstraints(maxHeight: constraints.maxHeight * .42),
+            child: SingleChildScrollView(child: controls),
+          ),
+          if (reading case final r?)
+            ReadingTools(
+              session: r,
+              onBack: r.history.isEmpty
+                  ? null
+                  : () => _run((job) async {
+                      final a = r.popHistory()!;
+                      await _read(int.parse(a.blockId.substring(1)), job);
+                      setState(() => target = a);
+                    }),
+              onProgress: (v) {
+                r.rememberJump();
+                _run((job) => _read((v * (index!.blocks - 1)).round(), job));
+              },
+            ),
           if (page case final p?)
-            KeyedSubtree(
-              key: ValueKey('txt-page:${p.index.id}:${p.blocks.first.ordinal}'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 24),
-                  Text(
-                    p.chapter.title,
-                    style: const TextStyle(
-                      fontFamily: 'Songti SC',
-                      fontSize: 30,
-                      height: 1.5,
-                    ),
-                  ),
-                  const Divider(),
-                  for (final b in p.blocks)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SelectableText(
-                            b.text,
-                            style: const TextStyle(
-                              fontFamily: 'Songti SC',
-                              fontFamilyFallback: ['STSong', 'serif'],
-                              fontSize: 24,
-                              height: 1.9,
+            Expanded(
+              child: StreamBuilder<void>(
+                stream: reading?.changes,
+                builder: (context, _) => TextReadingSurface(
+                  page: p,
+                  preferences:
+                      reading?.preferences ?? const ReadingPreferences(),
+                  anchor: target,
+                  onAnchor: (a) => reading?.observe(a),
+                  onPrevious: p.blocks.first.ordinal == 0
+                      ? null
+                      : () => _run(
+                          (j) => _read(
+                            (p.blocks.first.ordinal - 8).clamp(
+                              0,
+                              index!.blocks - 1,
                             ),
+                            j,
+                            atEnd: true,
                           ),
-                          if (b.continuation)
-                            const Text('长段落接续', style: TextStyle(fontSize: 11)),
-                          if (remembered == b.id) const Text('上次记住的位置'),
-                          if (b.text.trim().isNotEmpty)
-                            TextButton(
-                              onPressed: busy
-                                  ? null
-                                  : () => _run((job) async {
-                                      final saved = await widget.deps.positions!
-                                          .savePosition(
-                                            widget.bookId,
-                                            PositionChannel.reading,
-                                            p.anchor(b),
-                                            expectedSequence: sequence,
-                                          );
-                                      job.checkCancelled();
-                                      setState(() {
-                                        sequence = saved.sequence;
-                                        remembered = b.id;
-                                        notice = '已记住这个文本块。';
-                                      });
-                                    }),
-                              child: const Text('记住这一段'),
-                            ),
-                        ],
-                      ),
-                    ),
-                  const SizedBox(height: 20),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 8,
-                    children: [
-                      TextButton(
-                        onPressed: busy || p.blocks.first.ordinal == 0
-                            ? null
-                            : () => _run(
-                                (job) => _read(
-                                  (p.blocks.first.ordinal - 8).clamp(
-                                    0,
-                                    index!.blocks - 1,
-                                  ),
-                                  job,
-                                ),
-                              ),
-                        child: const Text('上一段内容'),
-                      ),
-                      FilledButton(
-                        onPressed:
-                            busy || p.blocks.last.ordinal + 1 >= index!.blocks
-                            ? null
-                            : () => _run(
-                                (job) => _read(p.blocks.last.ordinal + 1, job),
-                              ),
-                        child: const Text('下一段内容'),
-                      ),
-                      Text(
-                        '文本块 ${p.blocks.first.ordinal + 1}–${p.blocks.last.ordinal + 1} / ${index!.blocks}',
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    '已按需读取 TXT 正文。自动滚动进度、分页与完整排版将在后续阅读器步骤接入。',
-                    style: TextStyle(fontSize: 12),
-                  ),
-                ],
+                        ),
+                  onNext: p.blocks.last.ordinal + 1 >= index!.blocks
+                      ? null
+                      : () => _run((j) => _read(p.blocks.last.ordinal + 1, j)),
+                ),
               ),
             ),
+          if (page != null)
+            TextButton(
+              onPressed: () => _run((j) async {
+                final r = reading;
+                final a = r?.anchor ?? page!.anchor(page!.blocks.first);
+                if (r != null) {
+                  r.observe(a, explicit: true);
+                  await r.flush();
+                  if (r.needsReview || r.error != null) {
+                    throw const AppFailure(FailureCode.unexpected);
+                  }
+                  sequence = r.sequence;
+                } else {
+                  final saved = await widget.deps.positions!.savePosition(
+                    widget.bookId,
+                    PositionChannel.reading,
+                    a,
+                    expectedSequence: sequence,
+                  );
+                  sequence = saved.sequence;
+                }
+                j.checkCancelled();
+                setState(() => notice = '已记住这个文本块。');
+              }),
+              child: const Text('记住这一段'),
+            ),
         ],
-      ),
-    ),
+      );
+    },
   );
 }
