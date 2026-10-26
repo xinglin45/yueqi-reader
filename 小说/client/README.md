@@ -1,6 +1,6 @@
 # novel_app · 阅栖
 
-2026-10-26更新：**MAC-09代码与自动化已完成，最终原生退出/重启及默认入口复核待解锁；本步暂不标记完整验收，下一步先补齐尾项**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09阶段验证](../../docs/verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
+2026-10-26更新：**MAC-09代码与自动化已完成，默认入口已复核，剩余原生跳转/退出重启验收待无前台干扰方案；本步暂不标记完整验收，下一步先补齐尾项**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09阶段验证](../../docs/verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
 
 小说/client是一套Flutter工程，保留Android、iOS、Windows、macOS四个宿主，共用lib。MAC-01/02、MAC-06研究、MAC-03本地存储与MAC-16分级隐私及MAC-04文件导入与MAC-05 TXT与MAC-07 EPUB与MAC-08书架管理已完成，仅验证macOS Apple Silicon。显示名阅栖，开发标识local.yueqi.novel，版本0.0.10+10。
 

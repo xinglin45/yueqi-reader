@@ -1,6 +1,6 @@
 # 架构设计
 
-2026-10-26更新：**MAC-09代码与自动化已完成，最终原生退出/重启及默认入口复核待解锁；本步暂不标记完整验收，下一步先补齐尾项**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09阶段验证](verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
+2026-10-26更新：**MAC-09代码与自动化已完成，默认入口已复核，剩余原生跳转/退出重启验收待无前台干扰方案；本步暂不标记完整验收，下一步先补齐尾项**。TXT/EPUB已接入共享会话、滚动/分页/双栏、可调排版、自动进度与历史返回；102项Flutter/Dart及13项Python测试通过，见[MAC-09阶段验证](verifications/mac-09-2026-10-26.md)。完整首版来源仍0/0，MAC-10及原生低存在感窗口尚未开始。
 
 状态：目标架构；MAC-01已初始化小说四端宿主和reader_core最小标识；MAC-02已实现D1应用壳、纯Dart平台端口与任务生命周期。MAC-06已验证受控WKWebView、中文精确检索及原生TTS小样，见[三项研究验收](verifications/mac-06-2026-10-19.md)；MAC-03已接入后台SQLite、系统资料目录、托管样本与稳定位置，见[存储决策](decisions/0006-mac03-local-storage-and-anchors.md)；MAC-16将内容分级存入schema4，本机声明与搜索/隐私状态隔离于设备目录，策略与会话作废见[ADR-0007](decisions/0007-mac16-local-access-and-privacy.md)；MAC-04将导入索引存入schema5，文件端口与只读授权隔离于macOS适配，见[ADR-0008](decisions/0008-mac04-document-import.md)；MAC-05在schema6增加版本化TXT块/目录索引，原件按范围读取、不另存正文，见[ADR-0009](decisions/0009-mac05-txt-index.md)；MAC-07在macOS接入受控EPUB会话/资源/原文映射，见[ADR-0010](decisions/0010-mac07-controlled-epub.md)；MAC-09排版已编码，其他原生适配/后端仍待实现，见[应用壳验收](verifications/mac-02-2026-10-16.md)。外部源/第三方项目都是候选，不代表已接入。
 

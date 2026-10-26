@@ -1,6 +1,6 @@
 {
   "date": "2026-10-26",
-  "stage": "MAC-09 implementation checkpoint; final native exit/restart/default-entry QA pending manual Mac unlock",
+  "stage": "MAC-09 implementation checkpoint; default entry verified; native jump/normal-exit/restart end-to-end QA pending non-disruptive background workflow",
   "test_results": {
     "flutter_dart": 102,
     "python": 13,
@@ -13,7 +13,7 @@
   "source_tree_sha256": "2bdf8d4b19f84f853e891796c2f37d6e264b7e4b09483d187e87e313f4237914",
   "source_tree_algorithm": "sha256 of sorted relative-path + space + sha256 per source file, newline joined; lib/**/*.dart, macos/Runner/**/*.swift, pubspec.yaml, pubspec.lock",
   "source_file_count": 58,
-  "native_default_entry_launch": "pending_locked",
+  "native_default_entry_launch": "passed: original one-book shelf, dark theme and preview paragraph 2 preserved",
   "builds": {
     "Debug": {
       "entrypoint": "lib/main.dart (default; no -t)",
@@ -41,5 +41,7 @@
       "notices_sha256": "a83a26b2d140a544db5077dbc1f316b8ce017f7834acb30b7f419c695da7aee0",
       "app_framework_sha256": "010d950a9cfdd70e8a16a8674053bec980b8f125c5aa56a4033f4260b17a15d6"
     }
-  }
+  },
+  "native_default_entry_evidence": "native-default-release-original.png",
+  "native_ui_testing_policy": "No foreground activation, maximize or fullscreen; no more reader UI-tool calls that may summon its window. Prefer terminal builds and windowless tests."
 }
